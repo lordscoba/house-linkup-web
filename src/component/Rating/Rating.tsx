@@ -13,11 +13,11 @@ const Rating = ({ rating }: Props) => {
     return (
       <span key={index}>
         {rating >= index + 1 ? (
-          <FaStar className="text-[2rem] text-[orange]" />
+          <FaStar className="text-[1.5rem] text-[orange]" />
         ) : rating >= number ? (
-          <FaStarHalfAlt className="text-[2rem] text-[orange]" />
+          <FaStarHalfAlt className="text-[1.5rem] text-[orange]" />
         ) : (
-          <AiOutlineStar className="text-[2rem] " />
+          <AiOutlineStar className="text-[1.5rem] " />
         )}
       </span>
     );

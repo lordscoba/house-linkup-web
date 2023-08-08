@@ -44,7 +44,7 @@ const PropertyHero = (props: Props) => {
           <span className="text-[#69B99D]">HouseLinkUp</span>, your most trusted
           alien
         </h2>
-        <section className="w-full xl:w-[518px] h-[550px] bg-[#fff] p-[54px]">
+        <section className="w-full xl:w-[518px] h-[550px] bg-[#fff] p-[54px] animate__slideInRight ">
           {data?.length > 0
             ? data?.map((item: PropertyInterface, index: any) => {
                 return (
