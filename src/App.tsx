@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { About, Contact, Home, Property, Services } from './screens';
+import { About, Contact, HomeScreen, Property, Services } from './Pages';
 import Layout from './component/AppLayout';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomeScreen />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/property" element={<Property />} />
