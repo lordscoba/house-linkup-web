@@ -11,5 +11,14 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const hideScrollbar = {
+        '.hide-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+      };
+      addUtilities(hideScrollbar, ['responsive', 'hover']);
+    },
+  ],
 };

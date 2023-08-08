@@ -1,5 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import { About, Contact, HomeScreen, Property, Services } from './Pages';
+import {
+  About,
+  Contact,
+  HomeScreen,
+  Property,
+  Services,
+  SingleHouseScreen,
+} from './Pages';
 import Layout from './component/AppLayout';
 
 function App() {
@@ -12,6 +19,7 @@ function App() {
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/property" element={<Property />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/property/:id" element={<SingleHouseScreen />} />
         </Routes>
       </Layout>
     </>

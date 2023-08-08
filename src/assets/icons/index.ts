@@ -36,3 +36,8 @@ export { default as mini_Icon_3 } from './mini-cost-icon-35.png';
 export { default as mini_Icon_4 } from './mini-cost-icon-3.png';
 export { default as mini_Icon_5 } from './mini-cost-icon-4.png';
 export { default as mini_Icon_6 } from './mini-cost-icon-6.png';
+export { default as Clock } from './Clock.png';
+export { default as Dollar } from './dollar.svg';
+export { default as Qoute } from './quote.png';
+export { default as LessThan } from './CaretLeft.png';
+export { default as GreaterThanBlack } from './CaretRight-black.png';

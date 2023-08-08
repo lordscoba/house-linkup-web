@@ -6,7 +6,7 @@ type Props = {};
 const Search = (props: Props) => {
   return (
     <>
-      <div className="xl:mt-[189px] mt-[260px] xl:w-[1220px] h-[600px] xl:h-auto w-full m-auto relative">
+      <div className="xl:mt-[189px] mt-[3rem] xl:w-[1220px] h-[600px] xl:h-auto w-full m-auto relative">
         <img
           src={HeroNewPlaceBg}
           alt="bg image"
@@ -19,7 +19,7 @@ const Search = (props: Props) => {
           <div className="w-full xl:w-[631px] py-[6px] px-[11px] bg-[#fff] flex justify-between rounded-[15px]">
             <input
               type="text"
-              placeholder="email address"
+              placeholder="Email Address"
               className="w-full border-none outline-none focus:border-none focus:outline-none"
             />
             <button className="xl:py-[18px] py-[12px] px-[24px] xl:px-[48px] bg-[#69B99D] text-[#fff] rounded-[10px]">
