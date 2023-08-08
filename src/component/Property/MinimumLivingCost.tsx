@@ -18,10 +18,10 @@ const MinimumLivingCost = (props: Props) => {
       </h4>
 
       <section className="block xl:flex items-center gap-[65px] mt-[38px]">
-        <div className="mb-[65px]">
-          <img src={MiniCostImage} alt="" />
+        <div className="mb-[65px] ">
+          <img src={MiniCostImage} alt="" className="object-cover w-full" />
         </div>
-        <div className="flex gap-4 items-center  justify-center xl:justify-start flex-wrap text-center xl:text-start  ">
+        <div className="flex gap-[2rem] items-center  justify-center xl:justify-start flex-wrap text-center xl:text-start  ">
           {data?.length > 0
             ? data?.map((item: MiniCostInterface, index: any) => {
                 return <MiniCostCard icon={item?.icon} title={item?.title} />;
@@ -42,7 +42,7 @@ interface MiniCardInterface {
 
 const MiniCostCard = ({ icon, title }: MiniCardInterface) => {
   return (
-    <div className="w-[200px] xl:w-[300px] h-[168px] ">
+    <div className="w-[200px] xl:w-[200px] h-[168px] ">
       <div className="w-[77px] h-[77px] p-[1rem] bg-[#eceaea] rounded-[8px] mb-[21px] m-auto xl:m-0  ">
         <img src={icon} alt="icon" />
       </div>
