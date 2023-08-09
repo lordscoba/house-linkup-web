@@ -24,7 +24,13 @@ const MinimumLivingCost = (props: Props) => {
         <div className="flex gap-[2rem] items-center  justify-center xl:justify-start flex-wrap text-center xl:text-start  ">
           {data?.length > 0
             ? data?.map((item: MiniCostInterface, index: any) => {
-                return <MiniCostCard icon={item?.icon} title={item?.title} />;
+                return (
+                  <MiniCostCard
+                    icon={item?.icon}
+                    title={item?.title}
+                    key={index}
+                  />
+                );
               })
             : null}
         </div>

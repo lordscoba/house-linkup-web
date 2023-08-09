@@ -11,13 +11,15 @@ const NavBar = (props: Props) => {
 
   const [showNav, setShowNav] = useState<Boolean>(false);
   const { pathname } = useLocation();
+  const route = pathname.split('/')[1];
 
   useEffect(() => {
     setLinks(data);
+    console.log(route);
   }, []);
 
   return (
-    <div className="z-50  bg-[#C9CDCE] relative  pb-3">
+    <div className="z-50  bg-[#D9D9D9] relative  pb-3">
       <div className=" max-w-[1440px] m-auto xl:pt-[51px] block xl:flex items-center justify-between px-3">
         <div className="flex items-center  justify-between">
           <div className=" flex items-center gap-4">
@@ -69,7 +71,7 @@ const NavBar = (props: Props) => {
                         >
                           {item?.text}
                         </Link>
-                        {pathname === item?.link ? (
+                        {route === item?.link ? (
                           <p className="w-2 h-2 rounded-full bg-[#4BA586] m-auto mt-[8px]"></p>
                         ) : null}
                       </section>
