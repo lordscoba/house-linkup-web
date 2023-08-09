@@ -41,3 +41,4 @@ export { default as Dollar } from './dollar.svg';
 export { default as Qoute } from './quote.png';
 export { default as LessThan } from './CaretLeft.png';
 export { default as GreaterThanBlack } from './CaretRight-black.png';
+export { default as ArrowRightUp } from './ArrowUpRight.png';

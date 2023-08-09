@@ -7,26 +7,26 @@ export const data: Array<NavTypes> = [
   {
     text: 'Home',
     name: 'home',
-    link: '/',
+    link: '',
   },
   {
     text: 'Property',
     name: 'property',
-    link: '/property',
+    link: 'property',
   },
   {
     text: 'About',
     name: 'about',
-    link: '/about',
+    link: 'about',
   },
   {
     text: 'Services',
     name: 'services',
-    link: '/services',
+    link: 'services',
   },
   {
     text: 'Contact',
     name: 'contact',
-    link: '/contact',
+    link: 'contact',
   },
 ];

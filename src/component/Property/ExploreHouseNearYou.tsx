@@ -69,6 +69,7 @@ const ExploreHouseNearYou = () => {
                   image={item?.image}
                   location={item?.location}
                   price={item?.price}
+                  _id={item?._id}
                 />
               );
             })

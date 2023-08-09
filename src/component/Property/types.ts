@@ -21,6 +21,15 @@ export interface FindHouseNearYouInterface {
   Year: Number;
   image: string;
   location: string;
+  _id: string;
+  kitchenImage?: string;
+  bedroomImage?: string;
+  parlourImage?: string;
+  toiletImage?: string;
+  bathroomImage?: string;
+  street?: string;
+  rentAmount?: Number;
+  active?: Boolean;
 }
 
 export type FindHouseArray = Array<FindHouseNearYouInterface>;

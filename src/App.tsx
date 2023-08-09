@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import {
   About,
   Contact,
@@ -8,6 +8,7 @@ import {
   SingleHouseScreen,
 } from './Pages';
 import Layout from './component/AppLayout';
+import { useEffect } from 'react';
 
 function App() {
   return (
