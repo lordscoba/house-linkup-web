@@ -34,3 +34,7 @@ export { default as Parlor_3 } from './parlor-3.jpg';
 export { default as Parlor_4 } from './parlor-4.jpg';
 export { default as Parlor_5 } from './parlor-5.jpg';
 export { default as Parlor_6 } from './parlor-6.jpg';
+
+//SERVICES
+
+export { default as ServicesBg } from './about-bg.png';
