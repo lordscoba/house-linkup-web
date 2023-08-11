@@ -11,6 +11,12 @@ import Layout from './component/AppLayout';
 import { useEffect } from 'react';
 
 function App() {
+  const { pathname } = useLocation();
+
+  // useEffect(() => {
+  //   const link = `${pathname}`;
+  //   console.log({ app: link });
+  // }, []);
   return (
     <>
       <Layout>
@@ -20,7 +26,7 @@ function App() {
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/property" element={<Property />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/property/:id" element={<SingleHouseScreen />} />
+          <Route path={`${pathname}`} element={<SingleHouseScreen />} />
         </Routes>
       </Layout>
     </>

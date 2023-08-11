@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FindHouseArray, FindHouseNearYouInterface } from './types';
-import { findHouseNearYouValues } from './data';
+import { FindHouseArray, FindHouseNearYouInterface } from '../Property/types';
+import { findHouseNearYouValues } from '../Property/data';
 import { Clock, Dollar, Like } from '../../assets/icons';
-import Houses from '../reusableComponents/Houses';
+import Houses from './Houses';
 const navData = [
   {
     text: 'Near to market',

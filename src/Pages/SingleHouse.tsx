@@ -27,8 +27,8 @@ const SingleHouse = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const dd = houseData?.find(
-      (item: FindHouseNearYouInterface) => item?._id === params?.id
+    const dd = findHouseNearYouValues?.find(
+      (item: FindHouseNearYouInterface) => item?._id === `${_id}`
     );
     setData(dd);
   }, [houseData]);
@@ -80,6 +80,7 @@ const FirstSection = ({
   active,
 }: FirstSectionInterface) => {
   const navigate = useNavigate();
+
   return (
     <section className="pt-[66px] bg-[#D9D9D9] pb-[44px]">
       <section className=" px-[32px]  xl:px-0 w-full xl:w-[1220px] m-auto">

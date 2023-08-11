@@ -42,7 +42,7 @@ const FlexibilityAndOptions = (props: Props) => {
         </section>
       </section>
       <section className="mt-[12px] w-full xl:w-[637px]">
-        <div className="xl:w-[189px] w-[140px] h-[140px] xl:h-[189px] rounded-full bg-[#8CFBA4] ml-auto mb-[55px]"></div>
+        <div className="xl:w-[189px] w-[100px] h-[100px] xl:h-[189px] rounded-full bg-[#8CFBA4] ml-auto mb-[55px]"></div>
         <article className="xl:px-[48px]">
           <h3 className="xl:text-[44px] text-[32px] text-[#18191F] font-semibold">
             Flexibility and options to suit your lifestyle.
