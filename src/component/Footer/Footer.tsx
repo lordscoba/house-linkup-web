@@ -6,18 +6,25 @@ import {
   Logo,
   Twitter,
 } from '../../assets/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 type Props = {};
 
 const Footer = (props: Props) => {
+  const { pathname } = useLocation();
   return (
-    <div className="w-full xl:w-[1220px] block xl:flex lg:flex  text-center gap-[181px] px-[32px] xl:px-0 m-auto mt-[84px] mb-[21px]">
-      <FisrtSection />
-      <Resources />
-      <Legal />
-      <Links />
-    </div>
+    <>
+      {pathname === '/sign-up' || pathname === '/login' ? (
+        ''
+      ) : (
+        <div className="w-full xl:w-[1220px] block xl:flex lg:flex  text-center gap-[181px] px-[32px] xl:px-0 m-auto mt-[84px] mb-[21px]">
+          <FisrtSection />
+          <Resources />
+          <Legal />
+          <Links />
+        </div>
+      )}
+    </>
   );
 };
 

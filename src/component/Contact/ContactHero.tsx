@@ -14,6 +14,7 @@ const ContactHero = (props: Props) => {
 
     if (file && file.type.startsWith('image/')) {
       const imageURL = URL.createObjectURL(file);
+
       setImage(imageURL);
       setImageName(file?.name);
     }
@@ -36,52 +37,225 @@ const ContactHero = (props: Props) => {
   const handleLabelClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleImagePreview = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsImage((prev) => !prev);
+  };
   return (
     <section className="">
-      <section className="bg-[#D9D9D9] pt-[93px]">
-        <p className="text-center text-[24px] text-[#000] font-[500]">
+      <section className="bg-[#D9D9D9] pt-[93px] xl:h-[870px] pb-[93px] xl:px-0 relative">
+        <p className="text-center xl:text-[24px] text-[20px] text-[#000] font-[500]">
           Rent with us and be Confident that Your home will be Filled Out!
         </p>
-        <div className="image-uploader border border-dashed h-[102px] text-center text-[red]">
-          <div
-            className="drop-area h-full"
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-          >
-            {image ? (
-              // <img src={image} alt="Uploaded" className="preview-image" />
-              <p>{imageName}</p>
-            ) : (
-              <p>Drag and drop an image here or</p>
-            )}
+      </section>
 
-            <div className="inline-block relative cursor-pointer ">
-              <label
-                htmlFor="browse"
-                onClick={handleLabelClick}
-                className="inline-block py-[10px] px-[20px] cursor-pointer"
-              >
-                Browse
-              </label>
+      <form className="w-full xl:w-[1130px] m-auto bg-[#fff] rounded-lg px-[63px] py-[52px]  xl:mt-[-43rem] relative mb-[5rem] border">
+        <section className="xl:flex block items-center justify-between mb-[25px]">
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="name" className="text-[17px] font-[600]">
+              {' '}
+              Name <span className="text-[red] text-[1.2rem] ">*</span>
+            </label>
+            <div>
               <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-                className="hidden"
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Name"
+                className="w-full border py-2 px-4 rounded-md"
               />
             </div>
           </div>
-        </div>
-        <div>
-          <button onClick={() => setIsImage((prev) => !prev)}>
-            Preview Image
-          </button>
-          {isImage && (
-            <img src={image} alt="Uploaded" className="preview-image" />
-          )}
-        </div>
-      </section>
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="email" className="text-[17px] font-[600]">
+              Email <span className="text-[red] text-[1.2rem] ">*</span>
+            </label>
+            <div>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="email"
+                className="w-full border py-2 px-4 rounded-md"
+              />
+            </div>
+          </div>
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="unit-number" className="text-[17px] font-[600]">
+              {' '}
+              Unit Number <span className="text-[red] text-[1.2rem] ">*</span>
+            </label>
+            <div>
+              <input
+                type="tel"
+                name="unit-number"
+                id="unit-number"
+                placeholder="Enter Unit Number"
+                className="w-full border py-2 px-4 rounded-md"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="xl:flex block items-center justify-between mb-[25px]">
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="city" className="text-[17px] font-[600]">
+              {' '}
+              City
+            </label>{' '}
+            <span className="text-[red] text-[1.2rem] ">*</span>
+            <div className="border flex  px-4 py-2 rounded-md">
+              <select
+                name=""
+                id=""
+                className="w-full border-none outline-none focus:border-none"
+              >
+                <option value="me">me</option>
+              </select>
+            </div>
+          </div>
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="state" className="text-[17px] font-[600]">
+              {' '}
+              State
+            </label>{' '}
+            <span className="text-[red] text-[1.2rem] ">*</span>
+            <div className="border flex  px-4 py-2 rounded-md">
+              <select
+                name="state"
+                id="state"
+                className="w-full border-none outline-none focus:border-none"
+              >
+                <option value="me">state</option>
+              </select>
+            </div>
+          </div>
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="home-type" className="text-[17px] font-[600]">
+              {' '}
+              Home Type
+            </label>{' '}
+            <span className="text-[red] text-[1.2rem] ">*</span>
+            <div className="border flex  px-4 py-2 rounded-md">
+              <select
+                name="home-type"
+                id="home-type"
+                className="w-full border-none outline-none focus:border-none"
+              >
+                <option value="me">Home type</option>
+              </select>
+            </div>
+          </div>
+        </section>
+        <section className="xl:flex block items-center gap-[25px] mb-[25px]">
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="price" className="text-[17px] font-[600]">
+              {' '}
+              Price <span className="text-[red] text-[1.2rem] ">*</span>
+            </label>
+            <div>
+              <input
+                type="tel"
+                name="price"
+                id="price"
+                placeholder="Enter Price"
+                className="w-full border py-2 px-4 rounded-md"
+              />
+            </div>
+          </div>
+          <div className="xl:w-[318px] w-full mb-4">
+            <label htmlFor="flat-type" className="text-[17px] font-[600]">
+              {' '}
+              Flat Type
+            </label>{' '}
+            <span className="text-[red] text-[1.2rem] ">*</span>
+            <div className="border flex  px-4 py-2 rounded-md">
+              <select
+                name="flat-type"
+                id="flat-type"
+                className="w-full border-none outline-none focus:border-none"
+              >
+                <option value="">Select flat type</option>
+                <option value="me">3 Bedroom </option>
+                <option value="me">5 Bedroom </option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-[25px]">
+          <label htmlFor="description" className="text-[17px] font-[600]">
+            Description{' '}
+          </label>
+          <span className="text-[red] text-[1.2rem] ">*</span>
+          <div>
+            <textarea
+              placeholder="Description"
+              className="px-4 border w-full rounded-md h-[151px] pt-2"
+            ></textarea>
+          </div>
+        </section>
+        {/* IMAGE UPLOAD */}
+        <section>
+          <h2 className="text-[18px] font-[600] text-[#000]">Upload Photos</h2>
+          <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center py-[60px] text-center ">
+            <div
+              className="drop-area h-full"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              {image ? (
+                // <img src={image} alt="Uploaded" className="preview-image" />
+                <p className="font-bold">{imageName}</p>
+              ) : (
+                <p className="text-[#000] font-[500] text-[1rem]">
+                  Drag and drop an image here or
+                </p>
+              )}
+
+              <div className="inline-block relative cursor-pointer ">
+                <label
+                  htmlFor="browse"
+                  onClick={handleLabelClick}
+                  className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
+                >
+                  Browse
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                  className="hidden"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-[55px]">
+            <button
+              type="submit"
+              className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[22px] text-[18px] w-full xl:w-[513px] m-auto xl:py-[16px] py-[8px] rounded-md"
+            >
+              Contact Us
+            </button>
+          </div>
+          <div className="mt-[25px] text-enter">
+            <button onClick={handleImagePreview} className=" mb-[1rem]">
+              Preview Image
+            </button>
+            {isImage && (
+              <>
+                {!image ? (
+                  <p>No Image to Preview at the moment</p>
+                ) : (
+                  <img src={image} alt="Uploaded" className="preview-image" />
+                )}
+              </>
+            )}
+          </div>
+        </section>
+      </form>
     </section>
   );
 };
