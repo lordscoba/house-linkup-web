@@ -38,3 +38,7 @@ export { default as Parlor_6 } from './parlor-6.jpg';
 //SERVICES
 
 export { default as ServicesBg } from './about-bg.png';
+
+//AUTH
+export { default as SignUp_BG } from './signup_bg.png';
+export { default as Login_BG } from './login_bg.png';

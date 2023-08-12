@@ -3,8 +3,10 @@ import {
   About,
   Contact,
   HomeScreen,
+  Login,
   Property,
   Services,
+  SignUp,
   SingleHouseScreen,
 } from './Pages';
 import Layout from './component/AppLayout';
@@ -22,6 +24,8 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/property" element={<Property />} />
