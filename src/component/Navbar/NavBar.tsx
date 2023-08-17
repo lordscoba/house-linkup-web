@@ -1,22 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { NavData, NavTypes } from './navTypes';
 import { data } from './data';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../../assets/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreReducerTypes } from '../../redux/store';
+import { userDetailsAction } from '../../redux/actions/user.actions';
 
 type Props = {};
 
 const NavBar = (props: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [links, setLinks] = useState<NavData>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [show, setShow] = useState<Boolean>(false);
 
   const [showNav, setShowNav] = useState<Boolean>(false);
   const { pathname } = useLocation();
   const route = pathname.split('/')[1];
 
+  const LoginUser = useSelector((state: StoreReducerTypes) => state.loginUser);
+  const LoginSuccess = LoginUser?.success;
+
+  const userDetails = useSelector(
+    (state: StoreReducerTypes) => state.userDetails
+  );
+
+  console.log({ details: userDetails });
+
+  const dataFromStorage =
+    typeof !undefined && localStorage.getItem('loginUser')
+      ? JSON.parse(localStorage?.getItem('loginUser') as any)
+      : null;
+
   useEffect(() => {
     setLinks(data);
   }, []);
+
+  useEffect(() => {
+    const checkTokenExist = localStorage.getItem('loginUser');
+    const LoggedInUserUserId = dataFromStorage.userDoc?._id;
+    dispatch(userDetailsAction() as any);
+    if (checkTokenExist) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // useLayoutEffect(() => {
+  //   dispatch(userDetailsAction() as any);
+  // }, []);
 
   return (
     <>
@@ -25,7 +58,7 @@ const NavBar = (props: Props) => {
         ''
       ) : (
         <div className={`bg-[#CBD0D0] z-50  relative  pb-3`}>
-          <div className=" max-w-[1440px] m-auto xl:pt-[51px] block xl:flex items-center justify-between px-3">
+          <div className=" max-w-[1440px] m-auto xl:pt-[51px] block xl:flex items-center gap-[311px] px-3">
             <div className="flex items-center  justify-between">
               <div className=" flex items-center gap-4">
                 <img src={Logo} width={71} height={64} alt="" />
@@ -58,9 +91,9 @@ const NavBar = (props: Props) => {
             <section
               className={`${
                 showNav ? 'block' : 'hidden'
-              }  xl:flex items-center gap-[32px] xl:mt-0 mt-3 `}
+              }   xl:flex  items-center gap-[4rem] xl:mt-0 mt-3 `}
             >
-              <div className="block xl:flex items-center flex-1 gap-[48px]">
+              <div className="block xl:flex  items-center flex-1  gap-[48px]">
                 {links?.length > 0
                   ? links?.map((item: NavTypes, index: any) => {
                       return (
@@ -85,20 +118,53 @@ const NavBar = (props: Props) => {
                     })
                   : null}
               </div>
-              <section>
-                <button
-                  onClick={() => navigate('/sign-up')}
-                  className="w-[151px] bg-[#fff] text-[#69B99D] border border-[#69B99D] py-[1rem] mr-[.7rem] text-[1rem] font-semibold"
-                >
-                  Sign up
-                </button>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="w-[151px] bg-[#69B99D] text-[#fff] py-[1rem] text-[1rem] font-semibold"
-                >
-                  login
-                </button>
-              </section>
+              {isLoggedIn || LoginSuccess ? (
+                <div className=" ">
+                  <div className="flex items-center gap-4">
+                    <p className="w-[44px] h-[44px] border-2 rounded-full p-2 uppercase flex items-center justify-center">
+                      <p className="text-[#69B99D]">
+                        {' '}
+                        {dataFromStorage?.userDoc?.fullName.slice(0, 1)}
+                      </p>
+                    </p>
+                    <div className="relative w-[7rem]">
+                      <svg
+                        onClick={() => setShow((prev) => !prev)}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="w-4 h-4 cursor-pointer "
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                        />
+                      </svg>
+                      <div className="absolute top-6 z-20 left-0 right-0">
+                        {show ? <LogoutAndProfile setShow={setShow} /> : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <section>
+                  <button
+                    onClick={() => navigate('/sign-up')}
+                    className="w-[151px] bg-[#fff] text-[#69B99D] border border-[#69B99D] py-[1rem] mr-[.7rem] text-[1rem] font-semibold"
+                  >
+                    Sign up
+                  </button>
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="w-[151px] bg-[#69B99D] text-[#fff] py-[1rem] text-[1rem] font-semibold"
+                  >
+                    login
+                  </button>
+                </section>
+              )}
             </section>
           </div>
         </div>
@@ -108,3 +174,21 @@ const NavBar = (props: Props) => {
 };
 
 export default NavBar;
+
+interface LinkInterface {
+  setShow: Function;
+}
+
+const LogoutAndProfile = ({ setShow }: LinkInterface) => {
+  return (
+    <div className="bg-[grey] px-2 text-[#fff]" onClick={() => setShow(false)}>
+      <Link to={'/profile'} className="cursor-pointer block">
+        Profile
+      </Link>
+      <Link to={'#'} className="cursor-pointer block">
+        DashBoard
+      </Link>
+      <button type="button">Log out</button>
+    </div>
+  );
+};

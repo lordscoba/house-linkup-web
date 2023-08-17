@@ -25,8 +25,8 @@ const Reviews = (props: Props) => {
     setData(ReviewValues);
   }, []);
   return (
-    <section className="xl:pl-[71px] px-[32px] mt-[134px] xl:flex block py-[57px] bg-[#F5FFFB] ">
-      <div className=" relative">
+    <section className="xl:pl-[71px] px-[32px] mt-[134px] xl:flex justify-center block py-[57px] bg-[#F5FFFB] ">
+      <div className=" relative  flex justify-center">
         {data?.length > 0
           ? data?.map((item: ReviewsInterface, index: any) => {
               return (
@@ -36,7 +36,7 @@ const Reviews = (props: Props) => {
                     index === dataIndex ? 'block xl:flex' : 'hidden'
                   }   items-center  gap-[78px]`}
                 >
-                  <div className="w-full h-[679px] xl:px-0 xl:w-[518px] ">
+                  <div className="w-full max-w-[518px] h-[679px] xl:px-0 xl:w-[518px] ">
                     <img
                       src={item?.icon}
                       alt="icon"
@@ -44,17 +44,17 @@ const Reviews = (props: Props) => {
                     />
                   </div>
 
-                  <div className="w-full xl:w-[531px]">
+                  <div className="w-full xl:w-[531px] max-w-[518px]">
                     <p className="xl:text-[36px] text-[26px] mt-3 xl:mt-0 text-[#191919] font-semibold mb-[58px]">
                       &apos;&apos;{item?.p}&apos;&apos;
                     </p>
-                    <p className="text-[30px] text-[#191919] font-semibold">
+                    <p className="text-[30px] text-[#191919] font-semibold md:text-center  xl:text-start">
                       {item?.name}
                     </p>
-                    <p className="text-[30px] text-[#636363] font-semibold mb-[1rem]">
+                    <p className="text-[30px] text-[#636363] font-semibold mb-[1rem] md:text-center xl:text-start">
                       {item?.location}
                     </p>
-                    <p className="xl:absolute bottom-0 mb-3 xl:mb-0">
+                    <p className="xl:absolute bottom-0 mb-3 xl:mb-0 md:flex justify-center">
                       {/* {Number(item?.rating)} */}
                       <Rating rating={Number(item?.rating)} />
                     </p>

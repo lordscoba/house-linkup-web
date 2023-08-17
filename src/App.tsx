@@ -4,6 +4,8 @@ import {
   Contact,
   HomeScreen,
   Login,
+  NotFound,
+  Profile,
   Property,
   Services,
   SignUp,
@@ -17,22 +19,24 @@ function App() {
 
   // useEffect(() => {
   //   const link = `${pathname}`;
-  //   console.log({ app: link });
+  //   console.log({ app: link.split('/') });
   // }, []);
   return (
     <>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact-us" element={<Contact />} />
-          <Route path="/property" element={<Property />} />
-          <Route path="/services" element={<Services />} />
-          <Route path={`${pathname}`} element={<SingleHouseScreen />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact-us" element={<Contact />} />
+        <Route path="/property" element={<Property />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/property/:id" element={<SingleHouseScreen />} />
+        <Route path="/services/:id" element={<SingleHouseScreen />} />
+        <Route path="/profile" element={<Profile />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 }
