@@ -27,14 +27,14 @@ const AdvantageCard = () => {
     setData(advantagesValues);
   }, []);
   return (
-    <div className="block xl:flex gap-[32px] xl:px-[96px] px-[34px] justify-center  mb-[78px]">
+    <div className="block xl:flex lg:flex md:flex flex-wrap gap-[32px] xl:px-[96px] px-[34px] justify-center  mb-[78px]">
       {data?.length > 0
         ? data?.map((item: AdvantagesInterface, index: any) => {
             return (
               <div
                 key={index}
                 className={` bg-[#fff]
-                 flex-1 h-[396px]  border rounded-[12px] text-center pt-[42px] pb-[68px] px-[32px] mb-4 xl:mb-0`}
+                 max-w-[397px] h-[396px]  border rounded-[12px] text-center pt-[42px] pb-[68px] px-[32px] mb-4 xl:mb-0`}
               >
                 <div
                   className={`${
@@ -63,8 +63,8 @@ const AdvantageCard = () => {
 const LiveHappilly = () => {
   //pt-[112px] pb-[175px]
   return (
-    <section className="bg-[#F5FFFB] py-[40px] xl:py-0  px-[32px] xl:pl-[96px] block xl:flex justify-between items-center">
-      <div className="">
+    <section className="bg-[#F5FFFB]  py-[40px] xl:py-0  px-[32px] xl:pl-[96px] block xl:flex lg:flex md:flex  xl:gap-[223px] gap-4  items-center">
+      <div className="max-w-[520px]">
         <h4 className="w-[520px] text-[38px] tracking-wider ">
           Live Happily, <br />
           HouseLinkUp helps you <br /> for Finding homes
@@ -85,7 +85,7 @@ const LiveHappilly = () => {
         </div>
       </div>
 
-      <div className=" xl:w-[50%] w-full  mt-[49px] mb-4">
+      <div className=" xl:w-[50%] w-full max-w-[512px]  mt-[49px] mb-4">
         {/* <div className=" w-[186px] h-[186px] rounded-full bg-[#8CFBA4] ml-auto"></div> */}
         <div className=" z-50">
           <img src={GroupImg} alt="group image" width={512} height={683} />

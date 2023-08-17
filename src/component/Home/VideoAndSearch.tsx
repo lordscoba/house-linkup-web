@@ -6,8 +6,8 @@ type Props = {};
 
 const VideoAndSearch = (props: Props) => {
   return (
-    <div className="px-[32px] xl:px-0 mt-[78px]">
-      <div className=" w-full xl:w-[1220px] h-[320px] xl:h-[680px] m-auto">
+    <div className="px-[32px] xl:px-0 mt-[78px] ">
+      <div className=" w-full xl:w-[1220px] max-w-[1220px] h-[320px] xl:h-[680px] m-auto">
         <video
           src="/video-2.mp4"
           loop
@@ -36,11 +36,11 @@ const Search = () => {
           alt="bg image"
           className="w-full h-full object-cover"
         />
-        <div className="block xl:flex  justify-between items-center absolute xl:top-[50%] xl:bottom-[50%] top-[20%] bottom-[20%] right-0 left-0 xl:pl-[62px] xl:pr-[24px] px-4">
+        <div className="block xl:flex   justify-between items-center absolute xl:top-[50%] xl:bottom-[50%] top-[20%] bottom-[20%] right-0 left-0 xl:pl-[62px] xl:pr-[24px] px-4">
           <p className="text-center xl:text-start text-[39px] text-[#fff] font-bold">
             Ready to find your <br /> New Place?
           </p>
-          <div className="w-full xl:w-[631px] py-[6px] px-[11px] bg-[#fff] flex justify-between rounded-[15px]">
+          <div className="w-full xl:max-w-[631px] lg:max-w-[613px] md:max-w-[631px] py-[6px] mt-[12px] xl:mt-0 px-[11px] bg-[#fff] flex justify-between rounded-[15px] m-auto">
             <input
               type="text"
               placeholder="Email Address"

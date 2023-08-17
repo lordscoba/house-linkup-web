@@ -6,3 +6,5 @@ export { default as Services } from './Services';
 export { default as SingleHouseScreen } from './SingleHouse';
 export { default as SignUp } from './SignUp';
 export { default as Login } from './Login';
+export { default as NotFound } from './NonFound';
+export { default as Profile } from './Profile';

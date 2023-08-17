@@ -9,7 +9,7 @@ const HowHouseLinkupWorks = (props: Props) => {
       <h2 className="text-[#131313] text-center font-semibold text-[38px] mb-[24px]">
         How HouseLinkUp works
       </h2>
-      <p className="text-center text-[#191919] text-[24px]  xl:w-[539px] px-[32px] xl:px-0 m-auto">
+      <p className="text-center text-[#191919] text-[24px] max-w-[539px]  xl:w-[539px] px-[32px] xl:px-0 m-auto">
         Properties to rent. Find rental property listed directly from private
         landlords and letting agents from all over.
       </p>
@@ -72,7 +72,7 @@ const SectionWithImage = () => {
           );
         })}
       </div>
-      <div>
+      <div className=" max-w-[900px] m-auto">
         <img src={Furnitur} alt="furniture" width={900} height={570} />
         <p className="xl:w-[573px] md:w-[573px] w-full xl:py-[40px] py-[30px] pl-[31px] pr-[14px] text-[24px] text-[#fff] bg-[#69B99D] xl:mt-[-2rem] md:mt-[-2rem]  relative">
           Find rental property listed directly <br /> landlords and letting

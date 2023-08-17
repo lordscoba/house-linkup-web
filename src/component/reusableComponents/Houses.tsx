@@ -21,9 +21,17 @@ const Houses = ({
 
   // useEffect(() => {
   //   const link = `${pathname}/${_id}`;
-  //   console.log({ house: link });
-
+  //   console.log({ house: pathname });
   // }, []);
+
+  const handleNavigate = () => {
+    if (pathname === '/property') {
+      navigate(`/property/${_id}`);
+    }
+    if (pathname === '/services') {
+      navigate(`/services/${_id}`);
+    }
+  };
   return (
     <div className="w-full xl:w-[32%] border-t pt-3 pb-5">
       <div className="flex items-center justify-between mb-[19px]">
@@ -33,7 +41,7 @@ const Houses = ({
         </h2>
         <span
           className="bg-[#69B99D] text-[#fff] py-[2px] px-[12px] rounded-[50px] cursor-pointer"
-          onClick={() => navigate(`${pathname}/${_id}`)}
+          onClick={handleNavigate}
         >
           FOR SALE
         </span>

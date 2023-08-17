@@ -6,17 +6,17 @@ type Props = {};
 const Search = (props: Props) => {
   return (
     <>
-      <div className="xl:mt-[189px] mt-[3rem] xl:w-[1220px] h-[600px] xl:h-auto w-full m-auto relative">
+      <div className="xl:mt-[189px] mt-[3rem] xl:w-[1220px] h-[600px] xl:h-auto w-full m-auto max-h-[306px] relative">
         <img
           src={HeroNewPlaceBg}
           alt="bg image"
           className="w-full h-full object-cover"
         />
-        <div className="block xl:flex  justify-between items-center absolute xl:top-[50%] xl:bottom-[50%] top-[20%] bottom-[20%] right-0 left-0 xl:pl-[62px] xl:pr-[24px] px-4">
+        <div className="block xl:flex justify-between items-center absolute xl:top-[50%] xl:bottom-[50%] top-[20%] bottom-[20%] right-0 left-0 xl:pl-[62px] xl:pr-[24px] px-4">
           <p className="text-center xl:text-start text-[39px] text-[#fff] font-bold">
             Ready to find your <br /> New Place?
           </p>
-          <div className="w-full xl:w-[631px] py-[6px] px-[11px] bg-[#fff] flex justify-between rounded-[15px]">
+          <div className="w-full xl:max-w-[631px]  lg:max-w-[613px] md:max-w-[613px] m-auto mt-[12px] xl:mt-0 py-[6px] px-[11px] bg-[#fff] flex justify-between rounded-[15px]">
             <input
               type="text"
               placeholder="Email Address"
