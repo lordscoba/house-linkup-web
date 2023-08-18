@@ -20,7 +20,6 @@ const Profile = (props: Props) => {
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
-  console.log({ gt: userDetails });
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = event?.target?.files?.[0];

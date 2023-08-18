@@ -78,8 +78,6 @@ const UpdateProfile = (props: Props) => {
     setSuccess(updateSuccess);
 
     setLoading(updateLoading);
-
-    console.log({ loading: loading, success: success, error: error });
   }, [
     updateProfile?.loading,
     updateProfile?.success,
