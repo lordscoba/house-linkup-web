@@ -112,7 +112,10 @@ export const userDetailsAction =
         },
       };
 
-      const { data } = await axios.get(apiRoutes.auth.user.getUserDetails);
+      const { data } = await axios.get(
+        apiRoutes.auth.user.getUserDetails,
+        config
+      );
 
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
     } catch (error: any) {
@@ -123,8 +126,15 @@ export const userDetailsAction =
     }
   };
 
+interface UpdateProfileInterface {
+  email: string;
+  phone_number: string;
+  location: string;
+  image: string;
+}
+
 export const updateProfileAction =
-  () =>
+  ({ email, image, location, phone_number }: UpdateProfileInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ updateProfile }: StoreReducerTypes) => void
@@ -132,13 +142,25 @@ export const updateProfileAction =
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
 
+      let FD = new FormData();
+
+      FD.append('image', image);
+      FD.append('phone_number', phone_number);
+      FD.append('location', location);
+      FD.append('email', email);
+
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       };
 
-      const { data } = await axios.get(apiRoutes.auth.user.updateProfile);
+      const { data } = await axios.put(
+        apiRoutes.auth.user.updateProfile,
+        FD,
+        config
+      );
 
       dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
     } catch (error: any) {

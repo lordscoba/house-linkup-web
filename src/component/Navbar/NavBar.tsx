@@ -70,8 +70,18 @@ const NavBar = (props: Props) => {
           <div className=" max-w-[1440px] m-auto xl:pt-[51px] block xl:flex items-center gap-[311px] px-3">
             <div className="flex items-center  justify-between">
               <div className=" flex items-center gap-4">
-                <img src={Logo} width={71} height={64} alt="" />
-                <h2 className="text-[24px] font-semibold text-[#4BA586]">
+                <img
+                  onClick={() => navigate('/')}
+                  src={Logo}
+                  width={71}
+                  height={64}
+                  alt=""
+                  className="cursor-pointer"
+                />
+                <h2
+                  onClick={() => navigate('/')}
+                  className="text-[24px] font-semibold text-[#4BA586] cursor-pointer"
+                >
                   HouseLinkUp
                 </h2>
               </div>
@@ -109,6 +119,9 @@ const NavBar = (props: Props) => {
                         <div key={index}>
                           <section className=" flex xl:block items-center gap-4 max-w-max xl:mb-0 mb-2">
                             <Link
+
+                              
+
                               onClick={() => setShowNav(false)}
                               to={item?.link}
                               className={` ${
@@ -158,6 +171,7 @@ const NavBar = (props: Props) => {
                           <LogoutAndProfile
                             setShow={setShow}
                             logOut={handleLogout}
+                            data={dataFromStorage}
                           />
                         ) : null}
                       </div>
@@ -199,12 +213,23 @@ export default NavBar;
 interface LinkInterface {
   setShow: Function;
   logOut: () => void;
+  data: {
+    userDoc: {
+      _id: string;
+    };
+  };
 }
 
-const LogoutAndProfile = ({ setShow, logOut }: LinkInterface) => {
+const LogoutAndProfile = ({ setShow, logOut, data }: LinkInterface) => {
   return (
     <div className="bg-[grey] px-2 text-[#fff]" onClick={() => setShow(false)}>
-      <Link to={"/profile"} className="cursor-pointer block">
+
+      <Link
+        to={`/profile/${data?.userDoc?._id}`}
+        className="cursor-pointer block"
+      >
+
+
         Profile
       </Link>
       <Link to={"#"} className="cursor-pointer block">
