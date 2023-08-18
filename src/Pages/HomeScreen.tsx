@@ -1,10 +1,8 @@
-import React from 'react';
-
-import Hero, { HeroWithImage } from '../component/Home/Hero';
-import Advantages from '../component/Home/Advantages';
-import HowHouseLinkupWorks from '../component/Home/HowHouseLinkupWorks';
-import Reviews from '../component/Home/Reviews';
-import VideoAndSearch from '../component/Home/VideoAndSearch';
+import Advantages from "../component/Home/Advantages";
+import Hero from "../component/Home/Hero";
+import HowHouseLinkupWorks from "../component/Home/HowHouseLinkupWorks";
+import Reviews from "../component/Home/Reviews";
+import VideoAndSearch from "../component/Home/VideoAndSearch";
 
 type Props = {};
 

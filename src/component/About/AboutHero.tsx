@@ -1,5 +1,4 @@
-import React from 'react';
-import { AboutGroupImage, AboutHeroImage } from '../../assets/icons';
+import { AboutGroupImage, AboutHeroImage } from "../../assets/icons";
 
 type Props = {};
 
@@ -14,7 +13,7 @@ const AboutHero = (props: Props) => {
           </div>
           <article className="w-full xl:w-[604px]">
             <h2 className="text-[#08110C] text-[48px] font-semibold mb-[10px]">
-              Discover Sustainable Luxury Living with{' '}
+              Discover Sustainable Luxury Living with{" "}
               <span className="text-[#69B99D]">HouseLinkUp</span> Realty.
             </h2>
             <p className="text-[24px] text-[#313131]">
@@ -53,7 +52,7 @@ const AboutHero = (props: Props) => {
           </div>
           <article className="w-full xl:w-[604px] xl:mb-[-14rem]">
             <h2 className="text-[#08110C] text-[48px] font-semibold mb-[10px]">
-              Building a Better Future with{' '}
+              Building a Better Future with{" "}
               <span className="text-[#69B99D]">HouseLinkUp</span> Homes.
             </h2>
             <p className="text-[24px] text-[#313131]">
