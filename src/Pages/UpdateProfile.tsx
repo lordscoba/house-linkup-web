@@ -145,11 +145,11 @@ const UpdateProfile = (props: Props) => {
           ) : (
             <img
               src={
-                userDetails?.serverResponse?.image[0]?.url ? (
-                  userDetails?.serverResponse?.image[0]?.url
+                userDetails?.serverResponse?.image?.[0]?.url ? (
+                  userDetails?.serverResponse?.image?.[0]?.url
                 ) : (
                   <p className="text-[#69B99D] text-[4rem]">
-                    {dataFromStorage?.userDoc?.full_name.slice(0, 1)}
+                    {dataFromStorage?.userDoc?.full_name?.slice(0, 1)}
                   </p>
                 )
               }
@@ -181,7 +181,9 @@ const UpdateProfile = (props: Props) => {
       </section>
       <div>
         <h2 className="uppercase mt-2 font-bold">
-          {userDetails?.serverResponse?.full_name}
+          {userDetails?.serverResponse?.full_name
+            ? userDetails?.serverResponse?.full_name
+            : null}
         </h2>
       </div>
 
@@ -225,7 +227,7 @@ const UpdateProfile = (props: Props) => {
           </div>
 
           <div>
-            {loading ? <CircularLoader /> || 'Loading' : null}
+            {loading ? <CircularLoader /> : null}
 
             {success ? (
               <Message type="success">{successMessage}</Message>

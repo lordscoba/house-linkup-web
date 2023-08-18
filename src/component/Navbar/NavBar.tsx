@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Logo } from "../../assets/icons";
-import { userDetailsAction } from "../../redux/actions/user.actions";
-import { LOG_OUT } from "../../redux/constants/user.constants";
-import { StoreReducerTypes } from "../../redux/store";
-import { data } from "./data";
-import { NavData, NavTypes } from "./navTypes";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Logo } from '../../assets/icons';
+import { userDetailsAction } from '../../redux/actions/user.actions';
+import { LOG_OUT } from '../../redux/constants/user.constants';
+import { StoreReducerTypes } from '../../redux/store';
+import { data } from './data';
+import { NavData, NavTypes } from './navTypes';
 
 type Props = {};
 
@@ -19,14 +19,14 @@ const NavBar = (props: Props) => {
 
   const [showNav, setShowNav] = useState<Boolean>(false);
   const { pathname } = useLocation();
-  const route = pathname.split("/")[1];
+  const route = pathname.split('/')[1];
 
   const LoginUser = useSelector((state: StoreReducerTypes) => state.loginUser);
   const LoginSuccess = LoginUser?.success;
 
   const dataFromStorage =
-    typeof !undefined && localStorage.getItem("loginUser")
-      ? JSON.parse(localStorage?.getItem("loginUser") as any)
+    typeof !undefined && localStorage.getItem('loginUser')
+      ? JSON.parse(localStorage?.getItem('loginUser') as any)
       : null;
 
   const NoToken = Boolean(!dataFromStorage);
@@ -40,7 +40,7 @@ const NavBar = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const checkTokenExist = localStorage.getItem("loginUser");
+    const checkTokenExist = localStorage.getItem('loginUser');
 
     dispatch(userDetailsAction() as any);
     if (checkTokenExist) {
@@ -62,9 +62,9 @@ const NavBar = (props: Props) => {
 
   return (
     <>
-      {" "}
-      {pathname === "/sign-up" || pathname === "/login" ? (
-        ""
+      {' '}
+      {pathname === '/sign-up' || pathname === '/login' ? (
+        ''
       ) : (
         <div className={`bg-[#CBD0D0] z-50  relative  pb-3`}>
           <div className=" max-w-[1440px] m-auto xl:pt-[51px] block xl:flex items-center gap-[311px] px-3">
@@ -109,7 +109,7 @@ const NavBar = (props: Props) => {
 
             <section
               className={`${
-                showNav ? "block" : "hidden"
+                showNav ? 'block' : 'hidden'
               }   xl:flex  items-center gap-[4rem] xl:mt-0 mt-3 `}
             >
               <div className="block xl:flex  items-center flex-1  gap-[48px]">
@@ -119,20 +119,17 @@ const NavBar = (props: Props) => {
                         <div key={index}>
                           <section className=" flex xl:block items-center gap-4 max-w-max xl:mb-0 mb-2">
                             <Link
-
-                              
-
                               onClick={() => setShowNav(false)}
                               to={item?.link}
                               className={` ${
                                 pathname === item?.link
-                                  ? "text-[#4BA586]"
-                                  : "text-[#222]"
+                                  ? 'text-[#4BA586]'
+                                  : 'text-[#222]'
                               } text-[18px] `}
                             >
                               {item?.text}
                             </Link>
-                            {"/" + route === item?.link ? (
+                            {'/' + route === item?.link ? (
                               <p className="w-2 h-2 rounded-full bg-[#4BA586] m-auto mt-[8px]"></p>
                             ) : null}
                           </section>
@@ -146,7 +143,7 @@ const NavBar = (props: Props) => {
                   <div className="flex items-center gap-4">
                     <p className="w-[44px] h-[44px] border-2 rounded-full p-2 uppercase flex items-center justify-center">
                       <p className="text-[#69B99D]">
-                        {" "}
+                        {' '}
                         {dataFromStorage?.userDoc?.full_name.slice(0, 1)}
                       </p>
                     </p>
@@ -182,7 +179,7 @@ const NavBar = (props: Props) => {
                 <section className="flex">
                   <button
                     onClick={() => {
-                      navigate("/sign-up");
+                      navigate('/sign-up');
                       setShowNav(false);
                     }}
                     className="w-[151px] bg-[#fff] text-[#69B99D] border border-[#69B99D] py-[1rem] mr-[.7rem] text-[1rem] font-semibold"
@@ -191,7 +188,7 @@ const NavBar = (props: Props) => {
                   </button>
                   <button
                     onClick={() => {
-                      navigate("/login");
+                      navigate('/login');
                       setShowNav(false);
                     }}
                     className="w-[151px] bg-[#69B99D] text-[#fff] py-[1rem] text-[1rem] font-semibold"
@@ -223,16 +220,10 @@ interface LinkInterface {
 const LogoutAndProfile = ({ setShow, logOut, data }: LinkInterface) => {
   return (
     <div className="bg-[grey] px-2 text-[#fff]" onClick={() => setShow(false)}>
-
-      <Link
-        to={`/profile/${data?.userDoc?._id}`}
-        className="cursor-pointer block"
-      >
-
-
+      <Link to={`/profile`} className="cursor-pointer block">
         Profile
       </Link>
-      <Link to={"#"} className="cursor-pointer block">
+      <Link to={'#'} className="cursor-pointer block">
         DashBoard
       </Link>
       <button type="button" onClick={logOut}>

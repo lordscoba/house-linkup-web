@@ -37,7 +37,6 @@ const Profile = (props: Props) => {
 
   useEffect(() => {
     dispatch(userDetailsAction() as any);
-    console.log({ d: userDetails });
   }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
