@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { FindHouseArray, FindHouseNearYouInterface } from '../Property/types';
-import { findHouseNearYouValues } from '../Property/data';
-import { Clock, Dollar, Like } from '../../assets/icons';
-import Houses from './Houses';
+import { useEffect, useState } from "react";
+import { findHouseNearYouValues } from "../Property/data";
+import { FindHouseArray, FindHouseNearYouInterface } from "../Property/types";
+import Houses from "./Houses";
 const navData = [
   {
-    text: 'Near to market',
+    text: "Near to market",
   },
   {
-    text: 'Nature Nearby',
+    text: "Nature Nearby",
   },
   {
-    text: 'Most viewed homes',
+    text: "Most viewed homes",
   },
 ];
 
@@ -44,8 +43,8 @@ const ExploreHouseNearYou = () => {
                     type="button"
                     className={`${
                       index === btnIndex
-                        ? 'text-[#69B99D] border-b-2 border-[#27563A]'
-                        : 'text-[#313131]'
+                        ? "text-[#69B99D] border-b-2 border-[#27563A]"
+                        : "text-[#313131]"
                     } text-[1rem] font-medium`}
                   >
                     {item?.text}
@@ -56,7 +55,7 @@ const ExploreHouseNearYou = () => {
           : null}
       </section>
       {/* <hr className="block h-[.2rem] bg-[#27563A]" /> */}
-      <section className="block xl:flex gap-[19px] flex-wrap">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 ">
         {houseData?.length > 0
           ? houseData?.map((item: FindHouseNearYouInterface, index: any) => {
               return (
