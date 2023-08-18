@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Clock, Dollar, Like } from '../../assets/icons';
-import { FindHouseNearYouInterface } from '../Property/types';
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Clock, Dollar } from "../../assets/icons";
+import { FindHouseNearYouInterface } from "../Property/types";
 // import { FindHouseInterface } from '../Property/ExploreHouseNearYou';
 
 const Houses = ({
@@ -25,18 +25,18 @@ const Houses = ({
   // }, []);
 
   const handleNavigate = () => {
-    if (pathname === '/property') {
+    if (pathname === "/property") {
       navigate(`/property/${_id}`);
     }
-    if (pathname === '/services') {
+    if (pathname === "/services") {
       navigate(`/services/${_id}`);
     }
   };
   return (
-    <div className="w-full xl:w-[32%] border-t pt-3 pb-5">
+    <div className="w-full border-t pt-3 pb-5">
       <div className="flex items-center justify-between mb-[19px]">
         <h2 className="flex items-center gap-2 text-[18px] font-bold">
-          <img src={Dollar} alt="dollar icon" className="w-[16px] h-[16px] " />{' '}
+          <img src={Dollar} alt="dollar icon" className="w-[16px] h-[16px] " />{" "}
           {Number(price).toLocaleString()}
         </h2>
         <span
@@ -48,13 +48,13 @@ const Houses = ({
       </div>
       <div className=" flex justify-between mb-[28px]">
         <div className=" flex gap-1 text-[14px]">
-          <span>{Number(NumOfBedRooms)} beds</span>{' '}
+          <span>{Number(NumOfBedRooms)} beds</span>{" "}
           <p className="w-[3px] h-[3px] rounded-full bg-[#000] mt-[12px]"></p>
-          <span>{Number(NumOfBathRooms)} baths</span>{' '}
+          <span>{Number(NumOfBathRooms)} baths</span>{" "}
           <p className="w-[3px] h-[3px] rounded-full bg-[#000] mt-[12px]"></p>
-          <span>{Number(SquareFt)} sqft</span>{' '}
+          <span>{Number(SquareFt)} sqft</span>{" "}
           <p className="w-[3px] h-[3px] rounded-full bg-[#000] mt-[12px]"></p>
-          <span>Eco-friendly</span>{' '}
+          <span>Eco-friendly</span>{" "}
         </div>
 
         <div className="flex items-center gap-1 text-[14px] ">
@@ -79,7 +79,7 @@ const Houses = ({
           stroke-width="1.5"
           stroke="currentColor"
           className={`${
-            clicked ? 'fill-[#69B99D]' : 'fill-none'
+            clicked ? "fill-[#69B99D]" : "fill-none"
           } w-6 h-6 cursor-pointer`}
         >
           <path

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { AdvantagesData, AdvantagesInterface } from './types';
-import { advantagesValues } from './data';
-import { GroupImg } from '../../assets/images';
+import { useEffect, useState } from "react";
+import { GroupImg } from "../../assets/images";
+import { advantagesValues } from "./data";
+import { AdvantagesData, AdvantagesInterface } from "./types";
 
 type Props = {};
 
@@ -38,7 +38,7 @@ const AdvantageCard = () => {
               >
                 <div
                   className={`${
-                    index === 1 ? 'bg-[#F8DAC5]' : 'bg-[#D2F7C6]'
+                    index === 1 ? "bg-[#F8DAC5]" : "bg-[#D2F7C6]"
                   } rounded-full p-3 max-w-max m-auto mb-[29px]`}
                 >
                   <img
@@ -64,17 +64,17 @@ const LiveHappilly = () => {
   //pt-[112px] pb-[175px]
   return (
     <section className="bg-[#F5FFFB]  py-[40px] xl:py-0  px-[32px] xl:pl-[96px] block xl:flex lg:flex md:flex  xl:gap-[223px] gap-4  items-center">
-      <div className="max-w-[520px]">
-        <h4 className="w-[520px] text-[38px] tracking-wider ">
+      <div className="w-full text-center md:text-left">
+        <h4 className="w-full text-[38px] tracking-wider ">
           Live Happily, <br />
           HouseLinkUp helps you <br /> for Finding homes
         </h4>
-        <p className="w-[449px] my-[32px] text-[20px]">
+        <p className="w-full my-[32px] text-[20px]">
           Properties to rent. Find rental property listed directly from private
           landlords and letting agents from all over.
         </p>
 
-        <p className="w-[404px] text-[20px]">
+        <p className="w-full text-[20px]">
           Search house for rent. Get Results from 8 Engines Instantly.
           Information 24/7. Web, Images & Videos. Trusted by Billions.
         </p>
@@ -86,11 +86,8 @@ const LiveHappilly = () => {
       </div>
 
       <div className=" xl:w-[50%] w-full max-w-[512px]  mt-[49px] mb-4">
-        {/* <div className=" w-[186px] h-[186px] rounded-full bg-[#8CFBA4] ml-auto"></div> */}
-        <div className=" z-50">
-          <img src={GroupImg} alt="group image" width={512} height={683} />
-        </div>
-        {/* <div className=" mb-[-5rem] ml-[-5rem] w-[341px]  h-[341px] rounded-full bg-[#96A0F9] "></div> */}
+        {/* <img src={GroupImg} alt="group image" width={512} height={683} /> */}
+        <img className="object-cover" src={GroupImg} alt="" />
       </div>
     </section>
   );

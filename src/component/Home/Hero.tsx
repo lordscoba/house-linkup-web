@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowDown, Rbg } from '../../assets/icons';
+import { useEffect, useState } from "react";
+import { ArrowDown, Rbg } from "../../assets/icons";
+import { housevalues, locationvalues, piceRangevalues } from "./data";
 import {
   HouseTypeData,
   HouseTypeInterface,
@@ -7,8 +8,7 @@ import {
   LocationInterface,
   PriceInterface,
   PriceListData,
-} from './types';
-import { housevalues, locationvalues, piceRangevalues } from './data';
+} from "./types";
 
 const Hero = () => {
   return (
@@ -28,7 +28,7 @@ export const HeroWithImage = () => {
         <img
           src={Rbg}
           alt="Bg image"
-          className="w-full h-[1100px]   object-cover"
+          className="w-full h-[1100px]  object-cover"
         />
       </div>
       <section className="absolute xl:top-[117px] top-[120px] px-[32px] xl:px-0 w-full">
@@ -58,7 +58,7 @@ const HeroCard = () => {
         <button
           onClick={() => setIndex(1)}
           className={`${
-            index === 1 ? 'text-[#69B99D]' : 'text-[#909090]'
+            index === 1 ? "text-[#69B99D]" : "text-[#909090]"
           } w-[54px] font-semibold`}
         >
           Buy
@@ -66,7 +66,7 @@ const HeroCard = () => {
         <button
           onClick={() => setIndex(2)}
           className={`${
-            index === 2 ? 'text-[#69B99D]' : 'text-[#909090]'
+            index === 2 ? "text-[#69B99D]" : "text-[#909090]"
           } w-[54px] font-semibold`}
         >
           Rent
@@ -90,7 +90,7 @@ const HeroCard = () => {
 
 const Location = () => {
   const [data, setData] = useState<LocationData>([]);
-  const [selected, setSelected] = useState<string>('');
+  const [selected, setSelected] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const Location = () => {
 
 const HouseType = () => {
   const [data, setData] = useState<HouseTypeData>([]);
-  const [selected, setSelected] = useState<string>('');
+  const [selected, setSelected] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -217,7 +217,7 @@ const HouseType = () => {
 
 const PriceRange = () => {
   const [data, setData] = useState<PriceListData>([]);
-  const [selected, setSelected] = useState<String>('');
+  const [selected, setSelected] = useState<String>("");
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -262,7 +262,7 @@ const PriceRange = () => {
                               key={index}
                               onClick={() => setShowDropDown(false)}
                             >
-                              <p onClick={() => setSelected('$' + obj)}>
+                              <p onClick={() => setSelected("$" + obj)}>
                                 ${obj}
                               </p>
                             </div>
