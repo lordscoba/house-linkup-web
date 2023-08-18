@@ -18,6 +18,9 @@ const UpdateProfile = (props: Props) => {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null) as any;
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dataFromStorage =
     typeof !undefined && localStorage.getItem('loginUser')
@@ -27,8 +30,6 @@ const UpdateProfile = (props: Props) => {
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
-
-  console.log({ tt: userDetails });
 
   const [image, setImage] = useState('') as any;
   const [email, setEmail] = useState(userDetails?.serverResponse?.email || '');
@@ -43,11 +44,10 @@ const UpdateProfile = (props: Props) => {
     (state: StoreReducerTypes) => state.updateProfile
   );
 
-  const UpdateSuccess = updateProfile?.success;
-  const UpdateLoading = updateProfile?.loading;
-  const message = updateProfile?.serverResponse?.message;
-  const UpdateError = updateProfile?.error;
-  const UpdateErrorMessage = updateProfile?.serverError;
+  // const UpdateSuccess = updateProfile?.success;
+  // const UpdateLoading = updateProfile?.loading;
+  // const message = updateProfile?.serverResponse?.message;
+  // const UpdateError = updateProfile?.error;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
@@ -71,28 +71,56 @@ const UpdateProfile = (props: Props) => {
   };
 
   useEffect(() => {
+    const updateSuccess = updateProfile?.success;
+
+    const updateLoading = updateProfile?.loading;
+
+    setSuccess(updateSuccess);
+
+    setLoading(updateLoading);
+
+    console.log({ loading: loading, success: success, error: error });
+  }, [
+    updateProfile?.loading,
+    updateProfile?.success,
+    updateProfile?.serverResponse,
+  ]);
+
+  useEffect(() => {
+    const updateProfileError = updateProfile?.error;
+
+    const updateProfileErrorMessage = updateProfile?.serverError;
+
+    setError(updateProfileError);
+
+    setErrorMessage(updateProfileErrorMessage);
+  }, [updateProfile?.error, updateProfile?.serverError]);
+
+  useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     setErrorMessage('');
-    if (UpdateSuccess) {
+    if (success) {
+      const message = updateProfile?.serverResponse?.message;
+
       setSuccessMessage(message);
       timeout = setTimeout(() => {
         setSuccessMessage('');
-        navigate('/');
+        navigate(`/profile/${dataFromStorage?.userDoc?._id}`);
       }, 2000);
 
       return () => clearTimeout(timeout);
     }
-  }, [UpdateSuccess]);
+  }, [success]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
-    if (UpdateError) {
+    if (error) {
       timeout = setTimeout(() => {
         setErrorMessage('');
       }, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [UpdateError]);
+  }, [error]);
 
   useEffect(() => {
     dispatch(userDetailsAction() as any);
@@ -199,15 +227,13 @@ const UpdateProfile = (props: Props) => {
           </div>
 
           <div>
-            {UpdateLoading ? <CircularLoader /> || 'Loading' : null}
+            {loading ? <CircularLoader /> || 'Loading' : null}
 
-            {UpdateSuccess ? (
+            {success ? (
               <Message type="success">{successMessage}</Message>
             ) : null}
 
-            {UpdateError ? (
-              <Message type="danger">{errorMessage}</Message>
-            ) : null}
+            {error ? <Message type="danger">{errorMessage}</Message> : null}
           </div>
 
           <button

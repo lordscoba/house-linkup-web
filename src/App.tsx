@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import {
   About,
   Contact,
+  Forgotpassword,
   HomeScreen,
   Login,
   NotFound,
@@ -13,9 +14,6 @@ import {
   SingleHouseScreen,
   UpdateProfile,
 } from './Pages';
-import Layout from './component/AppLayout';
-import { useEffect } from 'react';
-import ForgotPassword from './Pages/ForgotPassword';
 
 function App() {
   const { pathname } = useLocation();
@@ -37,7 +35,7 @@ function App() {
         <Route path="/property/:id" element={<SingleHouseScreen />} />
         <Route path="/services/:id" element={<SingleHouseScreen />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/update-profile/:id" element={<UpdateProfile />} />
 
