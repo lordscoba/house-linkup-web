@@ -1,8 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { StoreReducerTypes } from '../redux/store';
+import { userDetailsAction } from '../redux/actions/user.actions';
 
 type Props = {};
 
 const Profile = (props: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [image, setImage] = useState('');
   const fileInputRef = useRef('') as any;
 
@@ -11,37 +17,56 @@ const Profile = (props: Props) => {
       ? JSON.parse(localStorage?.getItem('loginUser') as any)
       : null;
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files?.[0];
+  const userDetails = useSelector(
+    (state: StoreReducerTypes) => state.userDetails
+  );
+  console.log({ gt: userDetails });
 
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event?.target?.files?.[0];
 
-      setImage(imageURL);
-      //   setImageName(file?.name);
-    }
-  };
+  //   if (file && file.type.startsWith('image/')) {
+  //     const imageURL = URL.createObjectURL(file);
 
-  const handleLabelClick = () => {
-    fileInputRef.current.click();
-  };
+  //     setImage(imageURL);
+  //   }
+  // };
+
+  // const handleLabelClick = () => {
+  //   fileInputRef.current.click();
+  // };
+
+  useEffect(() => {
+    dispatch(userDetailsAction() as any);
+    console.log({ d: userDetails });
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
       <section className="relative">
         <div className="w-[144px] h-[144px] border-2 rounded-full p-1 uppercase flex items-center justify-center ">
-          <input
+          {/* <input
             type="file"
             accept="image/*"
             ref={fileInputRef}
             className="hidden"
             onChange={handleFileChange}
-          />
-          {image ? (
-            <img
-              src={image}
-              alt=""
-              className="w-full h-full object-cover rounded-full"
-            />
+          /> */}
+
+          {userDetails?.success ? (
+            <>
+              {userDetails?.serverResponse?.image?.length > 0 ? (
+                <img
+                  src={userDetails?.serverResponse?.image[0]?.url}
+                  alt=""
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                <p className="text-[#69B99D] text-[4rem]">
+                  {' '}
+                  {userDetails?.serverResponse?.full_name.slice(0, 1)}
+                </p>
+              )}
+            </>
           ) : (
             <p className="text-[#69B99D] text-[4rem]">
               {' '}
@@ -49,7 +74,7 @@ const Profile = (props: Props) => {
             </p>
           )}
         </div>
-        <svg
+        {/* <svg
           onClick={handleLabelClick}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -68,27 +93,28 @@ const Profile = (props: Props) => {
             stroke-linejoin="round"
             d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
           />
-        </svg>
+        </svg> */}
       </section>
       <div>
         <h2 className="uppercase mt-2 font-bold">
-          {dataFromStorage?.userDoc?.full_name}
+          {userDetails?.serverResponse?.full_name}
         </h2>
         <button className="w-full border mt-1 py-1 rounded-lg bg-[#723d3d] text-[#fff]">
           Log Out
         </button>
       </div>
-
       <section className="mt-[2rem] w-full xl:w-[30rem] max-w-[30rem] px-[32px]">
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Email:{' '}
-          <span className="font-normal">{dataFromStorage?.userDoc?.email}</span>
+          <span className="font-normal">
+            {userDetails?.serverResponse?.email}
+          </span>
         </h2>
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Location:{' '}
           <span className="font-normal">
-            {dataFromStorage?.userDoc?.location
-              ? dataFromStorage?.userDoc?.location
+            {userDetails?.serverResponse?.location
+              ? userDetails?.serverResponse?.location
               : 'Add your location for easy accessibility'}
           </span>
         </h2>
@@ -96,14 +122,17 @@ const Profile = (props: Props) => {
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Phone Number:{' '}
           <span className="font-normal">
-            {dataFromStorage?.userDoc?.phone_number
-              ? dataFromStorage?.userDoc?.phoneNumber
+            {userDetails?.serverResponse?.phone_number
+              ? userDetails?.serverResponse?.phone_number
               : 'Add Phone Number for easy accessibility'}
           </span>
         </h2>
 
         <button
           type="button"
+          onClick={() =>
+            navigate(`/update-profile/${dataFromStorage?.userDoc?.full_name}`)
+          }
           className="w-full py-2 bg-[#69B99D] rounded-lg text-[#fff] font-semibold mt-8"
         >
           Update Profile

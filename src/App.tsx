@@ -11,6 +11,7 @@ import {
   Services,
   SignUp,
   SingleHouseScreen,
+  UpdateProfile,
 } from './Pages';
 import Layout from './component/AppLayout';
 import { useEffect } from 'react';
@@ -35,9 +36,10 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/property/:id" element={<SingleHouseScreen />} />
         <Route path="/services/:id" element={<SingleHouseScreen />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
+        <Route path="/update-profile/:id" element={<UpdateProfile />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
