@@ -1,5 +1,4 @@
-import React from 'react';
-import LoginIndex from '../component/Login/LoginIndex';
+import LoginIndex from "../component/Login/LoginIndex";
 
 type Props = {};
 

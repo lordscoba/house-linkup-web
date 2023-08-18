@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+/* ResponsiveFont.css */
+
+/* Define the base font size (you can adjust this value to your preference) */
+:root {
+  font-size: 16px;
+}
+
+/* Add media queries to adjust the font size at different screen sizes */
+@media screen and (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    font-size: 12px;
+  }
+}

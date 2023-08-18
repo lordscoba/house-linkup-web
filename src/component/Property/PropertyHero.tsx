@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { GreaterThan, Like, PropertyBg } from '../../assets/icons';
-import { PropertyArrayType, PropertyInterface } from './types';
-import { propertyValues } from './data';
+import { useEffect, useState } from "react";
+import { GreaterThan, Like, PropertyBg } from "../../assets/icons";
+import { propertyValues } from "./data";
+import { PropertyArrayType, PropertyInterface } from "./types";
 
 type Props = {};
 
@@ -40,16 +40,16 @@ const PropertyHero = (props: Props) => {
 
       <section className="absolute left-0 right-0 xl:top-[30%] top-[15%] bottom-[50%] px-[32px] xl:pl-[133px] block xl:flex">
         <h2 className="xl:text-[48px] text-[38px] text-[#000] w-full xl:w-[630px]">
-          Find the most affordable place to stay with{' '}
+          Find the most affordable place to stay with{" "}
           <span className="text-[#69B99D]">HouseLinkUp</span>, your most trusted
           alien
         </h2>
-        <section className="w-full max-w-[518px] m-auto xl:max-w-[518px] h-[550px] bg-[#fff] p-[54px] animate__slideInRight transition-all">
+        <section className="w-full max-w-[518px] m-auto xl:max-w-[518px] h-[550px] bg-[#fff] p-3 md:p-[54px] animate__slideInRight transition-all">
           {data?.length > 0
             ? data?.map((item: PropertyInterface, index: any) => {
                 return (
                   <div
-                    className={`${index === dataIndex ? 'block' : 'hidden'}`}
+                    className={`${index === dataIndex ? "block" : "hidden"}`}
                   >
                     <Card
                       key={index}
@@ -82,25 +82,21 @@ const Card = ({ image, location, price, handleNext }: Properties) => {
     <div className="mb-4 relative">
       <div className="flex justify-between items-center mb-[29px]">
         <div className="flex items-start gap-4">
-          {' '}
+          {" "}
           <span className="text-[#08110C] font-semibold text-[18px]">
             $ {Number(price).toLocaleString()}
-          </span>{' '}
+          </span>{" "}
           <span>New</span>
-        </div>{' '}
+        </div>{" "}
         <span className="bg-[#69B99D] text-[#fff] py-[2px] px-[8px] rounded-[50px]">
           FOR RENT
         </span>
       </div>
       <div className="w-full xl:w-[419px] md:w-auto h-[270px] mb-[14px]">
-        <img
-          src={image}
-          alt="house image"
-          className="w-full h-full object-cover"
-        />
+        <img src={image} className="w-full h-full object-cover" />
       </div>
       <div className="mb-[30px] flex justify-between items-center">
-        <p className="w-[219px] text-[1rem] text-[#27563A]">{location}</p>{' '}
+        <p className="w-[219px] text-[1rem] text-[#27563A]">{location}</p>{" "}
         <img src={Like} alt="like" width={24} height={24} />
       </div>
       <div className="w-[175px] m-auto">
