@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useLayoutEffect,
+  ButtonHTMLAttributes,
+} from 'react';
 import { NavData, NavTypes } from './navTypes';
 import { data } from './data';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +11,7 @@ import { Logo } from '../../assets/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../redux/store';
 import { userDetailsAction } from '../../redux/actions/user.actions';
+import { LOG_OUT } from '../../redux/constants/user.constants';
 
 type Props = {};
 
@@ -23,16 +29,16 @@ const NavBar = (props: Props) => {
   const LoginUser = useSelector((state: StoreReducerTypes) => state.loginUser);
   const LoginSuccess = LoginUser?.success;
 
-  const userDetails = useSelector(
-    (state: StoreReducerTypes) => state.userDetails
-  );
-
-  console.log({ details: userDetails });
-
   const dataFromStorage =
     typeof !undefined && localStorage.getItem('loginUser')
       ? JSON.parse(localStorage?.getItem('loginUser') as any)
       : null;
+
+  const NoToken = Boolean(!dataFromStorage);
+
+  const userDetails = useSelector(
+    (state: StoreReducerTypes) => state.userDetails
+  );
 
   useEffect(() => {
     setLinks(data);
@@ -40,16 +46,24 @@ const NavBar = (props: Props) => {
 
   useEffect(() => {
     const checkTokenExist = localStorage.getItem('loginUser');
-    const LoggedInUserUserId = dataFromStorage.userDoc?._id;
+
     dispatch(userDetailsAction() as any);
     if (checkTokenExist) {
       setIsLoggedIn(true);
     }
   }, []);
 
-  // useLayoutEffect(() => {
-  //   dispatch(userDetailsAction() as any);
-  // }, []);
+  useEffect(() => {
+    if (NoToken) {
+      setIsLoggedIn(false);
+    }
+  }, [NoToken]);
+
+  const handleLogout = () => {
+    dispatch({ type: LOG_OUT });
+    localStorage.clear();
+    console.log({ isLoggedIn, LoginSuccess });
+  };
 
   return (
     <>
@@ -124,7 +138,7 @@ const NavBar = (props: Props) => {
                     <p className="w-[44px] h-[44px] border-2 rounded-full p-2 uppercase flex items-center justify-center">
                       <p className="text-[#69B99D]">
                         {' '}
-                        {dataFromStorage?.userDoc?.fullName.slice(0, 1)}
+                        {dataFromStorage?.userDoc?.full_name.slice(0, 1)}
                       </p>
                     </p>
                     <div className="relative w-[7rem]">
@@ -144,7 +158,12 @@ const NavBar = (props: Props) => {
                         />
                       </svg>
                       <div className="absolute top-6 z-20 left-0 right-0">
-                        {show ? <LogoutAndProfile setShow={setShow} /> : null}
+                        {show ? (
+                          <LogoutAndProfile
+                            setShow={setShow}
+                            logOut={handleLogout}
+                          />
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -177,9 +196,10 @@ export default NavBar;
 
 interface LinkInterface {
   setShow: Function;
+  logOut: () => void;
 }
 
-const LogoutAndProfile = ({ setShow }: LinkInterface) => {
+const LogoutAndProfile = ({ setShow, logOut }: LinkInterface) => {
   return (
     <div className="bg-[grey] px-2 text-[#fff]" onClick={() => setShow(false)}>
       <Link to={'/profile'} className="cursor-pointer block">
@@ -188,7 +208,9 @@ const LogoutAndProfile = ({ setShow }: LinkInterface) => {
       <Link to={'#'} className="cursor-pointer block">
         DashBoard
       </Link>
-      <button type="button">Log out</button>
+      <button type="button" onClick={logOut}>
+        Log out
+      </button>
     </div>
   );
 };

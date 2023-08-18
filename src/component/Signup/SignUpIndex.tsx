@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../redux/store';
 import { registerAction } from '../../redux/actions/user.actions';
+import CircularLoader from '../loader/CircularLoader';
+import Message from '../message/Message';
 
 type Props = {};
 
@@ -20,22 +22,73 @@ const SignUpIndex = (props: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null) as any;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerAction({ email, fullName, password }) as any);
+    dispatch(registerAction({ email, full_name: fullName, password }) as any);
   };
 
   const RegisteredUser = useSelector(
     (state: StoreReducerTypes) => state.registerUser
   );
 
-  const registerSuccess = RegisteredUser?.success;
+  // const registerSuccess = RegisteredUser?.success;
 
   useEffect(() => {
-    if (registerSuccess) {
-      navigate('/login');
+    const LoginSuccess = RegisteredUser?.success;
+
+    const LoginLoading = RegisteredUser?.loading;
+
+    setSuccess(LoginSuccess);
+
+    setLoading(LoginLoading);
+  }, [
+    RegisteredUser?.loading,
+    RegisteredUser?.success,
+    RegisteredUser?.serverResponse,
+  ]);
+
+  useEffect(() => {
+    const LoginError = RegisteredUser?.error;
+
+    const LoginErrorMessage = RegisteredUser?.serverError;
+
+    setError(LoginError);
+
+    setErrorMessage(LoginErrorMessage);
+  }, [RegisteredUser?.error, RegisteredUser?.serverError]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    setErrorMessage('');
+    if (success) {
+      const message = RegisteredUser?.serverResponse?.message;
+
+      setSuccessMessage(message);
+      timeout = setTimeout(() => {
+        setSuccessMessage('');
+        navigate('/login');
+      }, 2000);
+
+      return () => clearTimeout(timeout);
     }
-  }, [registerSuccess]);
+  }, [success]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errorMessage) {
+      timeout = setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [errorMessage]);
 
   useEffect(() => {
     const checkTokenExist = localStorage.getItem('loginUser');
@@ -124,6 +177,14 @@ const SignUpIndex = (props: Props) => {
             <span>Or continue with</span>{' '}
             <div className="w-[130px] border mt-1"></div>
           </section> */}
+
+          {loading ? <CircularLoader /> : null}
+
+          {success ? <Message type="success">{successMessage}</Message> : null}
+
+          {error ? (
+            <Message type="danger">{error ? errorMessage : null}</Message>
+          ) : null}
           <form
             className="w-full xl:w-[400px] m-auto mt-[25px] px-[32px] mb-[25px] xl:mb-0"
             onSubmit={handleSubmit}
