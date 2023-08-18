@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOG_OUT,
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -26,7 +27,7 @@ import { apiRoutes } from '../routes/apiRoutes';
 import { RegisterInterface } from '../../component/Signup/signupTypes';
 
 export const registerAction =
-  ({ email, fullName, password }: RegisterInterface) =>
+  ({ email, full_name, password }: RegisterInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ registerUser }: StoreReducerTypes) => void
@@ -43,7 +44,7 @@ export const registerAction =
 
       const { data } = await axios.post(
         apiRoutes.auth.user.register,
-        { email, password, fullName },
+        { email, password, full_name },
         config
       );
 
@@ -208,3 +209,7 @@ export const resetPasswordAction =
       });
     }
   };
+
+// export const logoutAction = () => async (dispatch: Dispatch) => {
+//   dispatch({ type: LOG_OUT });
+// };

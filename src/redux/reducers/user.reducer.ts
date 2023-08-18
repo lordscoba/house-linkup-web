@@ -5,12 +5,14 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOG_OUT,
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   RESET_PASSWORD_FAIL,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
+  RESET_REGISTER,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
@@ -44,6 +46,15 @@ export const registerReducer = (
         serverError: action.payload,
       };
 
+    case RESET_REGISTER:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: false,
+        serverError: {},
+      };
+
     default:
       return state;
   }
@@ -71,6 +82,16 @@ export const loginReducer = (
         success: false,
         error: true,
         serverError: action.payload,
+      };
+
+    case LOG_OUT:
+      console.log('yes');
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: false,
+        serverError: {},
       };
 
     default:

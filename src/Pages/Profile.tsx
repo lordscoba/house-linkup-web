@@ -45,7 +45,7 @@ const Profile = (props: Props) => {
           ) : (
             <p className="text-[#69B99D] text-[4rem]">
               {' '}
-              {dataFromStorage?.userDoc?.fullName.slice(0, 1)}
+              {dataFromStorage?.userDoc?.full_name.slice(0, 1)}
             </p>
           )}
         </div>
@@ -72,7 +72,7 @@ const Profile = (props: Props) => {
       </section>
       <div>
         <h2 className="uppercase mt-2 font-bold">
-          {dataFromStorage?.userDoc?.fullName}
+          {dataFromStorage?.userDoc?.full_name}
         </h2>
         <button className="w-full border mt-1 py-1 rounded-lg bg-[#723d3d] text-[#fff]">
           Log Out
@@ -84,7 +84,6 @@ const Profile = (props: Props) => {
           Email:{' '}
           <span className="font-normal">{dataFromStorage?.userDoc?.email}</span>
         </h2>
-        {/* <p className="mt-[.5rem]">{dataFromStorage?.userDoc?.email}</p> */}
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Location:{' '}
           <span className="font-normal">
@@ -93,24 +92,16 @@ const Profile = (props: Props) => {
               : 'Add your location for easy accessibility'}
           </span>
         </h2>
-        {/* <p className="mt-[.5rem]">
-          {dataFromStorage?.userDoc?.location
-            ? dataFromStorage?.userDoc?.location :
-              'Add your location for easy accessibility'}
-        </p> */}
+
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Phone Number:{' '}
           <span className="font-normal">
-            {dataFromStorage?.userDoc?.phoneNumber
+            {dataFromStorage?.userDoc?.phone_number
               ? dataFromStorage?.userDoc?.phoneNumber
               : 'Add Phone Number for easy accessibility'}
           </span>
         </h2>
-        {/* <p className="mt-[.5rem]">
-          {dataFromStorage?.userDoc?.phoneNumber
-            ? dataFromStorage?.userDoc?.phoneNumber
-            : 'Add Phone Number for easy accessibility'}
-        </p> */}
+
         <button
           type="button"
           className="w-full py-2 bg-[#69B99D] rounded-lg text-[#fff] font-semibold mt-8"

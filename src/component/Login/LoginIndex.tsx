@@ -8,6 +8,7 @@ import { loginAction } from '../../redux/actions/user.actions';
 import { StoreReducerTypes } from '../../redux/store';
 import Message from '../message/Message';
 import CircularLoader from '../loader/CircularLoader';
+import { RESET_REGISTER } from '../../redux/constants/user.constants';
 // import { Login_BG, SignUp_BG } from '../assets/images';
 
 type Props = {};
@@ -59,6 +60,7 @@ const LoginIndex = (props: Props) => {
     if (errorMessage) {
       timeout = setTimeout(() => {
         setErrorMessage('');
+        dispatch({ type: RESET_REGISTER });
       }, 2000);
       return () => clearTimeout(timeout);
     }
@@ -66,14 +68,23 @@ const LoginIndex = (props: Props) => {
 
   useEffect(() => {
     const LoginSuccess = LoginUser?.success;
-    const LoginError = LoginUser?.error;
+
     const LoginLoading = LoginUser?.loading;
-    const LoginErrorMessage = LoginUser?.serverError;
+
     setSuccess(LoginSuccess);
-    setError(LoginError);
+
     setLoading(LoginLoading);
+  }, [LoginUser?.loading, LoginUser?.success, LoginUser?.serverResponse]);
+
+  useEffect(() => {
+    const LoginError = LoginUser?.error;
+
+    const LoginErrorMessage = LoginUser?.serverError;
+
+    setError(LoginError);
+
     setErrorMessage(LoginErrorMessage);
-  }, [LoginUser]);
+  }, [LoginUser?.error, LoginUser?.serverError]);
 
   useEffect(() => {
     const checkTokenExist = localStorage.getItem('loginUser');
@@ -138,17 +149,12 @@ const LoginIndex = (props: Props) => {
             <div className="w-[130px] border mt-1"></div>
           </section> */}
 
-          {error ? (
-            <Message text={error ? errorMessage : null} variant="error" />
-          ) : null}
-
           {loading ? <CircularLoader /> : null}
-          {success ? (
-            <Message
-              text={successMessage}
-              variant="success"
-              show={successMessage ? true : false}
-            />
+
+          {success ? <Message type="success">{successMessage}</Message> : null}
+
+          {error ? (
+            <Message type="danger">{error ? errorMessage : null}</Message>
           ) : null}
 
           <form
@@ -251,9 +257,12 @@ const LoginIndex = (props: Props) => {
                   </div>
                   <span>Remember me</span>
                 </div>
-                <p className="text-[#D93F21] text-[14px] font-[300]">
+                <Link
+                  to={'/forgot-password'}
+                  className="text-[#D93F21] text-[14px] font-[300] cursor-pointer"
+                >
                   Recover Password
-                </p>
+                </Link>
               </div>
             </div>
 

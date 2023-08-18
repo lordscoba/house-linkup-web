@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
-const SERVER_URL = 'http://localhost:5004/api';
+// const SERVER_URL = 'http://localhost:5004/api/v1';
+const SERVER_URL = 'https://house-linkup.cyclic.cloud/api/v1';
 
 const dataFromStorage =
   typeof !undefined && localStorage.getItem('loginUser')
@@ -10,14 +11,14 @@ const dataFromStorage =
 export const apiRoutes = {
   auth: {
     user: {
-      register: SERVER_URL + '/user/register',
-      login: SERVER_URL + '/user/login',
-      forgotPassword: SERVER_URL + '/user/forgot-password',
-      resetPassword: SERVER_URL + `/user/reset-password`,
+      register: SERVER_URL + '/register',
+      login: SERVER_URL + '/login',
+      forgotPassword: SERVER_URL + '/forgot-password',
+      resetPassword: SERVER_URL + `/reset-password`,
       getUserDetails:
-        SERVER_URL + `/user/user-details/${dataFromStorage?.userDoc?._id}`,
+        SERVER_URL + `/user-details/${dataFromStorage?.userDoc?._id}`,
       updateProfile:
-        SERVER_URL + `/user/update-profile/${dataFromStorage?.userDoc?._id}`,
+        SERVER_URL + `/update-profile/${dataFromStorage?.userDoc?._id}`,
     },
   },
 };

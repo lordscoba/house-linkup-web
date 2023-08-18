@@ -7,12 +7,14 @@ import {
   NotFound,
   Profile,
   Property,
+  ResetPassword,
   Services,
   SignUp,
   SingleHouseScreen,
 } from './Pages';
 import Layout from './component/AppLayout';
 import { useEffect } from 'react';
+import ForgotPassword from './Pages/ForgotPassword';
 
 function App() {
   const { pathname } = useLocation();
@@ -34,6 +36,8 @@ function App() {
         <Route path="/property/:id" element={<SingleHouseScreen />} />
         <Route path="/services/:id" element={<SingleHouseScreen />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:id" element={<ResetPassword />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
