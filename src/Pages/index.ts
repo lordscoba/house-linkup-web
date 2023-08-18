@@ -8,6 +8,6 @@ export { default as SignUp } from './SignUp';
 export { default as Login } from './Login';
 export { default as NotFound } from './NonFound';
 export { default as Profile } from './Profile';
-export { default as Forgotpasswprd } from './ForgotPassword';
+export { default as Forgotpassword } from './ForgotPassword';
 export { default as ResetPassword } from './Resetpassword';
 export { default as UpdateProfile } from './UpdateProfile';

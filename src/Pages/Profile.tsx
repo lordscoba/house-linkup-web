@@ -20,7 +20,6 @@ const Profile = (props: Props) => {
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
-  console.log({ gt: userDetails });
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = event?.target?.files?.[0];
@@ -38,7 +37,6 @@ const Profile = (props: Props) => {
 
   useEffect(() => {
     dispatch(userDetailsAction() as any);
-    console.log({ d: userDetails });
   }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
@@ -97,9 +95,11 @@ const Profile = (props: Props) => {
       </section>
       <div>
         <h2 className="uppercase mt-2 font-bold">
-          {userDetails?.serverResponse?.full_name}
+          {userDetails?.serverResponse?.full_name
+            ? userDetails?.serverResponse?.full_name
+            : dataFromStorage?.userDoc?.full_name}
         </h2>
-        <button className="w-full border mt-1 py-1 rounded-lg bg-[#723d3d] text-[#fff]">
+        <button className="w-full border mt-1 py-1 px-6 rounded-lg bg-[#723d3d] text-[#fff]">
           Log Out
         </button>
       </div>
@@ -107,7 +107,9 @@ const Profile = (props: Props) => {
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
           Email:{' '}
           <span className="font-normal">
-            {userDetails?.serverResponse?.email}
+            {userDetails?.serverResponse?.email
+              ? userDetails?.serverResponse?.email
+              : dataFromStorage?.userDoc?.email}
           </span>
         </h2>
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
@@ -115,7 +117,7 @@ const Profile = (props: Props) => {
           <span className="font-normal">
             {userDetails?.serverResponse?.location
               ? userDetails?.serverResponse?.location
-              : 'Add your location for easy accessibility'}
+              : dataFromStorage?.userDoc?.location || 'Add Location'}
           </span>
         </h2>
 
@@ -124,14 +126,14 @@ const Profile = (props: Props) => {
           <span className="font-normal">
             {userDetails?.serverResponse?.phone_number
               ? userDetails?.serverResponse?.phone_number
-              : 'Add Phone Number for easy accessibility'}
+              : dataFromStorage?.userDoc?.phone_number || 'Add Phone Number'}
           </span>
         </h2>
 
         <button
           type="button"
           onClick={() =>
-            navigate(`/update-profile/${dataFromStorage?.userDoc?.full_name}`)
+            navigate(`/update-profile/${dataFromStorage?.userDoc?._id}`)
           }
           className="w-full py-2 bg-[#69B99D] rounded-lg text-[#fff] font-semibold mt-8"
         >
