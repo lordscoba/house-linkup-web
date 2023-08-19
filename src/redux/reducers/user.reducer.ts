@@ -85,7 +85,6 @@ export const loginReducer = (
       };
 
     case LOG_OUT:
-      console.log('yes');
       return {
         ...state,
         loading: false,
@@ -146,6 +145,7 @@ export const updateProfileReducer = (
       };
 
     case UPDATE_PROFILE_FAIL:
+      // console.log('error');
       return {
         ...state,
         loading: false,

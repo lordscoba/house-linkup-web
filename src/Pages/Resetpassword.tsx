@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { StoreReducerTypes } from '../redux/store';
+import CircularLoader from '../component/loader/CircularLoader';
+import Message from '../component/message/Message';
+import { resetPasswordAction } from '../redux/actions/user.actions';
 
 type Props = {};
 
 const Resetpassword = (props: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<Boolean>(false);
@@ -11,13 +18,90 @@ const Resetpassword = (props: Props) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [successMessage, setSuccessMessage] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null) as any;
+
+  const location = useLocation();
+  const token = location.pathname.split('/')[2];
+  // console.log({ locat: token });
+
+  const resetPassword = useSelector(
+    (state: StoreReducerTypes) => state?.resetPassword
+  );
+
+  // HANDLESUBMIT FUNCTION HERE
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(resetPasswordAction({ password, token }) as any);
+  };
+
+  useEffect(() => {
+    const Success = resetPassword?.success;
+    const Loading = resetPassword?.loading;
+    const message = resetPassword?.serverResponse?.message;
+    setSuccessMessage(message);
+    setSuccess(Success);
+    setLoading(Loading);
+  }, [
+    resetPassword?.loading,
+    resetPassword?.success,
+    resetPassword?.serverResponse,
+  ]);
+
+  useEffect(() => {
+    const Error = resetPassword?.error;
+    const Loading = resetPassword?.loading;
+    const ErrorMessage = resetPassword?.serverError?.data?.message;
+    setError(Error);
+    setLoading(Loading);
+    setErrorMessage(ErrorMessage);
+  }, [
+    resetPassword?.error,
+    resetPassword?.serverError,
+    resetPassword?.loading,
+  ]);
+
+  // console.log({ err: resetPassword?.serverError });
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    setErrorMessage('');
+    if (success) {
+      timeout = setTimeout(() => {
+        setSuccessMessage('');
+        navigate('/login');
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errorMessage) {
+      timeout = setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [errorMessage]);
+
   return (
     <div className="h-screen flex flex-col items-center   w-full max-w-[50rem] m-auto text-center pt-[3rem]">
       <section className="border rounded-lg w-full xl:w-[35rem] lg:w-[35rem] md:w-[35rem] flex justify-center flex-col items-center py-6">
         <h2 className="mb-[2rem] font-semibold xl:text-[32px] text-[25px]">
           Reset Password
         </h2>
-        <form className="w-[25rem] px-[38px]">
+
+        {loading ? <CircularLoader /> : null}
+        {success ? <Message type="success">{successMessage}</Message> : null}
+        {error ? <Message type="danger"> {errorMessage}</Message> : null}
+
+        <form className="w-[25rem] px-[38px]" onSubmit={handleSubmit}>
           <h4 className="   text-center capitalize font-medium mb-[1.5rem]">
             Enter New Password
           </h4>
@@ -166,7 +250,7 @@ const Resetpassword = (props: Props) => {
                 </Link>
               </div> */}
           <button
-            type="button"
+            type="submit"
             className="w-full py-2 bg-[#69B99D] rounded-lg text-[#fff] font-semibold mt-8"
           >
             Send

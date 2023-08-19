@@ -8,7 +8,6 @@ import { loginAction } from '../../redux/actions/user.actions';
 import { StoreReducerTypes } from '../../redux/store';
 import Message from '../message/Message';
 import CircularLoader from '../loader/CircularLoader';
-import { RESET_REGISTER } from '../../redux/constants/user.constants';
 // import { Login_BG, SignUp_BG } from '../assets/images';
 
 type Props = {};
@@ -19,8 +18,8 @@ const LoginIndex = (props: Props) => {
 
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [rememberMe, setRememberMe] = useState<Boolean>(false);
-  const [successMessage, setSuccessMessage] = useState('');
 
+  const [successMessage, setSuccessMessage] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,21 +30,39 @@ const LoginIndex = (props: Props) => {
 
   const LoginUser = useSelector((state: StoreReducerTypes) => state.loginUser);
 
-  // console.log(errorMessage);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     dispatch(loginAction({ email, password }) as any);
   };
+
+  useEffect(() => {
+    const Success = LoginUser?.success;
+    const LoginLoading = LoginUser?.loading;
+    const message = LoginUser?.serverResponse?.message;
+    setLoading(LoginLoading);
+    if (Success) {
+      setSuccessMessage(message);
+      setSuccess(Success);
+    }
+  }, [[LoginUser?.success]]);
+
+  useEffect(() => {
+    const LoginLoading = LoginUser?.loading;
+    const LoginError = LoginUser?.error;
+    const LoginErrorMessage = LoginUser?.serverError;
+    setLoading(LoginLoading);
+
+    if (LoginError) {
+      console.log({ err: LoginErrorMessage, LoginError });
+      setError(LoginError);
+      setErrorMessage(LoginErrorMessage);
+    }
+  }, [LoginUser?.error, LoginUser]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     setErrorMessage('');
     if (success) {
-      const message = LoginUser?.serverResponse?.message;
-
-      setSuccessMessage(message);
       timeout = setTimeout(() => {
         setSuccessMessage('');
         navigate('/');
@@ -60,31 +77,10 @@ const LoginIndex = (props: Props) => {
     if (errorMessage) {
       timeout = setTimeout(() => {
         setErrorMessage('');
-        dispatch({ type: RESET_REGISTER });
       }, 2000);
       return () => clearTimeout(timeout);
     }
   }, [errorMessage]);
-
-  useEffect(() => {
-    const LoginSuccess = LoginUser?.success;
-
-    const LoginLoading = LoginUser?.loading;
-
-    setSuccess(LoginSuccess);
-
-    setLoading(LoginLoading);
-  }, [LoginUser?.loading, LoginUser?.success, LoginUser?.serverResponse]);
-
-  useEffect(() => {
-    const LoginError = LoginUser?.error;
-
-    const LoginErrorMessage = LoginUser?.serverError;
-
-    setError(LoginError);
-
-    setErrorMessage(LoginErrorMessage);
-  }, [LoginUser?.error, LoginUser?.serverError]);
 
   useEffect(() => {
     const checkTokenExist = localStorage.getItem('loginUser');
@@ -153,9 +149,7 @@ const LoginIndex = (props: Props) => {
 
           {success ? <Message type="success">{successMessage}</Message> : null}
 
-          {error ? (
-            <Message type="danger">{error ? errorMessage : null}</Message>
-          ) : null}
+          {error ? <Message type="danger">{errorMessage}</Message> : null}
 
           <form
             className="w-full xl:w-[400px] m-auto mt-[25px] px-[32px] mb-[25px] xl:mb-0"

@@ -8,6 +8,7 @@ import {
 } from '../redux/actions/user.actions';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
+import { setTimeout } from 'timers/promises';
 
 type Props = {};
 
@@ -44,11 +45,6 @@ const UpdateProfile = (props: Props) => {
     (state: StoreReducerTypes) => state.updateProfile
   );
 
-  // const UpdateSuccess = updateProfile?.success;
-  // const UpdateLoading = updateProfile?.loading;
-  // const message = updateProfile?.serverResponse?.message;
-  // const UpdateError = updateProfile?.error;
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
     setImage(file);
@@ -71,58 +67,55 @@ const UpdateProfile = (props: Props) => {
   };
 
   useEffect(() => {
-    const updateSuccess = updateProfile?.success;
-
-    const updateLoading = updateProfile?.loading;
-
-    setSuccess(updateSuccess);
-
-    setLoading(updateLoading);
-  }, [
-    updateProfile?.loading,
-    updateProfile?.success,
-    updateProfile?.serverResponse,
-  ]);
-
-  useEffect(() => {
-    const updateProfileError = updateProfile?.error;
-
-    const updateProfileErrorMessage = updateProfile?.serverError;
-
-    setError(updateProfileError);
-
-    setErrorMessage(updateProfileErrorMessage);
-  }, [updateProfile?.error, updateProfile?.serverError]);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    setErrorMessage('');
-    if (success) {
-      const message = updateProfile?.serverResponse?.message;
-
-      setSuccessMessage(message);
-      timeout = setTimeout(() => {
-        setSuccessMessage('');
-        navigate(`/profile/${dataFromStorage?.userDoc?._id}`);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [success]);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    if (error) {
-      timeout = setTimeout(() => {
-        setErrorMessage('');
-      }, 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, [error]);
-
-  useEffect(() => {
     dispatch(userDetailsAction() as any);
   }, []);
+
+  useEffect(() => {
+    const Success = updateProfile?.success;
+    const Loading = updateProfile?.loading;
+    const message = updateProfile?.serverResponse?.message;
+    setLoading(Loading);
+    if (Success) {
+      // console.log({ success: message });
+      setSuccessMessage(message);
+      setSuccess(Success);
+    }
+  }, [[updateProfile?.success]]);
+
+  useEffect(() => {
+    const updateProfileLoading = updateProfile?.loading;
+    const updateProfileError = updateProfile?.error;
+    const updateProfileErrorMessage = updateProfile?.serverError;
+    setLoading(updateProfileLoading);
+
+    if (updateProfileError) {
+      // console.log({ err: updateProfileErrorMessage, updateProfileError });
+      setError(updateProfileError);
+      setErrorMessage(updateProfileErrorMessage);
+    }
+  }, [updateProfile?.error, updateProfile]);
+
+  // useEffect(() => {
+  //   let timeout: ReturnType<typeof setTimeout>;
+  //   setErrorMessage('');
+  //   if (successMessage) {
+  //     timeout = setTimeout(() => {
+  //       setSuccessMessage('');
+  //       setSuccess(false);
+  //     }, 2000);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [success, successMessage]);
+
+  // useEffect(() => {
+  //   let time: ReturnType<typeof setTimeout>;
+  //   if (errorMessage) {
+  //     time = setTimeout(() => {
+  //       setErrorMessage('');
+  //     }, 2000);
+  //     return () => clearTimeout(time);
+  //   }
+  // }, [errorMessage]);
 
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
@@ -186,8 +179,22 @@ const UpdateProfile = (props: Props) => {
             : null}
         </h2>
       </div>
+      <button
+        onClick={() => navigate('/')}
+        type="button"
+        className="px-6 py-2 bg-[#69B99D] rounded-lg text-[#fff] font-semibold mt-8"
+      >
+        Go Home
+      </button>
 
       <section className="mt-[2rem] w-full xl:w-[30rem] max-w-[30rem] px-[32px]">
+        <div>
+          {loading ? <CircularLoader /> : null}
+
+          {success ? <Message type="success">{successMessage}</Message> : null}
+
+          {error ? <Message type="danger">{errorMessage}</Message> : null}
+        </div>
         <form onSubmit={handleProfileUpdate}>
           <h2 className=" font-bold my-1">Email: </h2>
           <div className="font-normal">
@@ -224,16 +231,6 @@ const UpdateProfile = (props: Props) => {
               placeholder="Enter Phone Number"
               className="w-full border py-2 pl-3 rounded-lg"
             />
-          </div>
-
-          <div>
-            {loading ? <CircularLoader /> : null}
-
-            {success ? (
-              <Message type="success">{successMessage}</Message>
-            ) : null}
-
-            {error ? <Message type="danger">{errorMessage}</Message> : null}
           </div>
 
           <button

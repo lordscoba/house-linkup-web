@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
@@ -21,6 +21,8 @@ const Profile = (props: Props) => {
     (state: StoreReducerTypes) => state.userDetails
   );
 
+  console.log({ user: userDetails });
+
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = event?.target?.files?.[0];
 
@@ -35,21 +37,13 @@ const Profile = (props: Props) => {
   //   fileInputRef.current.click();
   // };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(userDetailsAction() as any);
   }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
       <section className="relative">
         <div className="w-[144px] h-[144px] border-2 rounded-full p-1 uppercase flex items-center justify-center ">
-          {/* <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            className="hidden"
-            onChange={handleFileChange}
-          /> */}
-
           {userDetails?.success ? (
             <>
               {userDetails?.serverResponse?.image?.length > 0 ? (

@@ -28,7 +28,7 @@ const reducer: StoreReducerTypes = combineReducers({
   loginUser: loginReducer,
   registerUser: registerReducer,
   userDetails: userDetailsReducer,
-  updateprofile: updateProfileReducer,
+  updateProfile: updateProfileReducer,
   resetPassword: resetPasswordReducer,
   forgotPassword: forgotPasswordReducer,
 });
