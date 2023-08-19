@@ -106,16 +106,7 @@ export const userDetailsAction =
     try {
       dispatch({ type: USER_DETAILS_REQUEST });
 
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const { data } = await axios.get(
-        apiRoutes.auth.user.getUserDetails,
-        config
-      );
+      const { data } = await axios.get(apiRoutes.auth.user.getUserDetails);
 
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
     } catch (error: any) {
@@ -190,13 +181,22 @@ export const forgotPassordAction =
         },
       };
 
-      const { data } = await axios.get(apiRoutes.auth.user.forgotPassword);
+      const { data } = await axios.post(
+        apiRoutes.auth.user.forgotPassword,
+        { email },
+        config
+      );
+
+      console.log({ resetLink: data });
 
       dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data });
     } catch (error: any) {
+      console.log({ tyty: error?.response?.data?.message });
       dispatch({
         type: FORGOT_PASSWORD_FAIL,
-        payload: error?.response && error?.response?.data?.message,
+        payload: error?.response
+          ? error?.response
+          : error?.response?.data?.message,
       });
     }
   };
@@ -221,7 +221,11 @@ export const resetPasswordAction =
         },
       };
 
-      const { data } = await axios.get(apiRoutes.auth.user.resetPassword);
+      const { data } = await axios.post(
+        apiRoutes.auth.user.resetPassword,
+        { password, token },
+        config
+      );
 
       dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data });
     } catch (error: any) {
