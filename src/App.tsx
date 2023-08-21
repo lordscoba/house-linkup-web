@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from 'react-router-dom';
 import {
   About,
   Contact,
@@ -12,8 +12,8 @@ import {
   Services,
   SignUp,
   SingleHouseScreen,
-  UpdateProfile,
-} from "./Pages";
+  UpdateUserDetails,
+} from './Pages';
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
-        <Route path="/update-profile/:id" element={<UpdateProfile />} />
+        <Route path="/update-profile/:id" element={<UpdateUserDetails />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

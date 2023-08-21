@@ -1,27 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreReducerTypes } from '../redux/store';
 import { useNavigate } from 'react-router-dom';
-import {
-  updateProfileAction,
-  userDetailsAction,
-} from '../redux/actions/user.actions';
+import { StoreReducerTypes } from '../redux/store';
+import { updateProfileAction } from '../redux/actions/user.actions';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
-import { setTimeout } from 'timers/promises';
 
 type Props = {};
 
-const UpdateProfile = (props: Props) => {
+const UpdateUserDetails = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fileInputRef = useRef('') as any;
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null) as any;
+  const [successMessage, setSuccessMessage] = useState('') as any;
+  const [errorMessage, setErrorMessage] = useState<string>('') as any;
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isshown, setIsShown] = useState(false);
 
   const dataFromStorage =
     typeof !undefined && localStorage.getItem('loginUser')
@@ -67,10 +64,6 @@ const UpdateProfile = (props: Props) => {
   };
 
   useEffect(() => {
-    dispatch(userDetailsAction() as any);
-  }, []);
-
-  useEffect(() => {
     const Success = updateProfile?.success;
     const Loading = updateProfile?.loading;
     const message = updateProfile?.serverResponse?.message;
@@ -80,7 +73,7 @@ const UpdateProfile = (props: Props) => {
       setSuccessMessage(message);
       setSuccess(Success);
     }
-  }, [[updateProfile?.success]]);
+  }, [updateProfile?.success]);
 
   useEffect(() => {
     const updateProfileLoading = updateProfile?.loading;
@@ -95,27 +88,31 @@ const UpdateProfile = (props: Props) => {
     }
   }, [updateProfile?.error, updateProfile]);
 
-  // useEffect(() => {
-  //   let timeout: ReturnType<typeof setTimeout>;
-  //   setErrorMessage('');
-  //   if (successMessage) {
-  //     timeout = setTimeout(() => {
-  //       setSuccessMessage('');
-  //       setSuccess(false);
-  //     }, 2000);
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [success, successMessage]);
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    setErrorMessage('');
+    if (success) {
+      timeout = setTimeout(() => {
+        setSuccessMessage('');
+        // setSuccess(false);
+        setIsShown(true);
+      }, 2000);
 
-  // useEffect(() => {
-  //   let time: ReturnType<typeof setTimeout>;
-  //   if (errorMessage) {
-  //     time = setTimeout(() => {
-  //       setErrorMessage('');
-  //     }, 2000);
-  //     return () => clearTimeout(time);
-  //   }
-  // }, [errorMessage]);
+      return () => clearTimeout(timeout);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errorMessage) {
+      timeout = setTimeout(() => {
+        setErrorMessage('');
+        setIsShown(true);
+        setError(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [errorMessage]);
 
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
@@ -245,4 +242,4 @@ const UpdateProfile = (props: Props) => {
   );
 };
 
-export default UpdateProfile;
+export default UpdateUserDetails;
