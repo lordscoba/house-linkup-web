@@ -78,11 +78,10 @@ export const loginAction =
         config
       );
 
-      if (data) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('loginUser', JSON.stringify(data));
-        }
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('loginUser', JSON.stringify(data));
       }
+
       console.log({ login: data });
       dispatch({ type: LOGIN_SUCCESS, payload: data });
     } catch (error: any) {

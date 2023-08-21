@@ -44,18 +44,19 @@ const LoginIndex = (props: Props) => {
       setSuccessMessage(message);
       setSuccess(Success);
     }
-  }, [[LoginUser?.success]]);
+  }, [LoginUser?.success]);
 
   useEffect(() => {
     const LoginLoading = LoginUser?.loading;
-    const LoginError = LoginUser?.error;
-    const LoginErrorMessage = LoginUser?.serverError;
+
     setLoading(LoginLoading);
 
-    if (LoginError) {
-      console.log({ err: LoginErrorMessage, LoginError });
+    if (LoginUser?.error) {
+      const LoginError = LoginUser?.error;
+      const LoginErrorMessage = LoginUser?.serverError;
       setError(LoginError);
-      setErrorMessage(LoginErrorMessage);
+      setErrorMessage(LoginErrorMessage || 'Connection Error');
+      console.log({ err: LoginErrorMessage, LoginError });
     }
   }, [LoginUser?.error, LoginUser]);
 

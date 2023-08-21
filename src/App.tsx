@@ -12,7 +12,7 @@ import {
   Services,
   SignUp,
   SingleHouseScreen,
-  UpdateProfile,
+  UpdateUserDetails,
 } from './Pages';
 // import UpdateProfile from './Pages/UpdateProfile';
 
@@ -38,7 +38,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
-        <Route path="/update-profile/:id" element={<UpdateProfile />} />
+        <Route path="/update-profile/:id" element={<UpdateUserDetails />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

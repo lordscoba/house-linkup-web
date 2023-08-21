@@ -21,7 +21,7 @@ const Profile = (props: Props) => {
     (state: StoreReducerTypes) => state.userDetails
   );
 
-  console.log({ user: userDetails });
+  // console.log({ user: userDetails });
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = event?.target?.files?.[0];
