@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   About,
   Contact,
@@ -13,7 +13,7 @@ import {
   SignUp,
   SingleHouseScreen,
   UpdateProfile,
-} from './Pages';
+} from "./Pages";
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
