@@ -1,5 +1,5 @@
-// const SERVER_URL = 'http://localhost:5004/api/v1';
-const SERVER_URL = 'https://house-linkup.cyclic.cloud/api/v1';
+export const SERVER_URL = 'http://localhost:5004/api/v1';
+// const SERVER_URL = 'https://house-linkup.cyclic.cloud/api/v1';
 
 const dataFromStorage =
   typeof !undefined && localStorage.getItem('loginUser')
@@ -7,7 +7,7 @@ const dataFromStorage =
     : null;
 // forgotpassword
 
-console.log(dataFromStorage);
+let currentpage = 2;
 
 export const apiRoutes = {
   auth: {
@@ -20,6 +20,7 @@ export const apiRoutes = {
         SERVER_URL + `/user-details/${dataFromStorage?.userDoc?._id}`,
       updateProfile:
         SERVER_URL + `/update-profile/${dataFromStorage?.userDoc?._id}`,
+      getAllUsers: SERVER_URL + `/all-users?page=${currentpage}`,
     },
   },
 };

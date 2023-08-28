@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Instagram, Logo } from '../../assets/icons';
 import { Login_BG } from '../../assets/images';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginAction } from '../../redux/actions/user.actions';
+import { loginAction } from '../../redux/actions/auth.actions';
 import { StoreReducerTypes } from '../../redux/store';
 import Message from '../message/Message';
 import CircularLoader from '../loader/CircularLoader';

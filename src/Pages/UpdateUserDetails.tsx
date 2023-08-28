@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
-import { updateProfileAction } from '../redux/actions/user.actions';
+import { updateProfileAction } from '../redux/actions/auth.actions';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
 
