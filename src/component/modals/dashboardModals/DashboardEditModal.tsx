@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { GrStatusGood } from 'react-icons/gr';
 import { ImageInterface } from '../../dashboard/users/types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  activateUserAction,
+  blockuserAction,
+  deActivateuserAction,
+  demoteUserAction,
+  promoteUserAction,
+} from '../../../redux/actions/dashboardactions/dashboard.actions';
+import { EDIT_USER_RESET } from '../../../redux/constants/dashboardconstants/dashboard.constants';
+import { StoreReducerTypes } from '../../../redux/store';
 
 interface UserInterface {
   active: boolean;
@@ -17,6 +27,10 @@ interface UserInterface {
   _id: string;
 }
 
+interface IdInterface {
+  id: string;
+}
+
 type Props = {
   open: boolean;
   setOpen: (a: any) => void;
@@ -24,16 +38,25 @@ type Props = {
 };
 
 const DashboardEditModal = ({ open, setOpen, data }: Props) => {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState('');
   const [admin, setAdmin] = useState('');
   const [checkbox1Checked, setCheckbox1Checked] = useState(false);
   const [checkbox2Checked, setCheckbox2Checked] = useState(false);
 
+  const activate = useSelector(
+    (state: StoreReducerTypes) => state?.activateUser
+  );
+  const deActivate = useSelector(
+    (state: StoreReducerTypes) => state?.deActivateUser
+  );
+  const block = useSelector((state: StoreReducerTypes) => state?.blockUser);
+
   const handleCheckbox1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckbox1Checked((prev) => !prev);
     setCheckbox2Checked(false);
     setUser(e.target.value);
-    // console.log({ user });
   };
 
   const handleCheckbox2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +71,47 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
     setCheckbox1Checked(false);
     setCheckbox2Checked(false);
   };
+
+  const activateUserFunc = ({ id }: IdInterface) => {
+    dispatch(activateUserAction({ _id: id }) as any);
+    dispatch({ type: EDIT_USER_RESET });
+  };
+
+  const deActivateUserFunc = ({ id }: IdInterface) => {
+    dispatch(deActivateuserAction({ _id: id }) as any);
+    dispatch({ type: EDIT_USER_RESET });
+  };
+
+  const blockUserFunc = ({ id }: IdInterface) => {
+    dispatch(blockuserAction({ _id: id }) as any);
+    dispatch({ type: EDIT_USER_RESET });
+  };
+
+  const promoteUserFunc = ({ id }: IdInterface) => {
+    dispatch(promoteUserAction({ _id: id }) as any);
+    dispatch({ type: EDIT_USER_RESET });
+  };
+
+  const demoteUserFunc = ({ id }: IdInterface) => {
+    dispatch(demoteUserAction({ _id: id }) as any);
+    dispatch({ type: EDIT_USER_RESET });
+  };
+
+  useEffect(() => {
+    const activeState = activate?.serverResponse?.user?.active;
+    data.active = activeState;
+  }, [activate, activate?.success]);
+
+  useEffect(() => {
+    const DeActivateState = deActivate?.serverResponse?.user?.de_activated;
+    data.de_activated = DeActivateState;
+  }, [deActivate, deActivate?.success]);
+
+  useEffect(() => {
+    const blockState = block?.serverResponse?.user?.blocked;
+    data.blocked = blockState;
+  }, [block, block?.success]);
+
   return (
     <>
       {open ? (
@@ -64,6 +128,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
               <span className="font-bold">Edit User</span> :{' '}
               <span className="font-medium">{data?._id}</span>
             </div>
+
             <section className="flex flex-col justify-center flex-wrap  items-center my-8">
               <div className="flex items-center gap-2">
                 {data?.image?.length > 0 ? (
@@ -171,6 +236,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 {checkbox1Checked ? (
                   <button
                     type="button"
+                    onClick={() => demoteUserFunc({ id: data?._id })}
                     className="bg-[#69B99D] text-[#fff] border rounded-lg py-2 w-[8rem]"
                   >
                     Demote User
@@ -182,6 +248,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 {checkbox2Checked ? (
                   <button
                     type="button"
+                    onClick={() => promoteUserFunc({ id: data?._id })}
                     className=" bg-[#69B99D] text-[#fff] border rounded-lg py-2 w-[8rem]"
                   >
                     Promote User
@@ -192,6 +259,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
               <div className="text-[#69B99D] mt-8 flex flex-wrap justify-center gap-2">
                 <button
                   type="button"
+                  onClick={() => activateUserFunc({ id: data?._id })}
                   disabled={data?.active}
                   className={` ${
                     data?.active ? 'text-[#909090]' : ''
@@ -201,6 +269,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 </button>
                 <button
                   type="button"
+                  onClick={() => blockUserFunc({ id: data?._id })}
                   disabled={data?.blocked}
                   className={`${
                     data?.blocked ? 'text-[#909090]' : ''
@@ -210,6 +279,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 </button>
                 <button
                   type="button"
+                  onClick={() => deActivateUserFunc({ id: data?._id })}
                   disabled={data?.de_activated}
                   className={`${
                     data?.de_activated ? 'text-[#909090]' : ''
