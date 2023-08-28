@@ -91,6 +91,14 @@ const Table = ({ show }: ShoweInterface) => {
 
   const allUsers = useSelector((state: StoreReducerTypes) => state?.allUsers);
 
+  const activate = useSelector(
+    (state: StoreReducerTypes) => state?.activateUser
+  );
+  const deActivate = useSelector(
+    (state: StoreReducerTypes) => state?.deActivateUser
+  );
+  const block = useSelector((state: StoreReducerTypes) => state?.blockUser);
+
   const Pagination = ({ totalPages }: PaginationInterface) => {
     const handlePageChange = (page: number) => {
       setPageNumber(page);
@@ -120,14 +128,12 @@ const Table = ({ show }: ShoweInterface) => {
     setOpenModal(true);
     const UserToEdit = tableList[index];
     setSingleUserDetails(UserToEdit);
-    console.log({ usertoedit: UserToEdit });
   };
 
   const handleViewUser = ({ index }: EditUserInterface) => {
     setOpenDetailsModal(true);
     const UserToView = tableList[index];
     setSingleUserDetails(UserToView);
-    console.log({ usertoView: UserToView });
   };
 
   // const deleteUser = ({ index, setList }: DeleteUserInterface) => {
@@ -148,6 +154,10 @@ const Table = ({ show }: ShoweInterface) => {
     const totalPage = allUsers?.serverResponse?.totalPages;
     setPages(Number(totalPage));
   }, [allUsers, allUsers?.success]);
+
+  useEffect(() => {
+    dispatch(getAllUsersAction({ pageNumber }) as any);
+  }, [activate?.success, deActivate?.success, block?.success]);
 
   return (
     <section

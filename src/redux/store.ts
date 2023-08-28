@@ -6,6 +6,13 @@ import {
   updateProfileReducer,
   userDetailsReducer,
 } from './reducers/auth.reducer';
+import {
+  activateUserReducer,
+  blockUserReducer,
+  deActivateuserReducer,
+  demoteUserReducer,
+  promoteUserReducer,
+} from './reducers/dashboardreducers/dashboard.reducer';
 import { allUsersReducer, deleteUserReducer } from './reducers/users.reducer';
 
 const {
@@ -28,6 +35,14 @@ export type StoreReducerTypes = {
 
   allUsers: ReturnType<typeof allUsersReducer>;
   deleteUser: ReturnType<typeof deleteUserReducer>;
+
+  // dashboard
+
+  activateUser: ReturnType<typeof activateUserReducer>;
+  deActivateUser: ReturnType<typeof deActivateuserReducer>;
+  blockUser: ReturnType<typeof blockUserReducer>;
+  promoteUser: ReturnType<typeof promoteUserReducer>;
+  demoteUser: ReturnType<typeof demoteUserReducer>;
 };
 
 const reducer: StoreReducerTypes = combineReducers({
@@ -39,6 +54,13 @@ const reducer: StoreReducerTypes = combineReducers({
   forgotPassword: forgotPasswordReducer,
   allUsers: allUsersReducer,
   deleteUser: deleteUserReducer,
+
+  // dashboard
+  activateUser: activateUserReducer,
+  deActivateUser: deActivateuserReducer,
+  blockUser: blockUserReducer,
+  promoteUser: promoteUserReducer,
+  demoteUser: demoteUserReducer,
 });
 
 const initialState: any = {
