@@ -21,7 +21,7 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
-} from '../constants/user.constants';
+} from '../constants/auth.constants';
 import axios from 'axios';
 import { apiRoutes } from '../routes/apiRoutes';
 import { RegisterInterface } from '../../component/Signup/signupTypes';

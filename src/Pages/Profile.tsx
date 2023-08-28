@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
-import { userDetailsAction } from '../redux/actions/user.actions';
+import { userDetailsAction } from '../redux/actions/auth.actions';
 
 type Props = {};
 

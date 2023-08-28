@@ -48,3 +48,13 @@ export { default as Whatsapp } from './whatsapp-icon.png';
 export { default as Security } from './security-icon.png';
 export { default as Home_Management } from './home_management-icon.png';
 export { default as Home_Cleaning } from './home_cleaning-icon.png';
+
+// DASHBOARD SIDEBAR
+export { default as User } from './user.svg';
+export { default as dropDown } from './drop-down.svg';
+
+// TABLE
+export { default as EditIcon } from './edit_icon.svg';
+export { default as DeleteIcon } from './delete_icon.png';
+export { default as DeleteIcon_2 } from './trash.svg';
+export { default as RedDeleteIcon } from './red_trash_icon.png';

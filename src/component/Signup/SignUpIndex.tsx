@@ -4,7 +4,7 @@ import { Facebook, Instagram, Logo } from '../../assets/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../redux/store';
-import { registerAction } from '../../redux/actions/user.actions';
+import { registerAction } from '../../redux/actions/auth.actions';
 import CircularLoader from '../loader/CircularLoader';
 import Message from '../message/Message';
 
@@ -23,7 +23,6 @@ const SignUpIndex = (props: Props) => {
   const [password, setPassword] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
-
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,26 +40,25 @@ const SignUpIndex = (props: Props) => {
   // const registerSuccess = RegisteredUser?.success;
 
   useEffect(() => {
-    const LoginSuccess = RegisteredUser?.success;
+    const RegisterSuccess = RegisteredUser?.success;
+    const RegisterLoading = RegisteredUser?.loading;
+    const message = RegisteredUser?.serverResponse?.message;
+    setLoading(RegisterLoading);
 
-    const LoginLoading = RegisteredUser?.loading;
-
-    setSuccess(LoginSuccess);
-
-    setLoading(LoginLoading);
+    if (RegisterSuccess) {
+      setSuccessMessage(message);
+      setSuccess(RegisterSuccess);
+    }
   }, [
-    RegisteredUser?.loading,
     RegisteredUser?.success,
+    RegisteredUser?.loading,
     RegisteredUser?.serverResponse,
   ]);
 
   useEffect(() => {
     const LoginError = RegisteredUser?.error;
-
     const LoginErrorMessage = RegisteredUser?.serverError;
-
     setError(LoginError);
-
     setErrorMessage(LoginErrorMessage);
   }, [RegisteredUser?.error, RegisteredUser?.serverError]);
 
@@ -68,9 +66,6 @@ const SignUpIndex = (props: Props) => {
     let timeout: ReturnType<typeof setTimeout>;
     setErrorMessage('');
     if (success) {
-      const message = RegisteredUser?.serverResponse?.message;
-
-      setSuccessMessage(message);
       timeout = setTimeout(() => {
         setSuccessMessage('');
         navigate('/login');
@@ -78,7 +73,7 @@ const SignUpIndex = (props: Props) => {
 
       return () => clearTimeout(timeout);
     }
-  }, [success]);
+  }, [successMessage]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;

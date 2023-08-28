@@ -19,8 +19,8 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
-} from "../constants/user.constants";
-import { ResponseType, initialStateRequest } from "../responseType";
+} from '../constants/auth.constants';
+import { ResponseType, initialStateRequest } from '../responseType';
 
 export const registerReducer = (
   state: ResponseType = initialStateRequest,
