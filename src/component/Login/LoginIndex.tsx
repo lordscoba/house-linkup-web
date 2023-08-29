@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../../assets/icons";
 import { Login_BG } from "../../assets/images";
-import { loginAction } from "../../redux/actions/user.actions";
+// import { loginAction } from "../../redux/actions/user.actions";
+import { loginAction } from "../../redux/actions/auth.actions";
 import { StoreReducerTypes } from "../../redux/store";
 import CircularLoader from "../loader/CircularLoader";
 import Message from "../message/Message";
@@ -55,7 +56,7 @@ const LoginIndex = (props: Props) => {
       const LoginError = LoginUser?.error;
       const LoginErrorMessage = LoginUser?.serverError;
       setError(LoginError);
-      setErrorMessage(LoginErrorMessage || 'Connection Error');
+      setErrorMessage(LoginErrorMessage || "Connection Error");
       console.log({ err: LoginErrorMessage, LoginError });
     }
   }, [LoginUser?.error, LoginUser]);

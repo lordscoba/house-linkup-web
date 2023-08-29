@@ -14,15 +14,13 @@ import {
   SingleHouseScreen,
   UpdateUserDetails,
 } from './Pages';
+import { Dashboard, Users } from './Pages/dashboardPages';
+import Header from './component/dashboard/header/Header';
+import SideBar from './component/dashboard/sidebarMenu/SideBar';
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
   const { pathname } = useLocation();
-
-  // useEffect(() => {
-  //   const link = `${pathname}`;
-  //   console.log({ app: link.split('/') });
-  // }, []);
   return (
     <>
       <Routes>
@@ -39,6 +37,12 @@ function App() {
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/update-profile/:id" element={<UpdateUserDetails />} />
+
+        {/* DASHBOARD */}
+
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/dashboard/all-users" element={<Users />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

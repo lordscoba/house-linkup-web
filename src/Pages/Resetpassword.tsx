@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
-import { resetPasswordAction } from '../redux/actions/user.actions';
+import { resetPasswordAction } from '../redux/actions/auth.actions';
 
 type Props = {};
 

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
-import { forgotPassordAction } from '../redux/actions/user.actions';
+import { forgotPassordAction } from '../redux/actions/auth.actions';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
 

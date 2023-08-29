@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../../assets/icons';
-import { userDetailsAction } from '../../redux/actions/user.actions';
-import { LOG_OUT } from '../../redux/constants/user.constants';
+import { userDetailsAction } from '../../redux/actions/auth.actions';
+import { LOG_OUT } from '../../redux/constants/auth.constants';
 import { StoreReducerTypes } from '../../redux/store';
 import { data } from './data';
 import { NavData, NavTypes } from './navTypes';
@@ -57,13 +57,15 @@ const NavBar = (props: Props) => {
   const handleLogout = () => {
     dispatch({ type: LOG_OUT });
     localStorage.clear();
-    console.log({ isLoggedIn, LoginSuccess });
+    // console.log({ isLoggedIn, LoginSuccess });
   };
 
   return (
     <>
       {' '}
       {pathname === '/sign-up' || pathname === '/login' ? (
+        ''
+      ) : route === 'dashboard' ? (
         ''
       ) : (
         <div className={`bg-[#CBD0D0] z-50  relative  pb-3`}>
@@ -223,7 +225,7 @@ const LogoutAndProfile = ({ setShow, logOut, data }: LinkInterface) => {
       <Link to={`/profile`} className="cursor-pointer block">
         Profile
       </Link>
-      <Link to={'#'} className="cursor-pointer block">
+      <Link to={'/dashboard'} className="cursor-pointer block">
         DashBoard
       </Link>
       <button type="button" onClick={logOut}>

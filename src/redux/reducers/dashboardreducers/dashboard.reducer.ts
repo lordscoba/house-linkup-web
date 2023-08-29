@@ -1,35 +1,32 @@
 import {
-  FORGOT_PASSWORD_FAIL,
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  LOGIN_FAIL,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOG_OUT,
-  REGISTER_FAIL,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  RESET_PASSWORD_FAIL,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-  RESET_REGISTER,
-  UPDATE_PROFILE_FAIL,
-  UPDATE_PROFILE_REQUEST,
-  UPDATE_PROFILE_SUCCESS,
-  USER_DETAILS_FAIL,
-  USER_DETAILS_REQUEST,
-  USER_DETAILS_SUCCESS,
-} from "../constants/user.constants";
-import { ResponseType, initialStateRequest } from "../responseType";
+  ACTIVATE_USER_FAIL,
+  ACTIVATE_USER_REQUEST,
+  ACTIVATE_USER_SUCCESS,
+  BLOCK_USER_FAIL,
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  DEMOTE_USER_FAIL,
+  DEMOTE_USER_REQUEST,
+  DEMOTE_USER_SUCCESS,
+  DE_ACTIVATE_USER_FAIL,
+  DE_ACTIVATE_USER_REQUEST,
+  DE_ACTIVATE_USER_SUCCESS,
+  EDIT_USER_RESET,
+  PROMOTE_USER_FAIL,
+  PROMOTE_USER_REQUEST,
+  PROMOTE_USER_SUCCESS,
+  RESET_USER,
+} from '../../constants/dashboardconstants/dashboard.constants';
+import { ResponseType, initialStateRequest } from '../../responseType';
 
-export const registerReducer = (
+export const activateUserReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case REGISTER_REQUEST:
+    case ACTIVATE_USER_REQUEST:
       return { ...state, loading: true };
-    case REGISTER_SUCCESS:
+    case ACTIVATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -37,7 +34,7 @@ export const registerReducer = (
         serverResponse: action.payload,
       };
 
-    case REGISTER_FAIL:
+    case ACTIVATE_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -46,28 +43,22 @@ export const registerReducer = (
         serverError: action.payload,
       };
 
-    case RESET_REGISTER:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: false,
-        serverError: {},
-      };
+    case EDIT_USER_RESET:
+      return initialStateRequest;
 
     default:
       return state;
   }
 };
 
-export const loginReducer = (
+export const deActivateuserReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case DE_ACTIVATE_USER_REQUEST:
       return { ...state, loading: true };
-    case LOGIN_SUCCESS:
+    case DE_ACTIVATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -75,7 +66,7 @@ export const loginReducer = (
         serverResponse: action.payload,
       };
 
-    case LOGIN_FAIL:
+    case DE_ACTIVATE_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -84,29 +75,53 @@ export const loginReducer = (
         serverError: action.payload,
       };
 
-    case LOG_OUT:
+    case EDIT_USER_RESET:
+      return initialStateRequest;
+    default:
+      return state;
+  }
+};
+
+export const blockUserReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case BLOCK_USER_REQUEST:
+      return { ...state, loading: true };
+    case BLOCK_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case BLOCK_USER_FAIL:
       return {
         ...state,
         loading: false,
         success: false,
-        error: false,
-        serverError: {},
+        error: true,
+        serverError: action.payload,
       };
+
+    case EDIT_USER_RESET:
+      return initialStateRequest;
 
     default:
       return state;
   }
 };
 
-export const userDetailsReducer = (
+export const promoteUserReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case USER_DETAILS_REQUEST:
+    case PROMOTE_USER_REQUEST:
       return { ...state, loading: true };
-
-    case USER_DETAILS_SUCCESS:
+    case PROMOTE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -114,7 +129,7 @@ export const userDetailsReducer = (
         serverResponse: action.payload,
       };
 
-    case USER_DETAILS_FAIL:
+    case PROMOTE_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -122,21 +137,23 @@ export const userDetailsReducer = (
         error: true,
         serverError: action.payload,
       };
+
+    case EDIT_USER_RESET:
+      return initialStateRequest;
 
     default:
       return state;
   }
 };
 
-export const updateProfileReducer = (
+export const demoteUserReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case UPDATE_PROFILE_REQUEST:
+    case DEMOTE_USER_REQUEST:
       return { ...state, loading: true };
-
-    case UPDATE_PROFILE_SUCCESS:
+    case DEMOTE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -144,8 +161,7 @@ export const updateProfileReducer = (
         serverResponse: action.payload,
       };
 
-    case UPDATE_PROFILE_FAIL:
-      // console.log('error');
+    case DEMOTE_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -154,65 +170,8 @@ export const updateProfileReducer = (
         serverError: action.payload,
       };
 
-    default:
-      return state;
-  }
-};
-
-export const resetPasswordReducer = (
-  state: ResponseType = initialStateRequest,
-  action: any
-) => {
-  switch (action.type) {
-    case RESET_PASSWORD_REQUEST:
-      return { ...state, loading: true };
-
-    case RESET_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        serverResponse: action.payload,
-      };
-
-    case RESET_PASSWORD_FAIL:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: true,
-        serverError: action.payload,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const forgotPasswordReducer = (
-  state: ResponseType = initialStateRequest,
-  action: any
-) => {
-  switch (action.type) {
-    case FORGOT_PASSWORD_REQUEST:
-      return { ...state, loading: true };
-
-    case FORGOT_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        serverResponse: action.payload,
-      };
-
-    case FORGOT_PASSWORD_FAIL:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: true,
-        serverError: action.payload,
-      };
+    case EDIT_USER_RESET:
+      return initialStateRequest;
 
     default:
       return state;
