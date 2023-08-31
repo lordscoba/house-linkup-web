@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../../../assets/icons';
-import { UserDashboardArray, UserDashboardInterface } from './types';
+// import { UserDashboardArray, UserDashboardInterface } from './types';
 import { userDashboardNavValues } from './data';
 import { useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../../redux/store';
+import { UserDashboardArray, UserDashboardInterface } from './types';
 
 type Props = {};
 

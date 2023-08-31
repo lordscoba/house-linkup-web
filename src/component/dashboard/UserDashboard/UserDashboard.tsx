@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import UserDashboardNav from './UserDashboardNav';
-import {
-  UserDashboardArray,
-  UserDashboardDataArray,
-  UserDashboardDataInterface,
-} from './types';
+
 import { userDashboardDataValues } from './data';
 import { Dollar, GreenDollar, Like } from '../../../assets/icons';
 import Rating from '../../Rating/Rating';
+import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
 
 type Props = {};
 

@@ -46,6 +46,10 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
   const [checkbox1Checked, setCheckbox1Checked] = useState(false);
   const [checkbox2Checked, setCheckbox2Checked] = useState(false);
 
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isDeActivated, setIsDeActivated] = useState<boolean>(false);
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
+
   const activate = useSelector(
     (state: StoreReducerTypes) => state?.activateUser
   );
@@ -101,17 +105,26 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
   useEffect(() => {
     const activeState = activate?.serverResponse?.user?.active;
     data.active = activeState;
+    // setIsActive(activeState);
   }, [activate, activate?.success]);
 
   useEffect(() => {
     const DeActivateState = deActivate?.serverResponse?.user?.de_activated;
     data.de_activated = DeActivateState;
+    // setIsDeActivated(DeActivateState);
   }, [deActivate, deActivate?.success]);
 
   useEffect(() => {
     const blockState = block?.serverResponse?.user?.blocked;
     data.blocked = blockState;
+    // setIsBlocked(blockState);
   }, [block, block?.success]);
+
+  useEffect(() => {
+    setIsActive(data?.active);
+    setIsDeActivated(data?.de_activated);
+    setIsBlocked(data?.blocked);
+  }, [data?.active, data?.de_activated, data?.blocked]);
 
   return (
     <>
@@ -173,11 +186,11 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 <h4 className="text-[#222] font-medium">Status :</h4>
                 <p className="text-[#222] font-bold">
                   {' '}
-                  {data?.active
+                  {isActive
                     ? 'Active'
-                    : data?.blocked
+                    : isBlocked
                     ? 'Blocked'
-                    : data?.de_activated
+                    : isDeActivated
                     ? 'DeActivated'
                     : null}
                 </p>
@@ -261,9 +274,9 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 <button
                   type="button"
                   onClick={() => activateUserFunc({ id: data?._id })}
-                  disabled={data?.active}
+                  disabled={isActive}
                   className={` ${
-                    data?.active ? 'text-[#909090]' : ''
+                    isActive ? 'text-[#909090]' : ''
                   } border rounded-lg py-2 w-[8rem]  font-bold`}
                 >
                   Activate
@@ -271,9 +284,9 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 <button
                   type="button"
                   onClick={() => blockUserFunc({ id: data?._id })}
-                  disabled={data?.blocked}
+                  disabled={isBlocked}
                   className={`${
-                    data?.blocked ? 'text-[#909090]' : ''
+                    isBlocked ? 'text-[#909090]' : ''
                   }  border rounded-lg py-2 w-[8rem]  font-bold`}
                 >
                   Block
@@ -281,9 +294,9 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
                 <button
                   type="button"
                   onClick={() => deActivateUserFunc({ id: data?._id })}
-                  disabled={data?.de_activated}
+                  disabled={isDeActivated}
                   className={`${
-                    data?.de_activated ? 'text-[#909090]' : ''
+                    isDeActivated ? 'text-[#909090]' : ''
                   }  border rounded-lg py-2 w-[8rem] font-bold`}
                 >
                   De Activate

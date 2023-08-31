@@ -15,6 +15,7 @@ import ViewDetails from '../../../modals/dashboardModals/ViewDetails';
 import RegisterFormModal from '../../../modals/dashboardModals/RegisterFormModal';
 import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
 import InfoModal from '../../../modals/dashboardModals/InfoModal';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import {
 //   deleteUserAction,
 //   getAllUsersAction,
@@ -163,7 +164,13 @@ const Table = ({ show }: ShoweInterface) => {
     setTableList(allUsers?.serverResponse?.Users);
     const totalPage = allUsers?.serverResponse?.totalPages;
     setPages(Number(totalPage));
-  }, [allUsers, allUsers?.success]);
+  }, [
+    allUsers,
+    allUsers?.success,
+    activate?.success,
+    deActivate?.success,
+    block?.success,
+  ]);
 
   useEffect(() => {
     dispatch(getAllUsersAction({ pageNumber }) as any);
@@ -315,6 +322,8 @@ const TableData = ({
   role,
 }: TableDataInterface) => {
   const dispatch = useDispatch();
+  const router = useLocation();
+  const navigate = useNavigate();
   const joinedDate = new Date(createdAt).toDateString();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -403,7 +412,24 @@ const TableData = ({
           </td>
           <td className="px-4 py-2 text-[black] whitespace-nowrap ">
             <img
-              onClick={() => handleOpenEditButton({ index })}
+              onClick={() => {
+                //             const searchParams = new URLSearchParams(Object.entries(attributes).filter(([_, value]) => Boolean(value)));
+                // const url = new URL(window.location.href);
+
+                // if (url.search !== searchParams.toString()) {
+                //   url.search = searchParams.toString();
+                //   window.history.replaceState({}, '', url.toString());
+                // }
+                // const searchParams = new URLSearchParams(Object.entries(attributes).filter(([_, value]) => Boolean(value)));
+
+                // const url = new URL(window.location.href).href.split(
+                //   '/?user='
+                // )[0];
+
+                // window.history.pushState({}, '', url + '/?user=' + _id);
+
+                handleOpenEditButton({ index });
+              }}
               src={EditIcon}
               alt="Edit icon"
               className="w-6 h-6 cursor-pointer"

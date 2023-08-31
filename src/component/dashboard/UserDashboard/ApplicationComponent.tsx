@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import UploadForm from '../../reusableComponents/UploadForm';
 import BookingCard from '../../reusableComponents/BookingCard';
 import { User_Dashboard_img_1 } from '../../../assets/images';
-import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
+// import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
 import { Dollar, Like } from '../../../assets/icons';
 import Rating from '../../Rating/Rating';
+import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
 
 const mockedData = [
   {

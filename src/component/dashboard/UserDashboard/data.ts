@@ -1,6 +1,7 @@
 import { Like } from '../../../assets/icons';
 import { User_Dashboard_img_1 } from '../../../assets/images';
 import { UserDashboardDataInterface, UserDashboardInterface } from './types';
+// import { UserDashboardDataInterface, UserDashboardInterface } from './types';
 
 export const userDashboardNavValues: Array<UserDashboardInterface> = [
   {
