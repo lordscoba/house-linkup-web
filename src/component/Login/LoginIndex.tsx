@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 // import { Facebook, Instagram, Logo } from '../assets/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { Facebook, Instagram, Logo } from '../../assets/icons';
-import { Login_BG } from '../../assets/images';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAction } from '../../redux/actions/auth.actions';
-import { StoreReducerTypes } from '../../redux/store';
-import Message from '../message/Message';
-import CircularLoader from '../loader/CircularLoader';
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "../../assets/icons";
+import { Login_BG } from "../../assets/images";
+// import { loginAction } from "../../redux/actions/user.actions";
+import { loginAction } from "../../redux/actions/auth.actions";
+import { StoreReducerTypes } from "../../redux/store";
+import CircularLoader from "../loader/CircularLoader";
+import Message from "../message/Message";
 // import { Login_BG, SignUp_BG } from '../assets/images';
 
 type Props = {};
@@ -19,14 +20,14 @@ const LoginIndex = (props: Props) => {
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [rememberMe, setRememberMe] = useState<Boolean>(false);
 
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null) as any;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const LoginUser = useSelector((state: StoreReducerTypes) => state.loginUser);
 
@@ -55,18 +56,18 @@ const LoginIndex = (props: Props) => {
       const LoginError = LoginUser?.error;
       const LoginErrorMessage = LoginUser?.serverError;
       setError(LoginError);
-      setErrorMessage(LoginErrorMessage || 'Connection Error');
+      setErrorMessage(LoginErrorMessage || "Connection Error");
       console.log({ err: LoginErrorMessage, LoginError });
     }
   }, [LoginUser?.error, LoginUser]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
-    setErrorMessage('');
+    setErrorMessage("");
     if (success) {
       timeout = setTimeout(() => {
-        setSuccessMessage('');
-        navigate('/');
+        setSuccessMessage("");
+        navigate("/");
       }, 2000);
 
       return () => clearTimeout(timeout);
@@ -77,16 +78,16 @@ const LoginIndex = (props: Props) => {
     let timeout: ReturnType<typeof setTimeout>;
     if (errorMessage) {
       timeout = setTimeout(() => {
-        setErrorMessage('');
+        setErrorMessage("");
       }, 2000);
       return () => clearTimeout(timeout);
     }
   }, [errorMessage]);
 
   useEffect(() => {
-    const checkTokenExist = localStorage.getItem('loginUser');
+    const checkTokenExist = localStorage.getItem("loginUser");
     if (checkTokenExist) {
-      navigate('/');
+      navigate("/");
     }
   }, []);
 
@@ -96,7 +97,7 @@ const LoginIndex = (props: Props) => {
         <div className="pt-[49px] xl:pl-[34px] px-4 flex items-center gap-[160px]">
           <div
             className=" flex items-center gap-4 "
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
           >
             <img
               src={Logo}
@@ -111,9 +112,9 @@ const LoginIndex = (props: Props) => {
           <div className="block xl:flex items-center gap-3 w-[25rem] xl:w-auto text-center">
             <p className="text-[#000] font-[300] text-[14px]">
               Don’t have an account?
-            </p>{' '}
+            </p>{" "}
             <Link
-              to={'/sign-up'}
+              to={"/sign-up"}
               className="text-[14px] text-[#69B99D] font-[600] "
             >
               Sign up!
@@ -168,7 +169,7 @@ const LoginIndex = (props: Props) => {
             </div>
             <div className="mb-[20px] relative">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="password"
                 value={password}
                 onChange={(e: any) => setPassword(e.target.value)}
@@ -239,21 +240,21 @@ const LoginIndex = (props: Props) => {
                     onClick={() => setRememberMe((prev) => !prev)}
                     className={`${
                       rememberMe
-                        ? 'bg-[#69B99D] justify-end'
-                        : 'bg-[#ECECEC] justify-start'
+                        ? "bg-[#69B99D] justify-end"
+                        : "bg-[#ECECEC] justify-start"
                     } w-[40px] h-[20px] border border-[#C9C9C9]  rounded-[36.5px] flex items-center cursor-pointer`}
                   >
-                    {' '}
+                    {" "}
                     <p
                       className={`${
-                        rememberMe ? 'bg-[#FFF]' : 'bg-[#757070]'
+                        rememberMe ? "bg-[#FFF]" : "bg-[#757070]"
                       } w-[1rem] h-[1rem] rounded-[50px] border `}
-                    ></p>{' '}
+                    ></p>{" "}
                   </div>
                   <span>Remember me</span>
                 </div>
                 <Link
-                  to={'/forgot-password'}
+                  to={"/forgot-password"}
                   className="text-[#D93F21] text-[14px] font-[300] cursor-pointer"
                 >
                   Recover Password

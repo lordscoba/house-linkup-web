@@ -26,6 +26,9 @@ export { default as House_6 } from './property-6.png';
 export { default as House_1 } from './house-1.png';
 export { default as Like } from './likeIcon.png';
 export { default as GreaterThan } from './CaretRight.png';
+export { default as GreenDollar } from './green_dollar.png';
+export { default as SortingArrow } from './sorting_arrow.png';
+export { default as SortingArrow_2 } from './sorting_arrow_2.png';
 
 // PROPERTY ICONS
 

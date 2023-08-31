@@ -42,3 +42,9 @@ export { default as ServicesBg } from './about-bg.png';
 //AUTH
 export { default as SignUp_BG } from './signup_bg.png';
 export { default as Login_BG } from './login_bg.png';
+
+// USER DASHBOARD
+export { default as User_Dashboard_img_1 } from './user_dashboard_img_1.png';
+
+// FAVOURITE
+export { default as Favourite_img_1 } from './fourite_image_1.png';

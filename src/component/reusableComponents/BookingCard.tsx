@@ -7,7 +7,7 @@ type Props = {
 const BookingCard = ({ amount }: Props) => {
   const [index, setIndex] = useState(0);
   return (
-    <div className="bg-[#fff] px-[40px] pt-[52px] pb-[43px] h-full border border-[rgba(151,151,151,0.83)] rounded-lg">
+    <div className="bg-[#fff] w-full md:w-[417px] px-[40px] pt-[52px] pb-[43px] h-full border border-[rgba(151,151,151,0.83)] rounded-lg">
       <p className="text-[#313131] text-[15px] font-[500]">Rent price</p>
       <h2 className="text-[#69B99D] text-[36px] font-[600] mb-[21px]">
         #{Number(amount).toLocaleString()}

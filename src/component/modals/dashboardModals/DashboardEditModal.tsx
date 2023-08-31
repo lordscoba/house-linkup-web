@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { GrStatusGood } from 'react-icons/gr';
-import { ImageInterface } from '../../dashboard/users/types';
+// import { ImageInterface } from '../../dashboard/users/types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   activateUserAction,
@@ -11,6 +11,7 @@ import {
 } from '../../../redux/actions/dashboardactions/dashboard.actions';
 import { EDIT_USER_RESET } from '../../../redux/constants/dashboardconstants/dashboard.constants';
 import { StoreReducerTypes } from '../../../redux/store';
+import { ImageInterface } from '../../dashboard/AdminDashboard/users/types';
 
 interface UserInterface {
   active: boolean;

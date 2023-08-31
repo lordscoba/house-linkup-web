@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Logo } from '../../assets/icons';
 import Header from './header/Header';
+import { Logo } from '../../../assets/icons';
 
 type Props = {
   setShow: (e: any) => void;

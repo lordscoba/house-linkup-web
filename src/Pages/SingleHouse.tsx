@@ -38,7 +38,7 @@ const SingleHouse = (props: Props) => {
   }, [_id]);
 
   return (
-    <main className="  " ref={containerRef}>
+    <main className="overflow-x-hidden  " ref={containerRef}>
       <FirstSection
         NumOfBathRooms={Number(data?.NumOfBathRooms)}
         NumOfBedRooms={Number(data?.NumOfBedRooms)}
@@ -201,7 +201,7 @@ const SecondSection = ({ amount }: SecondSectionInterface) => {
           </p>
         </article>
 
-        <div className="w-[417px] h-[530px] bg-[grey] xl:mt-[-10rem] mt-8">
+        <div className="  bg-[grey] xl:mt-[-10rem] mt-8">
           <BookingCard amount={amount} />
         </div>
       </div>
