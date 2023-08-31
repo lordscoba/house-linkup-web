@@ -3,17 +3,27 @@ import DashBoardNav from '../DashBoardNav';
 import DashboardSideBar from '../sidebarMenu/DashboardSideBar';
 import { ImageInterface, TableArrays, TableInterface } from './types';
 import { tableValues } from './data';
-import { EditIcon, RedDeleteIcon } from '../../../assets/icons';
+// import { EditIcon, RedDeleteIcon } from '../../../assets/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { StoreReducerTypes } from '../../../../redux/store';
 import {
   deleteUserAction,
   getAllUsersAction,
-} from '../../../redux/actions/user.action';
-import { StoreReducerTypes } from '../../../redux/store';
-import DashboardEditModal from '../../modals/dashboardModals/DashboardEditModal';
-import InfoModal from '../../modals/dashboardModals/InfoModal';
-import ViewDetails from '../../modals/dashboardModals/ViewDetails';
-import RegisterFormModal from '../../modals/dashboardModals/RegisterFormModal';
+} from '../../../../redux/actions/user.action';
+import DashboardEditModal from '../../../modals/dashboardModals/DashboardEditModal';
+import ViewDetails from '../../../modals/dashboardModals/ViewDetails';
+import RegisterFormModal from '../../../modals/dashboardModals/RegisterFormModal';
+import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
+import InfoModal from '../../../modals/dashboardModals/InfoModal';
+// import {
+//   deleteUserAction,
+//   getAllUsersAction,
+// } from '../../../redux/actions/user.action';
+// import { StoreReducerTypes } from '../../../redux/store';
+// import DashboardEditModal from '../../modals/dashboardModals/DashboardEditModal';
+// import InfoModal from '../../modals/dashboardModals/InfoModal';
+// import ViewDetails from '../../modals/dashboardModals/ViewDetails';
+// import RegisterFormModal from '../../modals/dashboardModals/RegisterFormModal';
 
 interface ShoweInterface {
   show: boolean;

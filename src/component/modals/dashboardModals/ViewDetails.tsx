@@ -1,5 +1,6 @@
 import React from 'react';
-import { ImageInterface } from '../../dashboard/users/types';
+import { ImageInterface } from '../../dashboard/AdminDashboard/users/types';
+// import { ImageInterface } from '../../dashboard/users/types';
 interface UserInterface {
   active: boolean;
   blocked: boolean;

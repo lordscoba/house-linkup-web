@@ -14,9 +14,14 @@ import {
   SingleHouseScreen,
   UpdateUserDetails,
 } from './Pages';
-import { Dashboard, Users } from './Pages/dashboardPages';
-import Header from './component/dashboard/header/Header';
-import SideBar from './component/dashboard/sidebarMenu/SideBar';
+import { Dashboard, Users } from './Pages/dashboardPages/AdminPage';
+import {
+  Application,
+  Favourite,
+  UserDashboadPage,
+} from './Pages/dashboardPages/UserPage';
+// import { Dashboard, Users } from '../../Pages/dashboardPages';
+
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -41,8 +46,12 @@ function App() {
         {/* DASHBOARD */}
 
         <Route path="/dashboard" element={<Dashboard />} />
-
         <Route path="/dashboard/all-users" element={<Users />} />
+
+        {/* USER DASHBOARD */}
+        <Route path="/dashboard/user" element={<UserDashboadPage />} />
+        <Route path="/dashboard/user/application" element={<Application />} />
+        <Route path="/dashboard/user/favourite" element={<Favourite />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

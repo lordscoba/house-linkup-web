@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { SideBarDataArray, SideBarInterface } from './types';
 import { sidebarValues } from './data';
-import { User, dropDown } from '../../../assets/icons';
+// import { User, dropDown } from '../../../assets/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { User, dropDown } from '../../../../assets/icons';
 
 type Props = {
   show: boolean;
