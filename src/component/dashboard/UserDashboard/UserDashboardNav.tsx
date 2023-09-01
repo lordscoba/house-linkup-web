@@ -3,17 +3,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../../../assets/icons';
 // import { UserDashboardArray, UserDashboardInterface } from './types';
 import { userDashboardNavValues } from './data';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../../redux/store';
 import { UserDashboardArray, UserDashboardInterface } from './types';
+import { LOG_OUT } from '../../../redux/constants/auth.constants';
 
 type Props = {};
 
 const UserDashboardNav = (props: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [links, setLinks] = useState<UserDashboardArray>([]);
   const [showNav, setShowNav] = useState<Boolean>(false);
+  const [show, setShow] = useState<Boolean>(false);
+
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const { pathname } = useLocation();
@@ -26,6 +30,12 @@ const UserDashboardNav = (props: Props) => {
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
+
+  const handleLogout = () => {
+    dispatch({ type: LOG_OUT });
+    localStorage.clear();
+    // console.log({ isLoggedIn, LoginSuccess });
+  };
 
   useEffect(() => {
     setLinks(userDashboardNavValues);
@@ -127,7 +137,7 @@ const UserDashboardNav = (props: Props) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link to={`/profile`}>
+          <div>
             {userFromstorage?.userDoc?.image?.length > 0 ? (
               <img
                 src={userFromstorage?.userDoc?.image?.[0]?.url}
@@ -156,12 +166,35 @@ const UserDashboardNav = (props: Props) => {
                 />
               </svg>
             )}
-          </Link>
+          </div>
           <div className="">
-            <h4 className="text-[1rem] font-bold">
+            <h4 className="text-[1rem] font-bold relative">
               {userFromstorage?.userDoc?.full_name}
             </h4>
             <p className="text-[#2B67F6] font-[400]">Renter</p>
+          </div>
+
+          <div className="relative w-[7rem]">
+            <svg
+              onClick={() => setShow((prev) => !prev)}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6 cursor-pointer "
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+            <div className="absolute top-6 z-20 left-0 right-0">
+              {show ? (
+                <LogoutAndProfile setShow={setShow} logOut={handleLogout} />
+              ) : null}
+            </div>
           </div>
         </div>
 
@@ -194,3 +227,36 @@ const UserDashboardNav = (props: Props) => {
 };
 
 export default UserDashboardNav;
+
+interface LinkInterface {
+  setShow: Function;
+  logOut: () => void;
+}
+
+const LogoutAndProfile = ({ setShow, logOut }: LinkInterface) => {
+  const LoggedInUser = useSelector(
+    (state: StoreReducerTypes) => state.loginUser
+  );
+
+  const userFromstorage = localStorage.getItem('loginUser')
+    ? JSON.parse(localStorage.getItem('loginUser') as any)
+    : null;
+
+  const isAdmin = LoggedInUser?.serverResponse?.userDoc?.role === 'SuperAdmin';
+  const isAdminFromStorage = userFromstorage?.userDoc?.role === 'SuperAdmin';
+
+  return (
+    <div
+      className="bg-[grey] px-2 text-[#fff] py-2"
+      onClick={() => setShow(false)}
+    >
+      <Link to={`/profile`} className="cursor-pointer block">
+        Profile
+      </Link>
+
+      <button type="button" onClick={logOut}>
+        Log out
+      </button>
+    </div>
+  );
+};
