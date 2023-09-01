@@ -88,7 +88,7 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
                 return (
                   <div
                     key={index}
-                    className="my-[38px] bg-[#fff] shadow-2xl border border-[red] rounded-xl py-[30px] md:px-[32px] px-2 flex flex-wrap justify-center  gap-[21px]"
+                    className="my-[38px] bg-[#fff] shadow-2xl rounded-xl py-[30px] md:px-[32px] px-2 flex flex-wrap justify-center  gap-[21px]"
                   >
                     <div>
                       <img
