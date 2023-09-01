@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   About,
   Contact,
@@ -13,10 +13,8 @@ import {
   SignUp,
   SingleHouseScreen,
   UpdateUserDetails,
-} from './Pages';
-import { Dashboard, Users } from './Pages/dashboardPages';
-import Header from './component/dashboard/header/Header';
-import SideBar from './component/dashboard/sidebarMenu/SideBar';
+} from "./Pages";
+import { Dashboard, Users } from "./Pages/dashboardPages";
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
