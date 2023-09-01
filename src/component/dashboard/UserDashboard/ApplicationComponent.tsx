@@ -88,7 +88,7 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
                 return (
                   <div
                     key={index}
-                    className="my-[38px] bg-[#fff] shadow-2xl rounded-xl py-[30px] px-[32px] flex flex-wrap justify-center  gap-[21px]"
+                    className="my-[38px] bg-[#fff] shadow-2xl border border-[red] rounded-xl py-[30px] md:px-[32px] px-2 flex flex-wrap justify-center  gap-[21px]"
                   >
                     <div>
                       <img
@@ -127,7 +127,7 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-2 w-[407px] mt-3">
+                      <div className="flex flex-wrap gap-2 w-full md:w-[407px] mt-3">
                         {item?.interior?.map((a: any, index: any) => {
                           return (
                             <div

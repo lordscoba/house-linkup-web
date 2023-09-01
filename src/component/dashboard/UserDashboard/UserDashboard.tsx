@@ -24,7 +24,7 @@ const UserDashboard = (props: Props) => {
       <section className="md:px-[1rem] mt-[24px] flex flex-1 gap-8">
         {/* FIRST SECTION */}
         <section className=" w-full lg:w-[55%]">
-          <div className="block  md:flex justify-between bg-[rgba(105,185,157,0.17)] px-[31px] py-[1rem]">
+          <div className="flex   flex-wrap justify-between bg-[rgba(105,185,157,0.17)] md:px-[31px] px-2 py-[1rem] ">
             <div className="flex items-center justify-center gap-2">
               <div>
                 <svg
@@ -46,13 +46,15 @@ const UserDashboard = (props: Props) => {
                 </svg>
               </div>
               <article>
-                <h4 className="text-[20px] text-[#000] font-[500]">
+                <h4 className="md:text-[20px] text-[1rem] text-[#000] font-[500]">
                   Review Tenant Application
                 </h4>
-                <p>Let's review your tenancy application </p>
+                <p className="text-[15px]">
+                  Let's review your tenancy application{' '}
+                </p>
               </article>
             </div>
-            <div className="text-center mt-4 md:mt-0">
+            <div className="text-center mt-4 md:mt-0 m-auto">
               <button
                 type="button"
                 className="px-4 py-2 bg-[#fff] text-[#8fda8f] rounded-[50px] border"
@@ -130,13 +132,9 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
     const btnValue = e.target.innerText;
     setSortString(btnValue);
   };
-  // const priceButtonClick = (e:any)=>{
-  //   const btnValue = e.target.innerText
-  //   setSortBy(btnValue)
-  // }
 
   return (
-    <div className="mt-[38px] block md:flex justify-between">
+    <div className="mt-[38px] flex flex-wrap justify-center md:justify-between ">
       <div className="flex items-center justify-center md:gap-4 gap-2">
         <div className="flex items-center  gap-1 border rounded-md md:px-3 px-2 py-1">
           <svg
@@ -160,7 +158,11 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
             />
           </svg>
 
-          <button type="button" onClick={priceButtonClick}>
+          <button
+            type="button"
+            onClick={priceButtonClick}
+            className="md:text-[1rem] text-[14px] font-semibold"
+          >
             Price
           </button>
         </div>
@@ -234,7 +236,11 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
               stroke-width="0.5"
             />
           </svg>
-          <button type="button" onClick={apartmentButtonClick}>
+          <button
+            type="button"
+            onClick={apartmentButtonClick}
+            className="md:text-[1rem] text-[14px] font-semibold"
+          >
             Apartment
           </button>
         </div>
@@ -251,7 +257,11 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
               fill="#6B6F7B"
             />
           </svg>
-          <button type="button" onClick={floorButtonClick}>
+          <button
+            type="button"
+            onClick={floorButtonClick}
+            className="md:text-[1rem] text-[14px] font-semibold"
+          >
             Floor
           </button>
         </div>
@@ -312,40 +322,18 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
               stroke-linejoin="round"
             />
           </svg>
-          <button>More</button>
+          <button className="md:text-[1rem] text-[14px] font-semibold">
+            More
+          </button>
         </div>
       </div>
 
-      <div className="flex items-center justify-center mt-4 gap-3">
-        <div className=" flex">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="63"
-            height="24"
-            viewBox="0 0 63 24"
-            fill="none"
-          >
-            <rect x="48" width="15" height="5" rx="1" fill="#69B99D" />
-            <rect x="39" width="5" height="5" rx="1" fill="#69B99D" />
-            <rect width="10" height="10" rx="1" fill="#6B6F7B" />
-            <rect x="14" y="14" width="10" height="10" rx="1" fill="#6B6F7B" />
-            <rect x="14" width="10" height="10" rx="1" fill="#6B6F7B" />
-            <rect y="14" width="10" height="10" rx="1" fill="#6B6F7B" />
-            <rect x="48" y="9" width="15" height="5" rx="1" fill="#69B99D" />
-            <rect x="39" y="9" width="5" height="5" rx="1" fill="#69B99D" />
-            <rect x="48" y="18" width="15" height="5" rx="1" fill="#69B99D" />
-            <rect x="39" y="18" width="5" height="5" rx="1" fill="#69B99D" />
-          </svg>
-        </div>
-        <div>
-          <p>
-            Sort by:{' '}
-            <span className="text-[20px] text-[#69B99D] font-[600]">
-              {sortString}
-            </span>
-          </p>
-        </div>
-      </div>
+      <p className="mt-2 d:mt-0">
+        Sort by:{' '}
+        <span className="text-[20px] text-[#69B99D] font-[600]">
+          {sortString}
+        </span>
+      </p>
     </div>
   );
 };
@@ -414,27 +402,26 @@ const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
 
   useEffect(() => {
     const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
-    console.log(currentItems);
     setCurrentData(currentItems);
   }, [data, currentPage]);
   return (
-    <div className="">
+    <div className=" ">
       {currentData?.length > 0
         ? currentData?.map((item: UserDashboardDataInterface, index: any) => {
             return (
               <div
                 key={index}
-                className="my-[38px] bg-[#fff] shadow-2xl rounded-xl py-[30px] px-[32px] flex flex-wrap justify-center  gap-[21px]"
+                className=" my-[38px]  bg-[#fff] shadow-2xl flex  justify-center gap-[23px] flex-wrap   py-4 md:px-4 px-2 rounded-lg"
               >
                 <div>
                   <img
                     src={item?.image}
                     alt={item?.address}
-                    className="w-full object-cover"
+                    className="w-full md:w-[208px] object-cover"
                   />
                 </div>
 
-                <section className="flex-1">
+                <section className=" ">
                   <div className=" flex  justify-between">
                     <div>
                       <h4>{item?.title}</h4>
@@ -463,7 +450,7 @@ const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 w-[407px] mt-3">
+                  <div className="flex flex-wrap gap-2 w-full md:w-[407px] mt-3">
                     {item?.interior?.map((a: any, index: any) => {
                       return (
                         <div key={index} className="flex items-center gap-1">
