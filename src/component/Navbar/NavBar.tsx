@@ -220,12 +220,29 @@ interface LinkInterface {
 }
 
 const LogoutAndProfile = ({ setShow, logOut, data }: LinkInterface) => {
+  const LoggedInUser = useSelector(
+    (state: StoreReducerTypes) => state.loginUser
+  );
+
+  const userFromstorage = localStorage.getItem('loginUser')
+    ? JSON.parse(localStorage.getItem('loginUser') as any)
+    : null;
+
+  const isAdmin = LoggedInUser?.serverResponse?.userDoc?.role === 'SuperAdmin';
+  const isAdminFromStorage = userFromstorage?.userDoc?.role === 'SuperAdmin';
+
   return (
-    <div className="bg-[grey] px-2 text-[#fff]" onClick={() => setShow(false)}>
-      <Link to={`/profile`} className="cursor-pointer block">
+    <div
+      className="bg-[grey] px-2 text-[#fff] py-2"
+      onClick={() => setShow(false)}
+    >
+      {/* <Link to={`/profile`} className="cursor-pointer block">
         Profile
-      </Link>
-      <Link to={'/dashboard'} className="cursor-pointer block">
+      </Link> */}
+      <Link
+        to={isAdminFromStorage ? '/dashboard' : '/dashboard/user'}
+        className="cursor-pointer block"
+      >
         DashBoard
       </Link>
       <button type="button" onClick={logOut}>

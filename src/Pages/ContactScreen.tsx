@@ -1,5 +1,5 @@
-import ContactHero from "../component/Contact/ContactHero";
-import Search from "../component/reusableComponents/Search";
+import ContactHero from '../component/Contact/ContactHero';
+import Search from '../component/reusableComponents/Search';
 
 type Props = {};
 

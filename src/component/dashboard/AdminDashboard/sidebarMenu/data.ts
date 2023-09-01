@@ -1,4 +1,5 @@
-import { User, dropDown } from '../../../assets/icons';
+// import { User, dropDown } from '../../../assets/icons';
+import { User, dropDown } from '../../../../assets/icons';
 import { SideBarInterface } from './types';
 
 export const sidebarValues: Array<SideBarInterface> = [

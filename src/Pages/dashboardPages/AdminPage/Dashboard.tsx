@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import SideBar from '../../component/dashboard/sidebarMenu/SideBar';
-import Header from '../../component/dashboard/header/Header';
-import DashboardSideBar from '../../component/dashboard/sidebarMenu/DashboardSideBar';
-import { Logo } from '../../assets/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
-import DashBoardNav from '../../component/dashboard/DashBoardNav';
-// import Users from './Users';
+import DashBoardNav from '../../../component/dashboard/AdminDashboard/DashBoardNav';
+import DashboardSideBar from '../../../component/dashboard/AdminDashboard/sidebarMenu/DashboardSideBar';
 
 type Props = {};
 

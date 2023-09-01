@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 type Props = {};
 
-const ContactHero = (props: Props) => {
+const UploadForm = (props: Props) => {
   const [image, setImage] = useState(null) as any;
   const [imageName, setImageName] = useState('');
   const [isImage, setIsImage] = useState<Boolean>(false);
@@ -43,12 +43,12 @@ const ContactHero = (props: Props) => {
     setIsImage((prev) => !prev);
   };
   return (
-    <section className="w-full max-w-[1004px] m-auto py-[23px]  xl:px-0 hide-scrollbar">
-      <section className="">
-        <p className="text-center xl:text-[24px] text-[20px] text-[#000] font-[500] px-[44px] mb-4">
+    <section className="w-full max-w-[1004px] py-[23px]  xl:px-0 hide-scrollbar">
+      {/* <section className="bg-[#D9D9D9] pt-[93px] xl:h-[870px] pb-[93px] xl:px-0 relative">
+        <p className="text-center xl:text-[24px] text-[20px] text-[#000] font-[500]">
           Rent with us and be Confident that Your home will be Filled Out!
         </p>
-      </section>
+      </section> */}
 
       <form className="w-full xl:w-[1130px] m-auto bg-[#fff] rounded-lg lg:px-[63px] px-4 py-[52px]    mb-[5rem] border">
         <section className="xl:flex block items-center justify-between mb-[25px]">
@@ -260,7 +260,7 @@ const ContactHero = (props: Props) => {
   );
 };
 
-export default ContactHero;
+export default UploadForm;
 
 // const [selectedCountry, setSelectedCountry] = useState('');
 // const [states, setStates] = useState([]);
