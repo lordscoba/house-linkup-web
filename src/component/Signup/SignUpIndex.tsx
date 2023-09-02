@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SignUp_BG } from '../../assets/images';
+import { Register_BG, SignUp_BG } from '../../assets/images';
 import { Facebook, Instagram, Logo } from '../../assets/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,7 +96,7 @@ const SignUpIndex = (props: Props) => {
   return (
     <div className="  flex flex-col-reverse xl:flex-row   ">
       <section className="w-full hidden xl:block   xl:min-w-[50%] h-[900px] relative">
-        <img src={SignUp_BG} alt="" className="object-cover w-full h-full " />
+        <img src={Register_BG} alt="" className="object-cover w-full h-full " />
 
         {/* <div className="xl:w-[428px] w-full m-auto absolute top-[20%] xl:right-0  left-0   bg-[rgba(255,255,255,0.20)] py-[179px] px-[13px]">
           <div className=" w-full bg-[#fff] rounded-[50px] text-[#000] m-auto mb-[35px] py-2">
@@ -120,7 +120,7 @@ const SignUpIndex = (props: Props) => {
         </div> */}
       </section>
       <section className="w-full border">
-        <div className="pt-[49px] xl:pl-[34px] px-4 flex items-center gap-[160px]">
+        <div className="py-4 xl:pl-[34px] px-4 flex items-center gap-[160px]">
           <div
             className=" flex items-center gap-4 "
             onClick={() => navigate('/')}
@@ -134,17 +134,6 @@ const SignUpIndex = (props: Props) => {
             <h2 className="xl:text-[24px] text-[20px] font-semibold text-[#4BA586] cursor-pointer">
               HouseLinkUp
             </h2>
-          </div>
-          <div className="block xl:flex items-center gap-3 w-[25rem] xl:w-auto text-center">
-            <p className="text-[#000] font-[300] text-[14px]">
-              have an account?
-            </p>{' '}
-            <Link
-              to={'/login'}
-              className="text-[14px] text-[#69B99D] font-[600] "
-            >
-              Sign in!
-            </Link>
           </div>
         </div>
 
@@ -344,6 +333,18 @@ const SignUpIndex = (props: Props) => {
               >
                 Create Account
               </button>
+            </div>
+
+            <div className=" mt-4 flex gap-2">
+              <p className="text-[#000] font-[300] text-[15px]">
+                have an account?
+              </p>{' '}
+              <Link
+                to={'/login'}
+                className="text-[15px] text-[#69B99D] font-[600] "
+              >
+                Sign in!
+              </Link>
             </div>
           </form>
         </section>

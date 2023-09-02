@@ -33,6 +33,7 @@ const UserDashboardNav = (props: Props) => {
 
   const handleLogout = () => {
     dispatch({ type: LOG_OUT });
+    navigate('/');
     localStorage.clear();
     // console.log({ isLoggedIn, LoginSuccess });
   };

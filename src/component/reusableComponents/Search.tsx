@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroNewPlaceBg } from '../../assets/images';
+import { HeroNewPlaceBg, Search_Bg } from '../../assets/images';
 
 type Props = {};
 
@@ -8,7 +8,7 @@ const Search = (props: Props) => {
     <>
       <div className="xl:mt-[189px] mt-[3rem] xl:w-[1220px] h-[600px] xl:h-auto w-full m-auto max-h-[306px] relative">
         <img
-          src={HeroNewPlaceBg}
+          src={Search_Bg}
           alt="bg image"
           className="w-full h-full object-cover"
         />
