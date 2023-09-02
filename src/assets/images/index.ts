@@ -4,6 +4,10 @@ export { default as ReviewImg } from './Review_img.png';
 export { default as HeroNewPlaceBg } from './hero-newplace-bg.png';
 export { default as Image_1 } from './image-2.avif';
 export { default as Image_2 } from './image-3.jpg';
+export { default as Login_Bg } from './login_bg_png.png';
+export { default as Register_BG } from './sign_up_bg_png.png';
+export { default as Search_Bg } from './search_component_bg_png.png';
+export { default as Services_Bg } from './services_png.png';
 
 // ABOUT
 
