@@ -1,20 +1,18 @@
-export interface BuyRent {
-  label: string;
-  value: String[];
+interface DropDownTypes {
+  heading: string;
+  values: string[];
 }
-
-export type BuyRentData = Array<BuyRent>;
 
 export interface LocationInterface {
   label: string;
   value: String[];
 }
 
-export type LocationData = Array<LocationInterface>;
+export type LocatiionTypesData = Array<LocationInterface>;
 
 export interface HouseTypeInterface {
-  label: string;
-  value: String[];
+  houses: Array<DropDownTypes>;
+  rent: Array<DropDownTypes>;
 }
 
 export type HouseTypeData = Array<HouseTypeInterface>;

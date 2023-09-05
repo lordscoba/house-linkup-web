@@ -13,31 +13,33 @@ import {
   ReviewsInterface,
 } from './types';
 
-export const locationvalues: Array<LocationInterface> = [
-  {
-    label: 'Location',
-
-    value: [
-      'Emene Enugu',
-      'Umudioka Anambra State',
-      'Awada Anambra State',
-      'Ojuelegba Lagos State',
-      'New Jessy USA',
-    ],
-  },
-];
-
 export const housevalues: Array<HouseTypeInterface> = [
   {
-    label: 'Type',
-
-    value: [
-      '1 bedroom',
-      '2 bedroom',
-      '3 bedroom',
-      '4 bedroom',
-      '5 bedroom',
-      '6 bedroom',
+    houses: [
+      {
+        heading: 'Houses',
+        values: [
+          '1 bedroom',
+          '2 bedroom',
+          '3 bedroom',
+          '4 bedroom',
+          '5 bedroom',
+          '6 bedroom',
+        ],
+      },
+    ],
+    rent: [
+      {
+        heading: 'Rent',
+        values: [
+          '1 rent',
+          '2 bedroom',
+          '3 bedroom',
+          '4 bedroom',
+          '5 bedroom',
+          '6 bedroom',
+        ],
+      },
     ],
   },
 ];
@@ -47,6 +49,41 @@ export const piceRangevalues: Array<PriceInterface> = [
     label: 'Price Range',
 
     value: ['200 - 350', '400 - 550', '500 - 650', '700 - 850', '900 - 1150'],
+  },
+];
+
+export const locationData: Array<LocationInterface> = [
+  {
+    label: 'location',
+
+    value: [
+      'Abia',
+      'Adamawa',
+      'AkwaIbom',
+      'Anambra',
+      'Bauchi',
+      'Bayelsa',
+      'Benue',
+      'Boronu',
+      'Cross-River',
+      'Delta',
+      'Ebonyi',
+      'Edo',
+      'Ekiti',
+      'Enugu',
+      'imo',
+      'Jigawa',
+      'Niger',
+      'Ondo',
+      'Oshun',
+      'Oyo',
+      'Platue',
+      'Rivers',
+      'Sokoto',
+      'Taraba',
+      'Gombe',
+      'Zamfara',
+    ],
   },
 ];
 

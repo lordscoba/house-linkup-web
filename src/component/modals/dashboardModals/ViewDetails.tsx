@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageInterface } from '../../dashboard/AdminDashboard/users/types';
 // import { ImageInterface } from '../../dashboard/users/types';
 interface UserInterface {
@@ -24,6 +24,10 @@ type Props = {
 
 const ViewDetails = ({ open, setOpen, data }: Props) => {
   // const joinedDate = new Date(createdAt).toDateString();
+  useEffect(() => {
+    console.log({ dd: data });
+  }, []);
+  console.log({ dd: data });
 
   return (
     <>

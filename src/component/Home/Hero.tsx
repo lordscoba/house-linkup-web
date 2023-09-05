@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { ArrowDown, Rbg } from "../../assets/icons";
-import { housevalues, locationvalues, piceRangevalues } from "./data";
+import { useEffect, useState } from 'react';
+import { ArrowDown, Rbg } from '../../assets/icons';
+import { housevalues, locationData, piceRangevalues } from './data';
 import {
   HouseTypeData,
   HouseTypeInterface,
-  LocationData,
+  LocatiionTypesData,
   LocationInterface,
   PriceInterface,
   PriceListData,
-} from "./types";
+} from './types';
 
 const Hero = () => {
   return (
@@ -58,7 +58,7 @@ const HeroCard = () => {
         <button
           onClick={() => setIndex(1)}
           className={`${
-            index === 1 ? "text-[#69B99D]" : "text-[#909090]"
+            index === 1 ? 'text-[#69B99D]' : 'text-[#909090]'
           } w-[54px] font-semibold`}
         >
           Buy
@@ -66,7 +66,7 @@ const HeroCard = () => {
         <button
           onClick={() => setIndex(2)}
           className={`${
-            index === 2 ? "text-[#69B99D]" : "text-[#909090]"
+            index === 2 ? 'text-[#69B99D]' : 'text-[#909090]'
           } w-[54px] font-semibold`}
         >
           Rent
@@ -89,71 +89,161 @@ const HeroCard = () => {
 };
 
 const Location = () => {
-  const [data, setData] = useState<LocationData>([]);
-  const [selected, setSelected] = useState<string>("");
+  const [data, setData] = useState<LocatiionTypesData>([]);
+  const [selected, setSelected] = useState<string>('');
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
+  const [arrayObj, setArrayObj] = useState<LocatiionTypesData>([]);
+  const [selectedTwo, setSelectedTwo] = useState<string>('');
+
   useEffect(() => {
-    setData(locationvalues);
+    setArrayObj(locationData);
+    setData(locationData);
   }, []);
 
   return (
     <div className=" ">
-      {data?.length > 0
-        ? data?.map((item: LocationInterface, index: any) => {
-            return (
-              <div key={index} className="mb-4">
-                <label htmlFor={`${item?.label}`} className="mb-2">
-                  {item?.label}
-                </label>
-                <p
-                  className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
-                  onClick={() => setShowDropDown((prev) => !prev)}
-                >
-                  {/* {selected} */}
-                  <input
-                    type="text"
-                    value={selected}
-                    onChange={(e) => e.target.value}
-                    placeholder="Select location "
-                  />
+      <div>
+        {data?.length > 0
+          ? data?.map((item: LocationInterface, index: any) => {
+              return (
+                <div key={index} className="mb-4">
+                  <label htmlFor={`${item?.label}`} className="mb-2">
+                    {item?.label}
+                  </label>
+                  <p
+                    className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
+                    onClick={() => setShowDropDown((prev) => !prev)}
+                  >
+                    <input
+                      type="text"
+                      value={selected}
+                      onChange={(e) => e.target.value}
+                      placeholder="Select location "
+                    />
 
-                  <img
-                    src={ArrowDown}
-                    alt="arrow icon"
-                    width={18}
-                    height={18}
-                    className="text-end ml-auto"
-                  />
-                </p>
+                    <img
+                      src={ArrowDown}
+                      alt="arrow icon"
+                      width={18}
+                      height={18}
+                      className="text-end ml-auto"
+                    />
+                  </p>
 
-                {showDropDown && (
-                  <div className="h-[10rem] overflow-y-auto ">
-                    {item.value
-                      ? item?.value?.map((obj: any, index: any) => {
+                  {showDropDown && (
+                    <div className="h-[10rem] overflow-y-auto ">
+                      {item.value
+                        ? item?.value?.map((obj: any, index: any) => {
+                            return (
+                              <div
+                                key={index}
+                                onClick={() => setShowDropDown(false)}
+                              >
+                                <p
+                                  onClick={() => setSelected(obj)}
+                                  className="cursor-pointer"
+                                >
+                                  {obj}
+                                </p>
+                              </div>
+                            );
+                          })
+                        : null}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          : null}
+      </div>
+
+      {/* <section>
+        <p>Location</p>
+        <p
+          className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
+          onClick={() => setShowDropDown((prev) => !prev)}
+        >
+          <input
+            type="text"
+            value={selected}
+            onChange={(e) => e.target.value}
+            placeholder="Select location "
+          />
+
+          <img
+            src={ArrowDown}
+            alt="arrow icon"
+            width={18}
+            height={18}
+            className="text-end ml-auto"
+          />
+        </p>
+
+        {showDropDown ? (
+          <>
+            {arrayObj?.length > 0
+              ? arrayObj?.map((item: LocationInterface, index: any) => {
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => setShowDropDown(false)}
+                      className=" border mt-3 h-[8rem] overflow-y-auto pl-3"
+                    >
+                      <div>
+                        {item?.houses?.map((d: any, i: any) => {
                           return (
-                            <div
-                              key={index}
-                              onClick={() => setShowDropDown(false)}
-                            >
-                              <p onClick={() => setSelected(obj)}>{obj}</p>
+                            <div key={index}>
+                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase mb-2">
+                                {d?.heading}
+                              </h4>
+                              {d?.values?.map((d: any, i: any) => {
+                                return (
+                                  <p
+                                    key={index}
+                                    onClick={() => setSelected(d)}
+                                    className="cursor-pointer"
+                                  >
+                                    {d}
+                                  </p>
+                                );
+                              })}
                             </div>
                           );
-                        })
-                      : null}
-                  </div>
-                )}
-              </div>
-            );
-          })
-        : null}
+                        })}
+                      </div>
+                      <div>
+                        {item?.rent?.map((d: any, i: any) => {
+                          return (
+                            <div key={index}>
+                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase my-2">
+                                {d?.heading}
+                              </h4>
+                              {d?.values?.map((d: any, i: any) => {
+                                return (
+                                  <p key={index} onClick={() => setSelected(d)}>
+                                    {d}
+                                  </p>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
+          </>
+        ) : null}
+      </section> */}
     </div>
   );
 };
 
 const HouseType = () => {
   const [data, setData] = useState<HouseTypeData>([]);
-  const [selected, setSelected] = useState<string>("");
+  const [selected, setSelected] = useState<string>('');
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -162,62 +252,92 @@ const HouseType = () => {
 
   return (
     <div className="mb-4 ">
-      {data?.length > 0
-        ? data?.map((item: HouseTypeInterface, index: any) => {
-            return (
-              <div key={index} className="">
-                <label htmlFor={`${item?.label}`} className="mb-2">
-                  {item?.label}
-                </label>
-                <p
-                  className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
-                  onClick={() => setShowDropDown((prev) => !prev)}
-                >
-                  <input
-                    type="text"
-                    value={selected}
-                    onChange={(e) => e.target.value}
-                    placeholder="Eg 1 bedroom etc "
-                  />
+      <section>
+        <p>House Type</p>
+        <p
+          className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
+          onClick={() => setShowDropDown((prev) => !prev)}
+        >
+          <input
+            type="text"
+            value={selected}
+            onChange={(e) => e.target.value}
+            placeholder="Select location "
+          />
 
-                  <img
-                    src={ArrowDown}
-                    alt="arrow icon"
-                    width={18}
-                    height={18}
-                    className="text-end ml-auto"
-                  />
-                </p>
+          <img
+            src={ArrowDown}
+            alt="arrow icon"
+            width={18}
+            height={18}
+            className="text-end ml-auto"
+          />
+        </p>
 
-                {showDropDown && (
-                  <div className="h-[10rem] overflow-y-auto ">
-                    {item.value
-                      ? item?.value?.map((obj: String, index: any) => {
+        {showDropDown ? (
+          <>
+            {data?.length > 0
+              ? data?.map((item: HouseTypeInterface, index: any) => {
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => setShowDropDown(false)}
+                      className=" border mt-3 h-[8rem] overflow-y-auto "
+                    >
+                      <div>
+                        {item?.houses?.map((d: any, i: any) => {
                           return (
-                            <div
-                              key={index}
-                              onClick={() => setShowDropDown(false)}
-                            >
-                              <p onClick={() => setSelected(obj.toString())}>
-                                {obj}
-                              </p>
+                            <div key={index}>
+                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase mb-2">
+                                {d?.heading}
+                              </h4>
+                              {d?.values?.map((d: any, i: any) => {
+                                return (
+                                  <p
+                                    key={index}
+                                    onClick={() => setSelected(d)}
+                                    className="cursor-pointer"
+                                  >
+                                    {d}
+                                  </p>
+                                );
+                              })}
                             </div>
                           );
-                        })
-                      : null}
-                  </div>
-                )}
-              </div>
-            );
-          })
-        : null}
+                        })}
+                      </div>
+                      <div>
+                        {item?.rent?.map((d: any, i: any) => {
+                          return (
+                            <div key={index}>
+                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase my-2">
+                                {d?.heading}
+                              </h4>
+                              {d?.values?.map((d: any, i: any) => {
+                                return (
+                                  <p key={index} onClick={() => setSelected(d)}>
+                                    {d}
+                                  </p>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
+          </>
+        ) : null}
+      </section>
     </div>
   );
 };
 
 const PriceRange = () => {
   const [data, setData] = useState<PriceListData>([]);
-  const [selected, setSelected] = useState<String>("");
+  const [selected, setSelected] = useState<String>('');
   const [showDropDown, setShowDropDown] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -262,7 +382,10 @@ const PriceRange = () => {
                               key={index}
                               onClick={() => setShowDropDown(false)}
                             >
-                              <p onClick={() => setSelected("$" + obj)}>
+                              <p
+                                onClick={() => setSelected('$' + obj)}
+                                className="cursor-pointer font-[500] py-2"
+                              >
                                 ${obj}
                               </p>
                             </div>
