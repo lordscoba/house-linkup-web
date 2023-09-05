@@ -21,6 +21,8 @@ const SignUpIndex = (props: Props) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
   const [success, setSuccess] = useState(false);
@@ -30,7 +32,9 @@ const SignUpIndex = (props: Props) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerAction({ email, full_name: fullName, password }) as any);
+    dispatch(
+      registerAction({ email, full_name: fullName, password, userName }) as any
+    );
   };
 
   const RegisteredUser = useSelector(
@@ -185,6 +189,16 @@ const SignUpIndex = (props: Props) => {
             </div>
             <div className="mb-[20px]">
               <input
+                type="text"
+                placeholder="User Name"
+                value={userName}
+                onChange={(e: any) => setUserName(e.target.value)}
+                required
+                className="w-full border rounded-lg focus:border-[grey] px-3 py-3"
+              />
+            </div>
+            <div className="mb-[20px]">
+              <input
                 type="email"
                 placeholder="Enter Email"
                 value={email}
@@ -265,6 +279,8 @@ const SignUpIndex = (props: Props) => {
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e: any) => setConfirmPassword(e.target.value)}
                 required
                 className="w-full border rounded-lg px-3 py-3"
               />

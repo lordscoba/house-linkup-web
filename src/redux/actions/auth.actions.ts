@@ -27,7 +27,7 @@ import { apiRoutes } from '../routes/apiRoutes';
 import { RegisterInterface } from '../../component/Signup/signupTypes';
 
 export const registerAction =
-  ({ email, full_name, password }: RegisterInterface) =>
+  ({ email, full_name, password, userName }: RegisterInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ registerUser }: StoreReducerTypes) => void
@@ -44,7 +44,7 @@ export const registerAction =
 
       const { data } = await axios.post(
         apiRoutes.auth.user.register,
-        { email, password, full_name },
+        { email, password, full_name, userName },
         config
       );
 
