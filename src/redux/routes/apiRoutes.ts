@@ -16,11 +16,15 @@ export const apiRoutes = {
       login: SERVER_URL + '/login',
       forgotPassword: SERVER_URL + '/forgotpassword',
       resetPassword: SERVER_URL + `/reset-password`,
+      // ADMIN DASHBOARD
       getUserDetails:
         SERVER_URL + `/user-details/${dataFromStorage?.userDoc?._id}`,
       updateProfile:
         SERVER_URL + `/update-profile/${dataFromStorage?.userDoc?._id}`,
       getAllUsers: SERVER_URL + `/all-users?page=${currentpage}`,
     },
+  },
+  usersdashboard: {
+    uploadHouse: SERVER_URL + `/upload-property`,
   },
 };

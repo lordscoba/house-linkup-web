@@ -13,6 +13,14 @@ import {
   demoteUserReducer,
   promoteUserReducer,
 } from './reducers/dashboardreducers/dashboard.reducer';
+import {
+  uploaParlorImageReducer,
+  uploadBathRoomImageReducer,
+  uploadHouseReducer,
+  uploadKitchenImageReducer,
+  uploadRoomImageReducer,
+  uploadToiletImageReducer,
+} from './reducers/dashboardreducers/usersdashboard.reducers/usersdashboard.reducers';
 import { allUsersReducer, deleteUserReducer } from './reducers/users.reducer';
 
 const {
@@ -43,6 +51,14 @@ export type StoreReducerTypes = {
   blockUser: ReturnType<typeof blockUserReducer>;
   promoteUser: ReturnType<typeof promoteUserReducer>;
   demoteUser: ReturnType<typeof demoteUserReducer>;
+
+  // users dashboard
+  uploadHouse: ReturnType<typeof uploadHouseReducer>;
+  uploadparlorImage: ReturnType<typeof uploaParlorImageReducer>;
+  uploadKitchenImage: ReturnType<typeof uploadKitchenImageReducer>;
+  uploadToiletImage: ReturnType<typeof uploadToiletImageReducer>;
+  uploadRoomImage: ReturnType<typeof uploadRoomImageReducer>;
+  uploadBathRoomImage: ReturnType<typeof uploadBathRoomImageReducer>;
 };
 
 const reducer: StoreReducerTypes = combineReducers({
@@ -61,6 +77,14 @@ const reducer: StoreReducerTypes = combineReducers({
   blockUser: blockUserReducer,
   promoteUser: promoteUserReducer,
   demoteUser: demoteUserReducer,
+
+  // users dashboard
+  uploadHouse: uploadHouseReducer,
+  uploadparlorImage: uploaParlorImageReducer,
+  uploadKitchenImage: uploadKitchenImageReducer,
+  uploadToiletImage: uploadToiletImageReducer,
+  uploadRoomImage: uploadRoomImageReducer,
+  uploadBathRoomImage: uploadBathRoomImageReducer,
 });
 
 const initialState: any = {

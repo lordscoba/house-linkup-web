@@ -135,7 +135,7 @@ const RegisterFormModal = ({ setShow, show }: Props) => {
                   value={userName}
                   onChange={(e: any) => setUserName(e.target.value)}
                   required
-                  className="w-full border rounded-lg focus:border-[grey] px-3 py-3"
+                  className="w-full border rounded-lg focus:border-[grey] px-3 py-3 text-[#222]"
                 />
               </div>
               <div className="mb-[20px]">

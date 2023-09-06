@@ -23,3 +23,22 @@ export interface UserDashboardDataInterface {
 }
 
 export type UserDashboardDataArray = Array<UserDashboardDataInterface>;
+
+export interface HouseUploadInterface {
+  image: string;
+  house_type: string;
+  state: string;
+  city: string;
+  full_name: string;
+  email: string;
+  address: string;
+  status: string;
+  price: string;
+  totalNum_ofToilet: number;
+  totalNum_ofRooms: number;
+  totalNum_ofKitchen: number;
+  totalNum_ofBathroom: number;
+  totalNum_ofParlor: number;
+}
+
+export type HouseUploadType = Array<HouseUploadInterface>;
