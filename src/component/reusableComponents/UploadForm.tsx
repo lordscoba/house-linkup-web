@@ -1,10 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import UploadParlor from './UploadParlor';
+import UploadKitchen from './UploadKitchen';
+import UploadToilet from './UploadToilet';
+import UploadRoom from './UploadRoom';
+import UploadBathRoom from './UploadBathRoom';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadHouseUserAction } from '../../redux/actions/dashboardactions/usersdashboard/usersdashboard.action';
+import { StoreReducerTypes } from '../../redux/store';
+import { UPLOAD_HOUSE_RESET } from '../../redux/constants/dashboardconstants/usersdashboardconstants/usersdashboard.constants';
+import CircularLoader from '../loader/CircularLoader';
+import Message from '../message/Message';
 
 type Props = {
   setData: Function;
 };
 
 const UploadForm = ({ setData }: Props) => {
+  const dispatch = useDispatch();
   const [image, setImage] = useState(null) as any;
   const [imageName, setImageName] = useState('');
   const [isImage, setIsImage] = useState<boolean>(false);
@@ -12,6 +24,7 @@ const UploadForm = ({ setData }: Props) => {
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
   const [local_government, setLocal_government] = useState('');
+  const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
   const [numOfParlor, setNumOfParlor] = useState(0);
   const [numOfKitchen, setNumOfKitchen] = useState(0);
@@ -43,6 +56,7 @@ const UploadForm = ({ setData }: Props) => {
   const [fullName, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [address, setaddress] = useState('');
+  const [posterId, setPosterId] = useState('');
 
   const fileInputRef = useRef(null) as any;
   const parlorRef = useRef(null) as any;
@@ -50,6 +64,19 @@ const UploadForm = ({ setData }: Props) => {
   const toiletRef = useRef(null) as any;
   const roomRef = useRef(null) as any;
   const bathRoomRef = useRef(null) as any;
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [token, setToken] = useState('');
+
+  const uploadHouseState = useSelector(
+    (state: StoreReducerTypes) => state?.uploadHouse
+  );
+
+  // console.log(uploadHouseState);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
@@ -216,11 +243,99 @@ const UploadForm = ({ setData }: Props) => {
       price,
     };
     setData([arrays]);
-    // console.log({ home: home_type });
+    window.scrollTo({
+      top: 26,
+      behavior: 'smooth',
+    });
+
+    dispatch(
+      uploadHouseUserAction({
+        address,
+        city,
+        description,
+        email,
+        frontImage: image,
+        full_Name: fullName,
+        house_type,
+        local_government,
+        poster: posterId,
+        price,
+        state,
+        status,
+        totalNum_ofParlor: numOfParlor,
+        totalNum_ofKitchen: numOfKitchen,
+        totalNum_ofRooms: numOfRooms,
+        totalNum_ofToilet: numOfToilet,
+        totalNum_ofBathroom: numOfBathRoom,
+        token,
+      }) as any
+    );
+
+    dispatch({ type: UPLOAD_HOUSE_RESET });
   };
+
+  // USEEFFECT
+
+  useEffect(() => {
+    const loading = uploadHouseState?.loading;
+    setLoading(loading);
+
+    const success = uploadHouseState?.success;
+    setSuccess(success);
+    if (success) {
+      const Message = uploadHouseState?.serverResponse?.message;
+      setSuccessMessage(Message);
+    }
+  }, [uploadHouseState?.loading, uploadHouseState?.success]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    setErrorMessage('');
+    if (success) {
+      timeout = setTimeout(() => {
+        setSuccessMessage('');
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    const err = uploadHouseState?.error;
+    setError(err);
+    if (err) {
+      const err = uploadHouseState?.serverError;
+      setErrorMessage(err);
+    }
+  }, [uploadHouseState?.error]);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errorMessage) {
+      timeout = setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [errorMessage]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('loginUser')
+      ? JSON.parse(localStorage.getItem('loginUser') as any)
+      : null;
+
+    const storedToken = storedData?.token;
+    const id = storedData?.userDoc?._id;
+    setPosterId(id);
+    setToken(storedToken);
+  }, []);
 
   return (
     <section className="w-full max-w-[1130px] py-[23px] m-auto xl:px-0 hide-scrollbar">
+      {uploadHouseState?.loading ? <CircularLoader /> : null}
+      {success ? <Message type="success"> {successMessage}</Message> : null}
+
+      {error ? <Message type="danger">{errorMessage}</Message> : null}
       <form
         onSubmit={handleFormSubmit}
         className="w-full xl:w-[1130px] m-auto bg-[#fff] rounded-lg lg:px-[63px] px-2  py-[42px]    mb-[5rem] border"
@@ -444,6 +559,7 @@ const UploadForm = ({ setData }: Props) => {
                   />
                 </div>
               </div>
+
               <div className="lg:w-[318px] w-full mb-4">
                 <label
                   htmlFor="NumOfKitchen"
@@ -538,6 +654,8 @@ const UploadForm = ({ setData }: Props) => {
             <div>
               <textarea
                 placeholder="Description"
+                value={description}
+                onChange={(e: any) => setDescription(e.target.value)}
                 className="px-4 border w-full rounded-md h-[151px] pt-2"
               ></textarea>
             </div>
@@ -616,340 +734,54 @@ const UploadForm = ({ setData }: Props) => {
               Other Important Images to upload (REQUIRED)
             </h2>
             <div className="flex flex-wrap gap-6">
-              <section className="w-full lg:max-w-[228px]">
-                <h2 className="text-[18px] font-[600] text-[#000]">
-                  Parlor Image
-                </h2>
-                <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center h-[213px] pt-6 text-center ">
-                  <div
-                    className="drop-area h-full"
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                  >
-                    {parlorImageUrl ? (
-                      // <img src={image} alt="Uploaded" className="preview-image" />
-                      <p className="font-bold">{parlorImageName}</p>
-                    ) : (
-                      <p className="text-[#000] font-[500] text-[1rem]">
-                        Drag and drop an image here or
-                      </p>
-                    )}
+              <UploadParlor
+                handleParlorFileChange={handleParlorFileChange}
+                handleParlorImagePreview={handleParlorImagePreview}
+                handleParlorLabelClick={handleParlorLabelClick}
+                isParlorImage={isParlorImage}
+                parlorImageName={parlorImageName}
+                parlorImageUrl={parlorImageUrl}
+                parlorRef={parlorRef}
+              />
 
-                    <div className="inline-block relative cursor-pointer ">
-                      <label
-                        htmlFor="browse"
-                        onClick={handleParlorLabelClick}
-                        className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
-                      >
-                        Browse
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleParlorFileChange}
-                        ref={parlorRef}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-[55px]">
-                  <button
-                    type="submit"
-                    className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[20px] text-[15px] w-full py-1  m-auto   rounded-md"
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="mt-[25px] text-enter">
-                  <button
-                    onClick={handleParlorImagePreview}
-                    className=" mb-[1rem] border px-3 py-1 bg-[rgba(110,99,99,0.7)] text-[#fff]"
-                  >
-                    Preview Image
-                  </button>
-                  {isParlorImage ? (
-                    <>
-                      {!parlorImageUrl ? (
-                        <p>No Image to Preview at the moment</p>
-                      ) : (
-                        <img
-                          src={parlorImageUrl}
-                          alt="Uploaded"
-                          className="preview-image"
-                        />
-                      )}
-                    </>
-                  ) : null}
-                </div>
-              </section>
-              <section className="w-full lg:max-w-[228px]">
-                <h2 className="text-[18px] font-[600] text-[#000]">
-                  Kitchen Image
-                </h2>
-                <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center h-[213px] pt-6 text-center ">
-                  <div
-                    className="drop-area h-full"
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                  >
-                    {kitchenImageUrl ? (
-                      <p className="font-bold">{kitchenImageName}</p>
-                    ) : (
-                      <p className="text-[#000] font-[500] text-[1rem]">
-                        Drag and drop an image here or
-                      </p>
-                    )}
+              <UploadKitchen
+                handleKitchenFileChange={handleKitchenFileChange}
+                handleKitchenImagePreview={handleKitchenImagePreview}
+                handleKitchenLabelClick={handleKitchenLabelClick}
+                isKitchenImage={isKitchenImage}
+                kitchenImageName={kitchenImageName}
+                kitchenImageUrl={kitchenImageUrl}
+                kitchenRef={kitchenRef}
+              />
 
-                    <div className="inline-block relative cursor-pointer ">
-                      <label
-                        htmlFor="browse"
-                        onClick={handleKitchenLabelClick}
-                        className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
-                      >
-                        Browse
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleKitchenFileChange}
-                        ref={kitchenRef}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-[55px]">
-                  <button
-                    type="submit"
-                    className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[20px] text-[15px] w-full py-1  m-auto   rounded-md"
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="mt-[25px] text-enter">
-                  <button
-                    onClick={handleKitchenImagePreview}
-                    className=" mb-[1rem] border px-3 py-1 bg-[rgba(110,99,99,0.7)] text-[#fff]"
-                  >
-                    Preview Image
-                  </button>
-                  {isKitchenImage && (
-                    <>
-                      {!kitchenImageUrl ? (
-                        <p>No Image to Preview at the moment</p>
-                      ) : (
-                        <img
-                          src={kitchenImageUrl}
-                          alt="Uploaded"
-                          className="preview-image"
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              </section>
-              <section className="w-full lg:max-w-[228px]">
-                <h2 className="text-[18px] font-[600] text-[#000]">
-                  Toilet Image
-                </h2>
-                <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center h-[213px] pt-6 text-center ">
-                  <div
-                    className="drop-area h-full"
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                  >
-                    {toiletImageUrl ? (
-                      // <img src={image} alt="Uploaded" className="preview-image" />
-                      <p className="font-bold">{toiletImageName}</p>
-                    ) : (
-                      <p className="text-[#000] font-[500] text-[1rem]">
-                        Drag and drop an image here or
-                      </p>
-                    )}
+              <UploadToilet
+                handleToiletFileChange={handleToiletFileChange}
+                handleToiletImagePreview={handleToiletImagePreview}
+                handleToiletLabelClick={handleToiletLabelClick}
+                isToiletImage={isToiletImage}
+                toiletImageName={toiletImageName}
+                toiletImageUrl={toiletImageUrl}
+                toiletRef={toiletRef}
+              />
 
-                    <div className="inline-block relative cursor-pointer ">
-                      <label
-                        htmlFor="browse"
-                        onClick={handleToiletLabelClick}
-                        className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
-                      >
-                        Browse
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleToiletFileChange}
-                        ref={toiletRef}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-[55px]">
-                  <button
-                    type="submit"
-                    className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[20px] text-[15px] w-full py-1  m-auto   rounded-md"
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="mt-[25px] text-enter">
-                  <button
-                    onClick={handleToiletImagePreview}
-                    className=" mb-[1rem] border px-3 py-1 bg-[rgba(110,99,99,0.7)] text-[#fff]"
-                  >
-                    Preview Image
-                  </button>
-                  {isToiletImage && (
-                    <>
-                      {!toiletImageUrl ? (
-                        <p>No Image to Preview at the moment</p>
-                      ) : (
-                        <img
-                          src={toiletImageUrl}
-                          alt="Uploaded"
-                          className="preview-image"
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              </section>
-              <section className="w-full lg:max-w-[228px]">
-                <h2 className="text-[18px] font-[600] text-[#000]">
-                  Room Image
-                </h2>
-                <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center h-[213px] pt-6 text-center ">
-                  <div
-                    className="drop-area h-full"
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                  >
-                    {roomImageUrl ? (
-                      // <img src={image} alt="Uploaded" className="preview-image" />
-                      <p className="font-bold">{roomImageName}</p>
-                    ) : (
-                      <p className="text-[#000] font-[500] text-[1rem]">
-                        Drag and drop an image here or
-                      </p>
-                    )}
-
-                    <div className="inline-block relative cursor-pointer ">
-                      <label
-                        htmlFor="browse"
-                        onClick={handleRoomLabelClick}
-                        className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
-                      >
-                        Browse
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleRoomFileChange}
-                        ref={roomRef}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-[55px]">
-                  <button
-                    type="submit"
-                    className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[20px] text-[15px] w-full py-1  m-auto   rounded-md"
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="mt-[25px] text-enter">
-                  <button
-                    onClick={handleRoomImagePreview}
-                    className=" mb-[1rem] border px-3 py-1 bg-[rgba(110,99,99,0.7)] text-[#fff]"
-                  >
-                    Preview Image
-                  </button>
-                  {isRoomImage && (
-                    <>
-                      {!roomImageUrl ? (
-                        <p>No Image to Preview at the moment</p>
-                      ) : (
-                        <img
-                          src={roomImageUrl}
-                          alt="Uploaded"
-                          className="preview-image"
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              </section>
-              <section className="w-full lg:max-w-[228px]">
-                <h2 className="text-[18px] font-[600] text-[#000]">
-                  Bathroom Image
-                </h2>
-                <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md flex items-center justify-center h-[213px] pt-6 text-center ">
-                  <div
-                    className="drop-area h-full"
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                  >
-                    {bathRoomImageUrl ? (
-                      // <img src={image} alt="Uploaded" className="preview-image" />
-                      <p className="font-bold">{bathRoomImageName}</p>
-                    ) : (
-                      <p className="text-[#000] font-[500] text-[1rem]">
-                        Drag and drop an image here or
-                      </p>
-                    )}
-
-                    <div className="inline-block relative cursor-pointer ">
-                      <label
-                        htmlFor="browse"
-                        onClick={handleBathRoomLabelClick}
-                        className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
-                      >
-                        Browse
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleBathRoomFileChange}
-                        ref={bathRoomRef}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-[55px]">
-                  <button
-                    type="submit"
-                    className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[20px] text-[15px] w-full py-1  m-auto   rounded-md"
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="mt-[25px] text-enter">
-                  <button
-                    onClick={handleBathRoomImagePreview}
-                    className=" mb-[1rem] border px-3 py-1 bg-[rgba(110,99,99,0.7)] text-[#fff]"
-                  >
-                    Preview Image
-                  </button>
-                  {isBathRoomImage && (
-                    <>
-                      {!bathRoomImageUrl ? (
-                        <p>No Image to Preview at the moment</p>
-                      ) : (
-                        <img
-                          src={bathRoomImageUrl}
-                          alt="Uploaded"
-                          className="preview-image"
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              </section>
+              <UploadRoom
+                handleRoomFileChange={handleRoomFileChange}
+                handleRoomImagePreview={handleRoomImagePreview}
+                handleRoomLabelClick={handleRoomLabelClick}
+                isRoomImage={isRoomImage}
+                roomImageName={roomImageName}
+                roomImageUrl={roomImageUrl}
+                roomRef={roomRef}
+              />
+              <UploadBathRoom
+                bathRoomImageName={bathRoomImageName}
+                bathRoomImageUrl={bathRoomImageUrl}
+                bathRoomRef={bathRoomRef}
+                handleBathRoomFileChange={handleBathRoomFileChange}
+                handleBathRoomImagePreview={handleBathRoomImagePreview}
+                handleBathRoomLabelClick={handleBathRoomLabelClick}
+                isBathRoomImage={isBathRoomImage}
+              />
             </div>
           </div>
         </section>

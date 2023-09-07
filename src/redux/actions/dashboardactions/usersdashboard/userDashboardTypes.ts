@@ -16,6 +16,7 @@ export interface UploadHouseInterface {
   totalNum_ofBathroom: number | any;
   totalNum_ofParlor: number | any;
   frontImage: string;
+  token: string;
 }
 
 export interface UploadImageInterface {

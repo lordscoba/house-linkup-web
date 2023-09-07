@@ -68,7 +68,7 @@ const DashboardEditModal = ({ open, setOpen, data }: Props) => {
     setCheckbox1Checked(false);
     setCheckbox2Checked((prev) => !prev);
     setAdmin(e.target.value);
-    console.log({ admin });
+    // console.log({ admin });
   };
 
   const handleModalClosed = () => {
