@@ -27,7 +27,7 @@ import {
   UploadImageInterface,
 } from './userDashboardTypes';
 
-export const promoteUserAction =
+export const uploadHouseUserAction =
   ({
     address,
     city,
@@ -46,6 +46,7 @@ export const promoteUserAction =
     totalNum_ofParlor,
     totalNum_ofRooms,
     totalNum_ofToilet,
+    token,
   }: UploadHouseInterface) =>
   async (
     dispatch: Dispatch,
@@ -78,6 +79,7 @@ export const promoteUserAction =
       FD.append('totalNum_ofParlor', totalNum_ofParlor);
       FD.append('totalNum_ofRooms', totalNum_ofRooms);
       FD.append('totalNum_ofToilet', totalNum_ofToilet);
+      FD.append('token', token);
 
       const { data } = await axios.post(
         apiRoutes.usersdashboard.uploadHouse,

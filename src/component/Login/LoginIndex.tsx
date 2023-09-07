@@ -57,7 +57,6 @@ const LoginIndex = (props: Props) => {
       const LoginErrorMessage = LoginUser?.serverError;
       setError(LoginError);
       setErrorMessage(LoginErrorMessage || 'Connection Error');
-      console.log({ err: LoginErrorMessage, LoginError });
     }
   }, [LoginUser?.error, LoginUser]);
 
