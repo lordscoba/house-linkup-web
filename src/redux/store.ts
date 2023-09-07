@@ -14,6 +14,7 @@ import {
   promoteUserReducer,
 } from './reducers/dashboardreducers/dashboard.reducer';
 import {
+  getUserUploadedHouseReducer,
   uploaParlorImageReducer,
   uploadBathRoomImageReducer,
   uploadHouseReducer,
@@ -59,6 +60,7 @@ export type StoreReducerTypes = {
   uploadToiletImage: ReturnType<typeof uploadToiletImageReducer>;
   uploadRoomImage: ReturnType<typeof uploadRoomImageReducer>;
   uploadBathRoomImage: ReturnType<typeof uploadBathRoomImageReducer>;
+  getUserUploads: ReturnType<typeof getUserUploadedHouseReducer>;
 };
 
 const reducer: StoreReducerTypes = combineReducers({
@@ -85,6 +87,7 @@ const reducer: StoreReducerTypes = combineReducers({
   uploadToiletImage: uploadToiletImageReducer,
   uploadRoomImage: uploadRoomImageReducer,
   uploadBathRoomImage: uploadBathRoomImageReducer,
+  getUserUploads: getUserUploadedHouseReducer,
 });
 
 const initialState: any = {

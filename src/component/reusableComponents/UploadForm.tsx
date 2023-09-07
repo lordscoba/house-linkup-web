@@ -729,7 +729,7 @@ const UploadForm = ({ setData }: Props) => {
           </section>
 
           {/* OTHER IMPORTANT IMAGES */}
-          <div>
+          {/* <div>
             <h2 className="font-semibold text-center text-[18px] my-10 uppercase">
               Other Important Images to upload (REQUIRED)
             </h2>
@@ -783,7 +783,7 @@ const UploadForm = ({ setData }: Props) => {
                 isBathRoomImage={isBathRoomImage}
               />
             </div>
-          </div>
+          </div> */}
         </section>
       </form>
     </section>

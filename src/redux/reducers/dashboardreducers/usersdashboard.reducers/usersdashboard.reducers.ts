@@ -1,4 +1,7 @@
 import {
+  GET_USER_UPLOADED_HOUSE_FAIL,
+  GET_USER_UPLOADED_HOUSE_REQUEST,
+  GET_USER_UPLOADED_HOUSE_SUCCESS,
   UPLOAD_BATH_ROOM_IMAGE_FAIL,
   UPLOAD_BATH_ROOM_IMAGE_REQUEST,
   UPLOAD_BATH_ROOM_IMAGE_SUCCESS,
@@ -180,6 +183,7 @@ export const uploadRoomImageReducer = (
       return state;
   }
 };
+
 export const uploadBathRoomImageReducer = (
   state: ResponseType = initialStateRequest,
   action: any
@@ -196,6 +200,38 @@ export const uploadBathRoomImageReducer = (
       };
 
     case UPLOAD_BATH_ROOM_IMAGE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+
+    case UPLOAD_HOUSE_RESET:
+      return initialStateRequest;
+
+    default:
+      return state;
+  }
+};
+
+export const getUserUploadedHouseReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case GET_USER_UPLOADED_HOUSE_REQUEST:
+      return { ...state, loading: true };
+    case GET_USER_UPLOADED_HOUSE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case GET_USER_UPLOADED_HOUSE_FAIL:
       return {
         ...state,
         loading: false,

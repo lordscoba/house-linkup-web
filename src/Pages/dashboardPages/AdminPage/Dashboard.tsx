@@ -19,7 +19,7 @@ const Dashboard = (props: Props) => {
         <h2
           className={`${
             show ? 'md:pl-[19rem]' : 'md:pl-[5rem]'
-          } flex-1   pt-[6rem] h-screen bg-[black] text-[#fff] px-2`}
+          } flex-1   pt-[6rem] h-screen bg-[#F3F4F6] text-[#333] px-2`}
         >
           Dashboard
         </h2>

@@ -1,6 +1,9 @@
 import { Dispatch } from 'redux';
 import { StoreReducerTypes } from '../../../store';
 import {
+  GET_USER_UPLOADED_HOUSE_FAIL,
+  GET_USER_UPLOADED_HOUSE_REQUEST,
+  GET_USER_UPLOADED_HOUSE_SUCCESS,
   UPLOAD_BATH_ROOM_IMAGE_FAIL,
   UPLOAD_BATH_ROOM_IMAGE_REQUEST,
   UPLOAD_BATH_ROOM_IMAGE_SUCCESS,
@@ -25,6 +28,7 @@ import { SERVER_URL, apiRoutes } from '../../../routes/apiRoutes';
 import {
   UploadHouseInterface,
   UploadImageInterface,
+  UserHouseUploadsInterface,
 } from './userDashboardTypes';
 
 export const uploadHouseUserAction =
@@ -258,6 +262,25 @@ export const uploadBathRoomImageAction =
     } catch (error: any) {
       dispatch({
         type: UPLOAD_BATH_ROOM_IMAGE_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const getUserUploadedHouseAction =
+  ({ id }: UserHouseUploadsInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ getUserUploads }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: GET_USER_UPLOADED_HOUSE_REQUEST });
+
+      const { data } = await axios.get(`${SERVER_URL}/get-property/${id}`);
+      dispatch({ type: GET_USER_UPLOADED_HOUSE_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: GET_USER_UPLOADED_HOUSE_FAIL,
         payload: error?.response && error?.response?.data?.message,
       });
     }

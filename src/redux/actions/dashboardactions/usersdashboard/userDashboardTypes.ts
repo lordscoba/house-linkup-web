@@ -22,3 +22,7 @@ export interface UploadHouseInterface {
 export interface UploadImageInterface {
   image: string;
 }
+
+export interface UserHouseUploadsInterface {
+  id: string;
+}
