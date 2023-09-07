@@ -180,7 +180,7 @@ const Table = ({ show }: ShoweInterface) => {
     <section
       className={`${
         show ? 'md:pl-[19rem]' : 'md:pl-[5rem]'
-      } flex-1   py-[6rem] bg-[black] text-[#fff] px-2 `}
+      } flex-1   py-[6rem] bg-[#F3F4F6] text-[#333] px-2 `}
     >
       <h2 className="text-center font-bold md:text-[2rem] text-[1.2rem]">
         Users List
@@ -213,7 +213,7 @@ const Table = ({ show }: ShoweInterface) => {
         <button
           type="button"
           onClick={() => setCreateUserModal(true)}
-          className="border px-8 py-2"
+          className="border px-8 py-2 bg-[#6726A8] text-[#fff]"
         >
           Create New User
         </button>
@@ -222,9 +222,9 @@ const Table = ({ show }: ShoweInterface) => {
       <section className="bg-[#fff] p-[1rem] rounded-lg mt-10 shadow-2xl overflow-x-auto overflow-y-auto h-[25rem] md:h-auto w-full hide-scrollbar   ">
         <div className=" w-[22rem] md:w-[31rem] lg:w-[35rem]  xl:w-full">
           <table className=" w-full bg-[#fff]   shadow-2xl rounded-lg ">
-            <thead className="bg-[grey]">
+            <thead className="bg-[#fff] text-[#333]">
               <tr className="">
-                <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap text-start">
+                <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap text-start pl-14 ">
                   User
                 </th>
                 <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap text-start">
