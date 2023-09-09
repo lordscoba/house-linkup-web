@@ -80,10 +80,12 @@ const UploadForm = ({ setData }: Props) => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
+    setImage(file);
     if (file && file.type.startsWith('image/')) {
       const imageURL = URL.createObjectURL(file);
-      setImage(imageURL);
+      // setImage(imageURL);
       setImageName(file?.name);
+      console.log({ image: image });
     }
   };
 
@@ -124,6 +126,7 @@ const UploadForm = ({ setData }: Props) => {
     const file = event?.target?.files?.[0];
     if (file && file.type.startsWith('image/')) {
       const imageURL = URL.createObjectURL(file);
+      // const file = event?.target?.files?.[0];
       setRoomImageUrl(imageURL);
       setRoomImageName(file?.name);
     }
@@ -690,6 +693,7 @@ const UploadForm = ({ setData }: Props) => {
                   </label>
                   <input
                     type="file"
+                    name="image"
                     accept="image/*"
                     onChange={handleFileChange}
                     ref={fileInputRef}
