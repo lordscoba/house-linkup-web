@@ -40,6 +40,7 @@ const UserDashboardNav = (props: Props) => {
 
   useEffect(() => {
     setLinks(userDashboardNavValues);
+    console.log({ d: userDetails?.serverResponse?.image?.[0]?.url });
   }, []);
   return (
     <div className="block xl:flex items-center  gap-[85px]  pt-4 border-b">
@@ -147,7 +148,7 @@ const UserDashboardNav = (props: Props) => {
               />
             ) : userDetails?.serverResponse?.image?.length > 0 ? (
               <img
-                src={userDetails?.serverResponse?.image[0]?.url}
+                src={userDetails?.serverResponse?.image?.[0]?.url}
                 alt=""
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />

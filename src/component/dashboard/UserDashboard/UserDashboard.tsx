@@ -1,23 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import UserDashboardNav from './UserDashboardNav';
 
 import { userDashboardDataValues } from './data';
 import { Dollar, GreenDollar, Like } from '../../../assets/icons';
 import Rating from '../../Rating/Rating';
-import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
+import {
+  FetchedHouseArrayType,
+  FetchedhouseResponseInterface,
+  HouseUploadInterface,
+  HouseUploadType,
+  UserDashboardDataArray,
+  UserDashboardDataInterface,
+} from './types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserUploadedHouseAction } from '../../../redux/actions/dashboardactions/usersdashboard/usersdashboard.action';
+import { StoreReducerTypes } from '../../../redux/store';
 
 type Props = {};
 
 const UserDashboard = (props: Props) => {
+  const dispatch = useDispatch();
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [data, setData] = useState<UserDashboardDataArray>([]);
+  const [data, setData] = useState<FetchedHouseArrayType>([]);
+  const [posterId, setPosterId] = useState('');
 
   const [sortBy, setSortBy] = useState('Price');
 
+  const userHouseUploads = useSelector(
+    (state: StoreReducerTypes) => state?.getUserUploads
+  );
+
   useEffect(() => {
-    setData(userDashboardDataValues);
+    const houses = userHouseUploads?.serverResponse?.allHouses;
+    if (userHouseUploads?.success) {
+      setData(houses);
+    }
+  }, [userHouseUploads?.success]);
+
+  const storedData = localStorage.getItem('loginUser')
+    ? JSON.parse(localStorage.getItem('loginUser') as any)
+    : null;
+  const id = storedData?.userDoc?._id;
+
+  useEffect(() => {
+    console.log({ id });
+    dispatch(getUserUploadedHouseAction({ id }) as any);
   }, []);
 
+  // useLayoutEffect(() => {
+  //   const storedData = localStorage.getItem('loginUser')
+  //     ? JSON.parse(localStorage.getItem('loginUser') as any)
+  //     : null;
+  //   const id = storedData?.userDoc?._id;
+  //   setPosterId(id);
+  // }, []);
   return (
     <div className=" md:px-[2rem] px-2">
       <UserDashboardNav />
@@ -340,13 +376,13 @@ const SortableButton = ({ setSortString, sortString }: SortButtonInterface) => {
 
 interface SortInterface {
   sortBy: string;
-  data: UserDashboardDataArray;
+  data: FetchedHouseArrayType;
   setData: (a: any) => void;
 }
 
 const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentData, setCurrentData] = useState<UserDashboardDataArray>([]);
+  const [currentData, setCurrentData] = useState<FetchedHouseArrayType>([]);
   const itemsPerPage = 2;
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -357,6 +393,8 @@ const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  // console.log(data);
 
   const pagination = () => {
     const pageButtons = [];
@@ -383,14 +421,14 @@ const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
   const sort = () => {
     if (sortBy === 'Price') {
       const sortedItems = [...data].sort((a, b) => {
-        return a?.rentPermonth - b?.rentPermonth;
+        return a.price - b.price;
       });
       setData(sortedItems);
     }
 
     if (sortBy === 'Apartment') {
       const sortedItems = [...data].sort((a, b) => {
-        return a?.title.localeCompare(b?.title);
+        return a?.city.localeCompare(b?.city);
       });
       setData(sortedItems);
     }
@@ -405,99 +443,113 @@ const SortedHouses = ({ sortBy, data, setData }: SortInterface) => {
     setCurrentData(currentItems);
   }, [data, currentPage]);
   return (
-    <div className=" ">
-      {currentData?.length > 0
-        ? currentData?.map((item: UserDashboardDataInterface, index: any) => {
-            return (
-              <div
-                key={index}
-                className=" my-[38px]  bg-[#fff] shadow-2xl flex  justify-center gap-[23px] flex-wrap   py-4 md:px-4 px-2 rounded-lg"
-              >
-                <div>
-                  <img
-                    src={item?.image}
-                    alt={item?.address}
-                    className="w-full md:w-[208px] object-cover"
-                  />
-                </div>
-
-                <section className=" ">
-                  <div className=" flex  justify-between">
-                    <div>
-                      <h4>{item?.title}</h4>
-                      <div className="flex items-center gap-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="12"
-                          height="16"
-                          viewBox="0 0 12 16"
-                          fill="none"
-                        >
-                          <path
-                            d="M5.99998 0C2.69154 0 0 2.69723 0 6.01258C0 11.3438 5.39888 15.5396 5.62874 15.7157L6.00002 16L6.37106 15.7157C6.60092 15.5396 12 11.3438 12 6.01258C12 2.69719 9.30846 0 5.99998 0ZM5.99954 14.4343C4.81703 13.4145 1.22249 9.98674 1.22249 6.01258C1.22249 3.37267 3.36536 1.22505 5.99998 1.22505C8.63413 1.22505 10.7775 3.37271 10.7775 6.01258C10.7775 9.97823 7.18154 13.4129 5.99954 14.4343Z"
-                            fill="#333333"
-                          />
-                          <path
-                            d="M6.10578 9.00037C4.46435 9.00037 3.12891 7.66509 3.12891 6.02375C3.12891 4.38232 4.46431 3.04688 6.10578 3.04688C7.74721 3.04688 9.08261 4.38228 9.08261 6.02375C9.08261 7.66509 7.74721 9.00037 6.10578 9.00037ZM6.10578 4.02315C5.00264 4.02315 4.10514 4.92065 4.10514 6.02379C4.10514 7.12681 5.00264 8.02418 6.10578 8.02418C7.20888 8.02418 8.10638 7.12681 8.10638 6.02379C8.10638 4.92061 7.20892 4.02315 6.10578 4.02315Z"
-                            fill="#333333"
-                          />
-                        </svg>
-                        <p>{item?.address}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <img src={Like} alt="like icon" />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 w-full md:w-[407px] mt-3">
-                    {item?.interior?.map((a: any, index: any) => {
-                      return (
-                        <div key={index} className="flex items-center gap-1">
-                          <p className="w-[4px] h-[4px] rounded-full bg-[#222]"></p>
-                          <span>{a}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* Ratings */}
-
-                  <div className="mt-6 flex justify-between">
-                    <div className="flex gap-2">
-                      <span>{Number(item?.rating)}</span>
-                      <Rating rating={Number(item?.rating)} />
-                      <span>({Number(item?.reviews)} Reviews)</span>
-                    </div>
-                    <div className="flex item-center">
+    <div className="mb-2 m-auto  w-full max-w-[754px]   ">
+      <section>
+        {currentData?.length > 0 ? (
+          currentData?.map(
+            (item: FetchedhouseResponseInterface, index: any) => {
+              return (
+                <div
+                  key={index}
+                  className="my-[38px] bg-[#fff] shadow-2xl  py-[20px]  px-2 rounded-xl"
+                >
+                  <section className=" flex gap-3 flex-wrap justify-center  ">
+                    <div className="w-full lg:w-[408px] h-[324px]  ">
                       <img
-                        src={Dollar}
-                        alt="dollar"
-                        className="w-[14px] lg:w-[20px] h-[14px] lg:h-[20px] fill-[green] mt-2"
+                        src={item?.front_image[0]?.url}
+                        alt={item?.address}
+                        className="w-full object-cover h-full"
                       />
-                      <p className="font-bold text-[18px] lg:text-[24px]">
-                        {Number(item?.rentPermonth).toLocaleString()}{' '}
-                        <sub className="text-[#333] text-[1rem] font-[400]">
-                          / month
-                        </sub>
-                      </p>
                     </div>
+
+                    <section className="w-full xl:w-[40%] h-[324px] relative  ">
+                      <h2 className="text-[#222] capitalize font-bold text-center mb-3  text-[18px] ">
+                        {item?.house_type}
+                      </h2>
+                      <div className=" flex-1 flex items-center gap-2 justify-center lg:justify-start ">
+                        <div className="">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="16"
+                            viewBox="0 0 12 16"
+                            fill="none"
+                          >
+                            <path
+                              d="M5.99998 0C2.69154 0 0 2.69723 0 6.01258C0 11.3438 5.39888 15.5396 5.62874 15.7157L6.00002 16L6.37106 15.7157C6.60092 15.5396 12 11.3438 12 6.01258C12 2.69719 9.30846 0 5.99998 0ZM5.99954 14.4343C4.81703 13.4145 1.22249 9.98674 1.22249 6.01258C1.22249 3.37267 3.36536 1.22505 5.99998 1.22505C8.63413 1.22505 10.7775 3.37271 10.7775 6.01258C10.7775 9.97823 7.18154 13.4129 5.99954 14.4343Z"
+                              fill="#333333"
+                            />
+                            <path
+                              d="M6.10578 9.00037C4.46435 9.00037 3.12891 7.66509 3.12891 6.02375C3.12891 4.38232 4.46431 3.04688 6.10578 3.04688C7.74721 3.04688 9.08261 4.38228 9.08261 6.02375C9.08261 7.66509 7.74721 9.00037 6.10578 9.00037ZM6.10578 4.02315C5.00264 4.02315 4.10514 4.92065 4.10514 6.02379C4.10514 7.12681 5.00264 8.02418 6.10578 8.02418C7.20888 8.02418 8.10638 7.12681 8.10638 6.02379C8.10638 4.92061 7.20892 4.02315 6.10578 4.02315Z"
+                              fill="#333333"
+                            />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="capitalize">
+                            {item?.state}, {item?.city}{' '}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex justify-center lg:justify-start gap-3 flex-wrap my-2 italic text-[14px]">
+                        <span>K = {item?.totalNum_ofKitchen}</span>
+                        <span>T = {item?.totalNum_ofToilet}</span>
+                        <span>P = {item?.totalNum_ofParlor}</span>
+                        <span>R = {item?.totalNum_ofRooms}</span>
+                        <span>BTh = {item?.totalNum_ofBathroom}</span>
+                      </div>
+                      <div className=" mt-[1.5rem]">
+                        <h2 className="text-center font-bold text-[18px] tracking-wider">
+                          Poster
+                        </h2>
+                        <p>
+                          Name : <span>{item?.poster?.full_name}</span>
+                        </p>
+                        <p>
+                          Email : <span>{item?.email}</span>
+                        </p>
+                        <p>
+                          Address : <span>{item?.address}</span>
+                        </p>
+                      </div>
+                      <div className="flex justify-between items-end mt-3  lg:absolute bottom-0 right-0 left-0">
+                        <div>
+                          <h4 className="font-bold uppercase">
+                            Status : {item?.status}
+                          </h4>
+                        </div>
+                        <div>
+                          <p className="font-bold">
+                            <span>&#36;</span>{' '}
+                            <span>{Number(item?.price).toLocaleString()}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </section>
+                  </section>
+                  <div className="flex gap-3 flex-wrap mt-2">
+                    <span>Kichen = K</span>
+                    <span>Toilet = T</span>
+                    <span>Parlor = P</span>
+                    <span>Room = R</span>
+                    <span>BathRoom = BTh</span>
                   </div>
-                </section>
-              </div>
-            );
-          })
-        : null}
-      <p>{pagination()}</p>
+                </div>
+              );
+            }
+          )
+        ) : (
+          <>
+            <section className="h-[8rem] mb-2  w-full max-w-[754px] border flex items-center justify-center m-auto ">
+              <p className="text-[1rem] lg:text-[18px] font-semibold">
+                No House Uploaded Yet
+              </p>
+            </section>
+          </>
+        )}
+
+        <p>{pagination()}</p>
+      </section>
     </div>
   );
 };
-
-// const sortByPriceAndName = () => {
-//   const sortedItems = [...items].sort((a, b) => {
-//     if (a.price !== b.price) {
-//       return a.price - b.price;
-//     }
-//     return a.name.localeCompare(b.name);
-//   });
-//   setItems(sortedItems);
-// };

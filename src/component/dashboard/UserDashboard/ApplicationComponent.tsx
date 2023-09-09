@@ -5,35 +5,7 @@ import { User_Dashboard_img_1 } from '../../../assets/images';
 // import { UserDashboardDataArray, UserDashboardDataInterface } from './types';
 import { Dollar, Like } from '../../../assets/icons';
 import Rating from '../../Rating/Rating';
-import {
-  HouseUploadInterface,
-  HouseUploadType,
-  UserDashboardDataArray,
-  UserDashboardDataInterface,
-} from './types';
-
-const mockedData = [
-  {
-    address: '1995 Broadway, New York',
-    image: User_Dashboard_img_1,
-    // likeIcon: Like,
-    // locationIcon: '',
-    interior: [
-      'Wifi',
-      'Air conditioning',
-      'Kitchen',
-      'Heating',
-      'Smokers',
-      'Parking',
-      'Balcony',
-      'Animal friendly',
-    ],
-    rating: 4.5,
-    reviews: 7,
-    title: ' Brownstone Lodge',
-    rentPermonth: 4200,
-  },
-];
+import { HouseUploadInterface, HouseUploadType } from './types';
 
 type Props = {};
 
@@ -41,20 +13,10 @@ const ApplicationComponent = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [data, setData] = useState<HouseUploadType>([]);
 
-  // useEffect(() => {
-  //   setData(mockedData);
-  // }, []);
-
-  console.log({ data });
-
   return (
     <div>
       <div className="flex xl:justify-between justify-center  flex-wrap my-[21px]">
         <GetUploadedHouse data={data} />
-
-        {/* <div>
-          <BookingCard amount={20000} />
-        </div> */}
       </div>
 
       <div className="mt-[1rem]">
@@ -90,21 +52,22 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
         <section>
           {data?.length > 0 ? (
             data?.map((item: HouseUploadInterface, index: any) => {
+              const url = URL.createObjectURL(item?.image);
               return (
                 <div
                   key={index}
                   className="my-[38px] bg-[#fff] shadow-2xl  py-[20px]  px-2 rounded-xl"
                 >
                   <section className=" flex gap-2 flex-wrap   ">
-                    <div className="w-full lg:w-[408px] ">
+                    <div className="w-full lg:w-[408px] h-[124px]">
                       <img
-                        src={item?.image}
+                        src={url}
                         alt={item?.address}
-                        className="w-full object-cover"
+                        className="w-full object-cover h-full"
                       />
                     </div>
 
-                    <section className="w-full lg:w-[40%] ">
+                    <section className="w-full lg:w-[40%] h-[324px] relative">
                       <h2 className="text-[#222] capitalize font-bold text-center lg:text-start mb-2 text-[18px]">
                         {item?.house_type}
                       </h2>
@@ -133,15 +96,17 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex justify-center lg:justify-start gap-3 flex-wrap my-2">
+                      <div className="flex justify-center lg:justify-start gap-3 flex-wrap my-2 italic text-[14px]">
                         <span>K = {item?.totalNum_ofKitchen}</span>
                         <span>T = {item?.totalNum_ofToilet}</span>
                         <span>P = {item?.totalNum_ofParlor}</span>
                         <span>R = {item?.totalNum_ofRooms}</span>
                         <span>BTh = {item?.totalNum_ofBathroom}</span>
                       </div>
-                      <div>
-                        <h2 className="text-center font-bold">Poster</h2>
+                      <div className=" mt-[1.5rem]">
+                        <h2 className="text-center font-bold text-[18px] tracking-wider">
+                          Poster
+                        </h2>
                         <p>
                           Name : <span>{item?.full_name}</span>
                         </p>
@@ -152,7 +117,7 @@ const GetUploadedHouse = ({ data }: UploadedPropertyInterface) => {
                           Address : <span>{item?.address}</span>
                         </p>
                       </div>
-                      <div className="flex justify-between mt-3">
+                      <div className="flex justify-between mt-3 lg:absolute bottom-0 right-0 left-0">
                         <div>
                           <h4 className="font-bold">Status : {item?.status}</h4>
                         </div>

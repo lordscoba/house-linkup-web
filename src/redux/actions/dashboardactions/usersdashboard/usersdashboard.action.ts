@@ -66,7 +66,7 @@ export const uploadHouseUserAction =
       };
 
       const FD = new FormData();
-      FD.append('front_image', frontImage);
+      FD.append('file', frontImage);
       FD.append('address', address);
       FD.append('city', city);
       FD.append('description', description);
@@ -91,7 +91,7 @@ export const uploadHouseUserAction =
         config
       );
 
-      // console.log({ promoteUser: data });
+      console.log({ postHouse: data });
 
       dispatch({ type: UPLOAD_HOUSE_SUCCESS, payload: data });
     } catch (error: any) {
@@ -118,7 +118,7 @@ export const uploadParlorImageAction =
       };
 
       const FD = new FormData();
-      FD.append('parlor_image', image);
+      FD.set('parlor_image', image);
 
       const { data } = await axios.put(
         `${SERVER_URL}/update-property/parlor-image`,
@@ -276,8 +276,9 @@ export const getUserUploadedHouseAction =
     try {
       dispatch({ type: GET_USER_UPLOADED_HOUSE_REQUEST });
 
-      const { data } = await axios.get(`${SERVER_URL}/get-property/${id}`);
+      const { data } = await axios.get(`${SERVER_URL}/all-property/${id}`);
       dispatch({ type: GET_USER_UPLOADED_HOUSE_SUCCESS, payload: data });
+      console.log({ userHouses: data });
     } catch (error: any) {
       dispatch({
         type: GET_USER_UPLOADED_HOUSE_FAIL,
