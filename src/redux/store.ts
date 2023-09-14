@@ -14,6 +14,13 @@ import {
   promoteUserReducer,
 } from './reducers/dashboardreducers/dashboard.reducer';
 import {
+  addLocalGovReducer,
+  addStateReducer,
+  createRegionReducer,
+  deleteStateReducer,
+  fetchAllRegionReducer,
+} from './reducers/dashboardreducers/locationdashboardreducer/locationDashboard.reducer';
+import {
   getUserUploadedHouseReducer,
   uploaParlorImageReducer,
   uploadBathRoomImageReducer,
@@ -52,6 +59,12 @@ export type StoreReducerTypes = {
   blockUser: ReturnType<typeof blockUserReducer>;
   promoteUser: ReturnType<typeof promoteUserReducer>;
   demoteUser: ReturnType<typeof demoteUserReducer>;
+  // LOCATION MANAGEMENT
+  createNewRegion: ReturnType<typeof createRegionReducer>;
+  fetchAllRegion: ReturnType<typeof fetchAllRegionReducer>;
+  addState: ReturnType<typeof addStateReducer>;
+  deleteState: ReturnType<typeof deleteStateReducer>;
+  addLocalGov: ReturnType<typeof addLocalGovReducer>;
 
   // users dashboard
   uploadHouse: ReturnType<typeof uploadHouseReducer>;
@@ -79,6 +92,13 @@ const reducer: StoreReducerTypes = combineReducers({
   blockUser: blockUserReducer,
   promoteUser: promoteUserReducer,
   demoteUser: demoteUserReducer,
+
+  // LOCATION MANAGEMENT
+  createNewRegion: createRegionReducer,
+  fetchAllRegion: fetchAllRegionReducer,
+  addState: addStateReducer,
+  deleteState: deleteStateReducer,
+  addLocalGov: addLocalGovReducer,
 
   // users dashboard
   uploadHouse: uploadHouseReducer,

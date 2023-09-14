@@ -1,31 +1,35 @@
+// LOCATION MANAGEMENT
+
 import {
-  ACTIVATE_USER_FAIL,
-  ACTIVATE_USER_REQUEST,
-  ACTIVATE_USER_SUCCESS,
-  BLOCK_USER_FAIL,
-  BLOCK_USER_REQUEST,
-  BLOCK_USER_SUCCESS,
-  DEMOTE_USER_FAIL,
-  DEMOTE_USER_REQUEST,
-  DEMOTE_USER_SUCCESS,
-  DE_ACTIVATE_USER_FAIL,
-  DE_ACTIVATE_USER_REQUEST,
-  DE_ACTIVATE_USER_SUCCESS,
-  EDIT_USER_RESET,
-  PROMOTE_USER_FAIL,
-  PROMOTE_USER_REQUEST,
-  PROMOTE_USER_SUCCESS,
-} from '../../constants/dashboardconstants/dashboard.constants';
-import { ResponseType, initialStateRequest } from '../../responseType';
+  ADD_LOCAL_GOV_FAIL,
+  ADD_LOCAL_GOV_REQUEST,
+  ADD_LOCAL_GOV_SUCCESS,
+  ADD_STATE_FAIL,
+  ADD_STATE_REQUEST,
+  ADD_STATE_SUCCESS,
+  CREATE_REGION_FAIL,
+  CREATE_REGION_REQUEST,
+  CREATE_REGION_SUCCESS,
+  DELETE_STATE_FAIL,
+  DELETE_STATE_REQUEST,
+  DELETE_STATE_SUCCESS,
+  GET_ALL_REGION_FAIL,
+  GET_ALL_REGION_REQUEST,
+  GET_ALL_REGION_SUCCESS,
+  RESET_ADD_LOCAL_GOV,
+  RESET_DELETE_STATE,
+  RESET_STATE,
+} from '../../../constants/dashboardconstants/locationConstants/location.constants';
+import { ResponseType, initialStateRequest } from '../../../responseType';
 
-export const activateUserReducer = (
+export const createRegionReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case ACTIVATE_USER_REQUEST:
+    case CREATE_REGION_REQUEST:
       return { ...state, loading: true };
-    case ACTIVATE_USER_SUCCESS:
+    case CREATE_REGION_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -33,7 +37,7 @@ export const activateUserReducer = (
         serverResponse: action.payload,
       };
 
-    case ACTIVATE_USER_FAIL:
+    case CREATE_REGION_FAIL:
       return {
         ...state,
         loading: false,
@@ -42,7 +46,7 @@ export const activateUserReducer = (
         serverError: action.payload,
       };
 
-    case EDIT_USER_RESET:
+    case RESET_STATE:
       return initialStateRequest;
 
     default:
@@ -50,14 +54,14 @@ export const activateUserReducer = (
   }
 };
 
-export const deActivateuserReducer = (
+export const fetchAllRegionReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case DE_ACTIVATE_USER_REQUEST:
+    case GET_ALL_REGION_REQUEST:
       return { ...state, loading: true };
-    case DE_ACTIVATE_USER_SUCCESS:
+    case GET_ALL_REGION_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -65,7 +69,7 @@ export const deActivateuserReducer = (
         serverResponse: action.payload,
       };
 
-    case DE_ACTIVATE_USER_FAIL:
+    case GET_ALL_REGION_FAIL:
       return {
         ...state,
         loading: false,
@@ -74,38 +78,7 @@ export const deActivateuserReducer = (
         serverError: action.payload,
       };
 
-    case EDIT_USER_RESET:
-      return initialStateRequest;
-    default:
-      return state;
-  }
-};
-
-export const blockUserReducer = (
-  state: ResponseType = initialStateRequest,
-  action: any
-) => {
-  switch (action.type) {
-    case BLOCK_USER_REQUEST:
-      return { ...state, loading: true };
-    case BLOCK_USER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        serverResponse: action.payload,
-      };
-
-    case BLOCK_USER_FAIL:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: true,
-        serverError: action.payload,
-      };
-
-    case EDIT_USER_RESET:
+    case RESET_STATE:
       return initialStateRequest;
 
     default:
@@ -113,14 +86,14 @@ export const blockUserReducer = (
   }
 };
 
-export const promoteUserReducer = (
+export const addStateReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case PROMOTE_USER_REQUEST:
+    case ADD_STATE_REQUEST:
       return { ...state, loading: true };
-    case PROMOTE_USER_SUCCESS:
+    case ADD_STATE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -128,7 +101,7 @@ export const promoteUserReducer = (
         serverResponse: action.payload,
       };
 
-    case PROMOTE_USER_FAIL:
+    case ADD_STATE_FAIL:
       return {
         ...state,
         loading: false,
@@ -137,7 +110,7 @@ export const promoteUserReducer = (
         serverError: action.payload,
       };
 
-    case EDIT_USER_RESET:
+    case RESET_STATE:
       return initialStateRequest;
 
     default:
@@ -145,14 +118,14 @@ export const promoteUserReducer = (
   }
 };
 
-export const demoteUserReducer = (
+export const deleteStateReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case DEMOTE_USER_REQUEST:
+    case DELETE_STATE_REQUEST:
       return { ...state, loading: true };
-    case DEMOTE_USER_SUCCESS:
+    case DELETE_STATE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -160,7 +133,7 @@ export const demoteUserReducer = (
         serverResponse: action.payload,
       };
 
-    case DEMOTE_USER_FAIL:
+    case DELETE_STATE_FAIL:
       return {
         ...state,
         loading: false,
@@ -168,9 +141,39 @@ export const demoteUserReducer = (
         error: true,
         serverError: action.payload,
       };
+    case RESET_DELETE_STATE:
+      return state;
 
-    case EDIT_USER_RESET:
-      return initialStateRequest;
+    default:
+      return state;
+  }
+};
+
+export const addLocalGovReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case ADD_LOCAL_GOV_REQUEST:
+      return { ...state, loading: true };
+    case ADD_LOCAL_GOV_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case ADD_LOCAL_GOV_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_ADD_LOCAL_GOV:
+      return state;
 
     default:
       return state;

@@ -9,7 +9,6 @@ import { loginAction } from '../../redux/actions/auth.actions';
 import { StoreReducerTypes } from '../../redux/store';
 import CircularLoader from '../loader/CircularLoader';
 import Message from '../message/Message';
-// import { Login_BG, SignUp_BG } from '../assets/images';
 
 type Props = {};
 
@@ -118,22 +117,6 @@ const LoginIndex = (props: Props) => {
           <p className="xl:text-[25px] text-[20px] font-[400] mb-[24px]">
             Login into your account
           </p>
-          {/* <div className="flex justify-center gap-3 mb-[19px]">
-            <button className="flex items-center justify-center w-[126px] border py-[8px] rounded-[5px] gap-2">
-              <img src={Instagram} alt="" />
-              <span> Google</span>
-            </button>
-            <button className="flex items-center justify-center w-[126px] border py-[8px]  rounded-[5px] gap-2">
-              <img src={Facebook} alt="" />
-              FaceBook
-            </button>
-          </div> */}
-
-          {/* <section className="flex items-center justify-center gap-2">
-            <div className="w-[130px] border mt-1"></div>{' '}
-            <span>Or continue with</span>{' '}
-            <div className="w-[130px] border mt-1"></div>
-          </section> */}
 
           {loading ? <CircularLoader /> : null}
 

@@ -24,6 +24,11 @@ export const apiRoutes = {
       getAllUsers: SERVER_URL + `/all-users?page=${currentpage}`,
     },
   },
+
+  adminDashboard: {
+    createNewRegion: SERVER_URL + `/create-new-region`,
+    fecthAllRegions: SERVER_URL + `/all-regions`,
+  },
   usersdashboard: {
     uploadHouse: SERVER_URL + `/upload-property`,
   },
