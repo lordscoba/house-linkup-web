@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreReducerTypes } from '../../../../redux/store';
+import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import {
+  RESET_DELETE_STATE,
+  RESET_STATE,
+} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 
 type Props = {
-  text: string;
-  name: string;
+  country: string;
+  state: string;
   show: boolean;
   setShow: (a: any) => void;
-  yesOnclick: () => void;
+  deleteFunc: (a: any) => void;
+  setData: (a: any) => void;
 };
 
-const InfoModal = ({ name, text, show, setShow, yesOnclick }: Props) => {
+const DeleteModal = ({
+  country,
+  deleteFunc,
+  setShow,
+  show,
+  state,
+  setData,
+}: Props) => {
+  const dispatch = useDispatch();
+
   return (
     <>
       {show ? (
@@ -21,8 +38,16 @@ const InfoModal = ({ name, text, show, setShow, yesOnclick }: Props) => {
               <span className="text-[1rem] text-[#fff]">X</span>
             </p>
             <section className="flex flex-col items-center justify-center mt-4">
-              <p className="text-[#222] text-[1.1rem]">{text}</p>
-              <h4 className="text-[#222] font-bold my-3">{name}</h4>
+              <p className="text-[#222] text-[1.1rem] font-medium">
+                {' '}
+                Region / Country : {country}
+              </p>
+
+              <p className="py-6">
+                Are You sure you want to delete{' '}
+                <span className="font-bold">{state} State </span>{' '}
+              </p>
+
               <div className="flex gap-3">
                 <button
                   type="button"
@@ -33,7 +58,7 @@ const InfoModal = ({ name, text, show, setShow, yesOnclick }: Props) => {
                 </button>
                 <button
                   type="button"
-                  onClick={yesOnclick}
+                  onClick={deleteFunc}
                   className="bg-[#69B99D] text-[#fff] border rounded-lg py-2 w-[8rem]"
                 >
                   YES
@@ -47,4 +72,4 @@ const InfoModal = ({ name, text, show, setShow, yesOnclick }: Props) => {
   );
 };
 
-export default InfoModal;
+export default DeleteModal;
