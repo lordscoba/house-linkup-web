@@ -19,7 +19,18 @@ import {
   Application,
   Favourite,
   UserDashboadPage,
+
+} from './Pages/dashboardPages/UserPage';
+import {
+  AddLocalGov,
+  AddTowns,
+  Towns,
+  ViewLocalGov,
+} from './Pages/dashboardPages/AdminPage/locationscreens';
+// import { Dashboard, Users } from '../../Pages/dashboardPages';
+
 } from "./Pages/dashboardPages/UserPage";
+
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -44,6 +55,13 @@ function App() {
         {/* DASHBOARD */}
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/add-local-gov/:id" element={<AddLocalGov />} />
+        <Route
+          path="/dashboard/view-local-gov/:id/:index"
+          element={<ViewLocalGov />}
+        />
+        <Route path="/dashboard/add-towns/:id" element={<AddTowns />} />
+        <Route path="/dashboard/view-towns/:id/:index" element={<Towns />} />
         <Route path="/dashboard/all-users" element={<Users />} />
 
         {/* USER DASHBOARD */}

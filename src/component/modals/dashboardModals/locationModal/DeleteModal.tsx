@@ -13,7 +13,8 @@ type Props = {
   show: boolean;
   setShow: (a: any) => void;
   deleteFunc: (a: any) => void;
-  setData: (a: any) => void;
+  // setData: (a: any) => void;
+  text: string;
 };
 
 const DeleteModal = ({
@@ -22,14 +23,15 @@ const DeleteModal = ({
   setShow,
   show,
   state,
-  setData,
+  // setData,
+  text,
 }: Props) => {
   const dispatch = useDispatch();
 
   return (
     <>
       {show ? (
-        <section className="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.5)]  z-50 flex justify-center  py-6 px-3 md:px-0 overflow-y-auto hide-scrollbar">
+        <section className="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.4)]  z-50 flex justify-center  py-6 px-3 md:px-0 overflow-y-auto hide-scrollbar">
           <div className="bg-[#fff] w-full md:w-[30rem] h-[250px] px-6 rounded-lg mt-8">
             <p
               onClick={() => setShow((prev: boolean) => !prev)}
@@ -45,7 +47,9 @@ const DeleteModal = ({
 
               <p className="py-6">
                 Are You sure you want to delete{' '}
-                <span className="font-bold">{state} State </span>{' '}
+                <span className="font-bold">
+                  {state} {text}
+                </span>{' '}
               </p>
 
               <div className="flex gap-3">

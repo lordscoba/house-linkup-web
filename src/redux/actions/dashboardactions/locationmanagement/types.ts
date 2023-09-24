@@ -18,3 +18,18 @@ export interface AddLocalGovInterface {
   stateId: string;
   local_government_name: string;
 }
+export interface getLocalGovByIdInterface {
+  countryId: string;
+  stateId: string;
+}
+export interface getTownsByIdInterface {
+  countryId: string;
+  stateId: string;
+  local_govId: string;
+}
+
+export interface deleteLocaGovInterface {
+  countryId: string;
+  stateId: string;
+  localGovId: string;
+}

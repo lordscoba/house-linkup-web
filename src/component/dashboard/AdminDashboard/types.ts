@@ -3,6 +3,8 @@ export interface TownsInterface {
   _id: string;
 }
 
+export type TownArray = Array<TownsInterface>;
+
 export interface LocalGovInterface {
   _id: string;
   local_government_name: string;
