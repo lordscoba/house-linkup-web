@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TownsInterface } from '../../../dashboard/AdminDashboard/types';
-import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
-import { useLocation } from 'react-router-dom';
-import { StoreReducerTypes } from '../../../../redux/store';
-import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import { RESET_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
-import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
-import AddTownsModal from '../../../modals/dashboardModals/locationModal/AddTownsModal';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
+import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
+import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
+import { StoreReducerTypes } from "../../../../redux/store";
+import { TownsInterface } from "../../../dashboard/AdminDashboard/types";
+import AddTownsModal from "../../../modals/dashboardModals/locationModal/AddTownsModal";
+import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
 // import DeleteModal from './DeleteModal';
 // import AddTownsModal from './AddTownsModal';
 
@@ -16,14 +16,14 @@ type Props = {};
 const ViewTownsComponent = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [lga, setLga] = useState('');
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
   const [show, setShow] = useState<boolean>(false);
 
-  const countryId = useLocation().pathname?.split('_')[0].split('/')[3];
-  const stateId = useLocation().pathname?.split('_')[1].split('/')[0];
-  const index = useLocation().pathname?.split('/')[4];
+  const countryId = useLocation().pathname?.split("_")[0].split("/")[3];
+  const stateId = useLocation().pathname?.split("_")[1].split("/")[0];
+  const index = useLocation().pathname?.split("/")[4];
 
   const Region = useSelector(
     (state: StoreReducerTypes) => state.fetchAllRegion
@@ -68,11 +68,11 @@ const ViewTownsComponent = (props: Props) => {
           Region / Country : {country}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold uppercase">
-          {' '}
+          {" "}
           State : {state}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold uppercase">
-          {' '}
+          {" "}
           LGA : {lga}
         </h4>
         <div onClick={openTownModal} className=" w-[12rem]  ml-auto my-4 ">
@@ -161,7 +161,7 @@ const TownsTable = ({ town, country }: TInterface) => {
           </td>
 
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
                 alt="Edit icon"
@@ -173,7 +173,7 @@ const TownsTable = ({ town, country }: TInterface) => {
             onClick={openDelModal}
             className="px-4 py-2 text-[black]  whitespace-nowrap m-auto "
           >
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={RedDeleteIcon}
                 alt="Red delete icon"

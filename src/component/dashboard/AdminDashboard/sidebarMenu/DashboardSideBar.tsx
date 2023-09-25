@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { MdHome, MdOutlineLocationOn } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { User, dropDown } from "../../../../assets/icons";
+import { dropDown } from "../../../../assets/icons";
 
 type Props = {
   show: boolean;
@@ -14,32 +14,34 @@ const DashboardSideBar = ({ show, setShow }: Props) => {
   return (
     <div
       className={`${
-        show ? " w-full max-w-[18rem]  border-2 rounded-lg shadow-2xl px-4" : ""
-      } h-screen overflow-y-auto hide-scrollbar pt-[6rem]   fixed bg-[#fff]  text-[grey]  `}
+        show
+          ? " w-full max-w-[15rem]  border-2 rounded-lg shadow-2xl px-4 animate__animated animate__slideInLeft"
+          : " md:w-full md:max-w-[5rem] animate__animated animate__fadeIn"
+      } h-screen overflow-y-auto hide-scrollbar pt-[6rem]   fixed bg-[#fff]  text-[grey] `}
     >
-      <div className="hidden md:flex flex-col text-[#222]">
+      <div className="hidden md:flex flex-col text-[#222] gap-3">
         {show ? (
           <>
             <TextAndDropDown
-              icon={User}
+              icon={<MdHome />}
               icon_2={dropDown}
               text="Dashboard"
               dropDownText="Dashboard"
               link="/dashboard"
             />
             <TextAndDropDown
-              icon={User}
+              icon={<FaUsers />}
               icon_2={dropDown}
-              text="Admin"
-              dropDownText="Admin"
-              link="/dashboard/admin"
-            />
-            <TextAndDropDown
-              icon={User}
-              icon_2={dropDown}
-              text="User"
+              text="Users"
               dropDownText="Users"
               link="/dashboard/all-users"
+            />
+            <TextAndDropDown
+              icon={<MdOutlineLocationOn />}
+              icon_2={dropDown}
+              text="Location"
+              dropDownText="Location"
+              link="/dashboard/location"
             />
           </>
         ) : (
@@ -62,25 +64,25 @@ const DashboardSideBar = ({ show, setShow }: Props) => {
         {show ? (
           <>
             <TextAndDropDown
-              icon={User}
+              icon={<MdHome />}
               icon_2={dropDown}
               text="Dashboard"
               dropDownText="Dashboard"
               link="/dashboard"
             />
             <TextAndDropDown
-              icon={User}
+              icon={<FaUsers />}
               icon_2={dropDown}
-              text="Admin"
-              dropDownText="Admin"
-              link="/dashboard/admin"
-            />
-            <TextAndDropDown
-              icon={User}
-              icon_2={dropDown}
-              text="User"
+              text="Users"
               dropDownText="Users"
               link="/dashboard/all-users"
+            />
+            <TextAndDropDown
+              icon={<MdOutlineLocationOn />}
+              icon_2={dropDown}
+              text="Location"
+              dropDownText="Location"
+              link="/dashboard/location"
             />
           </>
         ) : null}
@@ -128,14 +130,7 @@ const TextAndDropDown = ({
         } flex items-center justify-between mb-6`}
       >
         <div className="flex items-center gap-4 cursor-pointer">
-          <img
-            src={icon}
-            alt="icon"
-            className={`${
-              rotate ? "text-[purple]" : "text-[grey]"
-            } w-8 h-8 object-cover`}
-          />
-
+          <span className="text-2xl">{icon}</span>
           <h2>{text}</h2>
         </div>
 

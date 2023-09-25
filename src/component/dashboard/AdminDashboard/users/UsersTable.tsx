@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import DashBoardNav from '../DashBoardNav';
-import DashboardSideBar from '../sidebarMenu/DashboardSideBar';
-import { ImageInterface, TableArrays, TableInterface } from './types';
-import { tableValues } from './data';
-// import { EditIcon, RedDeleteIcon } from '../../../assets/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { StoreReducerTypes } from '../../../../redux/store';
+import { useEffect, useState } from "react";
+import { MdSearch } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
 import {
   deleteUserAction,
   getAllUsersAction,
-} from '../../../../redux/actions/user.action';
-import DashboardEditModal from '../../../modals/dashboardModals/DashboardEditModal';
-import ViewDetails from '../../../modals/dashboardModals/ViewDetails';
-import RegisterFormModal from '../../../modals/dashboardModals/RegisterFormModal';
-import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
-import InfoModal from '../../../modals/dashboardModals/InfoModal';
-import { useLocation, useNavigate } from 'react-router-dom';
-// import {
-//   deleteUserAction,
-//   getAllUsersAction,
-// } from '../../../redux/actions/user.action';
-// import { StoreReducerTypes } from '../../../redux/store';
-// import DashboardEditModal from '../../modals/dashboardModals/DashboardEditModal';
-// import InfoModal from '../../modals/dashboardModals/InfoModal';
-// import ViewDetails from '../../modals/dashboardModals/ViewDetails';
-// import RegisterFormModal from '../../modals/dashboardModals/RegisterFormModal';
+} from "../../../../redux/actions/user.action";
+import { StoreReducerTypes } from "../../../../redux/store";
+import DashboardEditModal from "../../../modals/dashboardModals/DashboardEditModal";
+import InfoModal from "../../../modals/dashboardModals/InfoModal";
+import RegisterFormModal from "../../../modals/dashboardModals/RegisterFormModal";
+import ViewDetails from "../../../modals/dashboardModals/ViewDetails";
+import { ImageInterface, TableArrays, TableInterface } from "./types";
 
 interface ShoweInterface {
   show: boolean;
@@ -65,26 +53,7 @@ export interface TableDataInterface {
   handleViewUserButton: (a: any) => void;
 }
 
-type Props = {};
-
-const UsersTable = (props: Props) => {
-  const [show, setShow] = useState<boolean>(false);
-
-  return (
-    <div className=" overflow-x-hidden hide-scrollbar">
-      <DashBoardNav setShow={setShow} />
-
-      <section className="flex ">
-        <DashboardSideBar show={show} setShow={setShow} />
-        <Table show={show} />
-      </section>
-    </div>
-  );
-};
-
-export default UsersTable;
-
-const Table = ({ show }: ShoweInterface) => {
+const UsersTable = ({ show }: ShoweInterface) => {
   const dispatch = useDispatch();
 
   const [tableList, setTableList] = useState([]);
@@ -98,7 +67,7 @@ const Table = ({ show }: ShoweInterface) => {
 
   const [singleUserDetails, setSingleUserDetails] = useState({}) as any;
 
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const allUsers = useSelector((state: StoreReducerTypes) => state?.allUsers);
 
@@ -121,7 +90,7 @@ const Table = ({ show }: ShoweInterface) => {
         <button
           key={i}
           onClick={() => handlePageChange(i)}
-          className={` border border-[grey] mr-2 rounded-md shadow-xl font-semibold px-6 text-[#222]`}
+          className={` border border-[grey] mr-2 rounded-md font-semibold px-6 text-[#222]`}
         >
           {i}
         </button>
@@ -146,16 +115,6 @@ const Table = ({ show }: ShoweInterface) => {
     const UserToView = tableList[index];
     setSingleUserDetails(UserToView);
   };
-
-  // const deleteUser = ({ index, setList }: DeleteUserInterface) => {
-  //   const filter = tableList?.filter((item, i) => i !== index);
-  //   setList(filter);
-  //   const clickedUser: any = tableList[index];
-  //   const _id = clickedUser?._id;
-  //   dispatch(deleteUserAction({ _id }) as any);
-  //   // console.log({ index, setList, _id, clickedUser });
-  // };
-
   useEffect(() => {
     dispatch(getAllUsersAction({ pageNumber }) as any);
   }, [pageNumber]);
@@ -177,51 +136,35 @@ const Table = ({ show }: ShoweInterface) => {
   }, [activate?.success, deActivate?.success, block?.success]);
 
   return (
-    <section
-      className={`${
-        show ? 'md:pl-[19rem]' : 'md:pl-[5rem]'
-      } flex-1   py-[6rem] bg-[#F3F4F6] text-[#333] px-2 `}
-    >
+    <section>
       <h2 className="text-center font-bold md:text-[2rem] text-[1.2rem]">
         Users List
       </h2>
       <div className=" mt-2 border rounded-[50px] pl-2 w-full  max-w-[26rem] flex items-center m-auto gap-2 bg-[#fff]">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          className="w-6 h-6  text-[grey]"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-          />
-        </svg>
-
+        <span className="text-2xl">
+          <MdSearch />
+        </span>
         <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 py-2 pl-2 rounded-[50px] text-[#222] "
+          className="flex-1 py-2 pl-2 rounded-[50px] text-[#222] outline-none"
         />
       </div>
       <div className="mt-4 flex justify-end px-4  ">
         <button
           type="button"
           onClick={() => setCreateUserModal(true)}
-          className="border px-8 py-2 bg-[#6726A8] text-[#fff]"
+          className="border px-8 py-2 bg-[#6726A8] text-[#fff] rounded-lg"
         >
           Create New User
         </button>
       </div>
       {/* TABLE SECTION */}
-      <section className="bg-[#fff] p-[1rem] rounded-lg mt-10 shadow-2xl overflow-x-auto overflow-y-auto h-[25rem] md:h-auto w-full hide-scrollbar   ">
+      <section className="bg-[#fff] p-[1rem] rounded-lg mt-10 overflow-x-auto overflow-y-auto md:h-auto w-full hide-scrollbar   ">
         <div className=" w-[22rem] md:w-[31rem] lg:w-[35rem]  xl:w-full">
-          <table className=" w-full bg-[#fff]   shadow-2xl rounded-lg ">
+          <table className=" w-full bg-[#fff] rounded-lg ">
             <thead className="bg-[#fff] text-[#333]">
               <tr className="">
                 <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap text-start pl-14 ">
@@ -253,7 +196,7 @@ const Table = ({ show }: ShoweInterface) => {
 
             {tableList
               ?.filter((item: TableDataInterface) => {
-                return searchQuery?.toLocaleLowerCase() === ''
+                return searchQuery?.toLocaleLowerCase() === ""
                   ? item
                   : item?.full_name
                       ?.toLowerCase()
@@ -303,6 +246,8 @@ const Table = ({ show }: ShoweInterface) => {
   );
 };
 
+export default UsersTable;
+
 const TableData = ({
   active,
   blocked,
@@ -327,7 +272,7 @@ const TableData = ({
   const joinedDate = new Date(createdAt).toDateString();
   const [open, setOpen] = useState<boolean>(false);
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -350,7 +295,7 @@ const TableData = ({
   return (
     <>
       <tbody className="">
-        {' '}
+        {" "}
         <tr>
           <td className="px-4 py-2 text-[black]  whitespace-nowrap">
             <p className="flex items-center gap-2">
@@ -379,7 +324,7 @@ const TableData = ({
 
               <p>
                 <span className="capitalize">{full_name}</span> <br />
-                <span>{location ? location : 'Not Specified Yet'}</span>
+                <span>{location ? location : "Not Specified Yet"}</span>
               </p>
             </p>
           </td>
@@ -436,7 +381,7 @@ const TableData = ({
             />
           </td>
           <td className="px-4 py-4 text-[black] whitespace-nowrap  ">
-            {' '}
+            {" "}
             <img
               onClick={handleOpenModal}
               src={RedDeleteIcon}
