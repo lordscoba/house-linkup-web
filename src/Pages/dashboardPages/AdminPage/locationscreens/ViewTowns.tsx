@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DashBoardNav from '../../../../component/dashboard/AdminDashboard/DashBoardNav';
 import DashboardSideBar from '../../../../component/dashboard/AdminDashboard/sidebarMenu/DashboardSideBar';
-import ViewLocalGovernment from '../../../../component/dashboard/AdminDashboard/locationmanagement/ViewLocalGovernment';
-// import ViewLocalGovernment from '../../../../component/dashboard/AdminDashboard/locationmanagement/ViewLocalGovernment';
+import ViewTownsComponent from '../../../../component/dashboard/AdminDashboard/locationmanagement/ViewTownsComponent';
 
 type Props = {};
 
-const ViewLocalGov = (props: Props) => {
+const ViewTowns = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
+
   return (
     <div>
       <DashBoardNav setShow={setShow} />
@@ -19,11 +19,11 @@ const ViewLocalGov = (props: Props) => {
             show ? 'md:pl-[19rem]' : 'md:pl-[5rem]'
           } flex-1   pt-[6rem]  bg-[#F3F4F6] text-[#333] px-2 overflow-x-hidden`}
         >
-          <ViewLocalGovernment />
+          <ViewTownsComponent />
         </div>
       </section>
     </div>
   );
 };
 
-export default ViewLocalGov;
+export default ViewTowns;

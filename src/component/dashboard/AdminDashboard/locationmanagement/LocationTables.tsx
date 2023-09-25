@@ -8,6 +8,7 @@ import { StoreReducerTypes } from '../../../../redux/store';
 import { RESET_DELETE_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
 import ViewLga from '../../../modals/dashboardModals/locationModal/ViewLga';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   item: Array<StateInterface>;
@@ -32,9 +33,9 @@ const LocationTables = ({
             <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center ">
               States
             </th>
-            <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center">
+            {/* <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center">
               Add LGA
-            </th>
+            </th> */}
             <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center">
               View LGA
             </th>
@@ -57,7 +58,7 @@ const LocationTables = ({
                     state={d?.state}
                     data={data}
                     countryIndex={countryIndex}
-                    setData={setData}
+                    // setData={setData}
                   />
                 );
               })
@@ -74,7 +75,7 @@ interface TableInterface {
   state: string;
   index: string | any;
 
-  setData: (a: any) => void;
+  // setData: (a: any) => void;
   data: RegionArray;
   countryIndex: string | any;
 }
@@ -82,11 +83,12 @@ interface TableInterface {
 const TableValues = ({
   state,
   index,
-  setData,
+  // setData,
   data,
   countryIndex,
 }: TableInterface) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [stateName, setStateName] = useState('');
   const [showAddLGA, setShowAddLGA] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
@@ -135,13 +137,15 @@ const TableValues = ({
   const viewLga = (index: any) => {
     const country = data[countryIndex];
     const countryName = country?.region;
+    const countryId = country?._id;
     const state = country?.states[index]?.state;
     const stateId = country?.states[index]?._id;
     const Lga = country?.states[index]?.local_government;
-    setLgaData(Lga);
-    setCountry(countryName);
-    setStateName(state);
-    setShowLga(true);
+    // setLgaData(Lga);
+    // setCountry(countryName);
+    // setStateName(state);
+    // setShowLga(true);
+    navigate(`/dashboard/view-local-gov/${countryId}/${index}`);
   };
 
   return (
@@ -152,7 +156,7 @@ const TableValues = ({
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center ">
             {state}
           </td>
-
+          {/* 
           <td
             onClick={() => addLocalGov(index)}
             className="px-4 py-2 text-[black]  whitespace-nowrap text-center"
@@ -161,7 +165,7 @@ const TableValues = ({
             <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-[50px]">
               Add LGA
             </button>
-          </td>
+          </td> */}
           <td
             onClick={() => viewLga(index)}
             className="px-4 py-2 text-[black]  whitespace-nowrap  text-center"
@@ -202,7 +206,8 @@ const TableValues = ({
         country={country}
         deleteFunc={handleStateDelete}
         state={stateName}
-        setData={setData}
+        // setData={setData}
+        text="State"
       />
       <AddLgaModal
         country={country}

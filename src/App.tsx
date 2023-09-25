@@ -20,6 +20,8 @@ import {
   Favourite,
   UserDashboadPage,
 } from './Pages/dashboardPages/UserPage';
+import { ViewLocalGov } from './Pages/dashboardPages/AdminPage/locationscreens';
+import ViewTowns from './Pages/dashboardPages/AdminPage/locationscreens/ViewTowns';
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -45,6 +47,14 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/all-users" element={<Users />} />
+        <Route
+          path="/dashboard/view-local-gov/:id/:index"
+          element={<ViewLocalGov />}
+        />
+        <Route
+          path="/dashboard/view-towns/:id/:index"
+          element={<ViewTowns />}
+        />
 
         {/* USER DASHBOARD */}
         <Route path="/dashboard/user" element={<UserDashboadPage />} />
