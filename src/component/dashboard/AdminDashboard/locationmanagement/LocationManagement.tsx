@@ -121,7 +121,7 @@ const LocationManagement = (props: Props) => {
         </h2>
 
         <div onClick={openCountryModal} className=" w-[12rem]  ml-auto my-4 ">
-          <button className="w-full border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff] rounded-lg text-[.8rem] md:text-[1rem]">
+          <button className="w-full border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]">
             Add Country
           </button>
         </div>
@@ -138,12 +138,12 @@ const LocationManagement = (props: Props) => {
                       </span>
                     </h2>
                     <div className=" flex gap-2">
-                      <button className="  border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff] rounded-lg text-[.8rem] md:text-[1rem]">
+                      <button className="  border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]">
                         Delete Country
                       </button>
                       <button
                         onClick={() => addState(index)}
-                        className=" border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff] rounded-lg text-[.8rem] md:text-[1rem]"
+                        className=" border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]"
                       >
                         Add State
                       </button>
