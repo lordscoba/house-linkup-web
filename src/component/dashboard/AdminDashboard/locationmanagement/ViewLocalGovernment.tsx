@@ -42,8 +42,6 @@ const ViewLocalGovernment = (props: Props) => {
     (state: StoreReducerTypes) => state?.deleteLocalGov
   );
 
-  const delSuccess = deleleLocalGov?.success;
-
   const openLgaModal = () => {
     setShowAddLgaModal(true);
   };
