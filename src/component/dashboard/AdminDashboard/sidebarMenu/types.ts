@@ -1,5 +1,5 @@
 export interface SideBarInterface {
-  icon: string | any;
+  // icon: string | any;
   text: string;
   icon_2: string | any;
 }

@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   About,
   Contact,
@@ -13,15 +13,15 @@ import {
   SignUp,
   SingleHouseScreen,
   UpdateUserDetails,
-} from './Pages';
-import { Dashboard, Users } from './Pages/dashboardPages/AdminPage';
+} from "./Pages";
+import { Dashboard, Location, Users } from "./Pages/dashboardPages/AdminPage";
+import { ViewLocalGov } from "./Pages/dashboardPages/AdminPage/locationscreens";
+import ViewTowns from "./Pages/dashboardPages/AdminPage/locationscreens/ViewTowns";
 import {
   Application,
   Favourite,
   UserDashboadPage,
-} from './Pages/dashboardPages/UserPage';
-import { ViewLocalGov } from './Pages/dashboardPages/AdminPage/locationscreens';
-import ViewTowns from './Pages/dashboardPages/AdminPage/locationscreens/ViewTowns';
+} from "./Pages/dashboardPages/UserPage";
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -43,9 +43,10 @@ function App() {
         <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/update-profile/:id" element={<UpdateUserDetails />} />
 
-        {/* DASHBOARD */}
+        {/* Admin DASHBOARD */}
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/location" element={<Location />} />
         <Route path="/dashboard/all-users" element={<Users />} />
         <Route
           path="/dashboard/view-local-gov/:id/:index"
