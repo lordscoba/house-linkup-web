@@ -10,6 +10,9 @@ import {
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
+  DELETE_LOCAL_GOV_FAIL,
+  DELETE_LOCAL_GOV_REQUEST,
+  DELETE_LOCAL_GOV_SUCCESS,
   DELETE_STATE_FAIL,
   DELETE_STATE_REQUEST,
   DELETE_STATE_SUCCESS,
@@ -17,6 +20,7 @@ import {
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
   RESET_ADD_LOCAL_GOV,
+  RESET_DELETE_LOCAL_GOV,
   RESET_DELETE_STATE,
   RESET_STATE,
 } from '../../../constants/dashboardconstants/locationConstants/location.constants';
@@ -118,6 +122,37 @@ export const addStateReducer = (
   }
 };
 
+export const addLocalGovReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case ADD_LOCAL_GOV_REQUEST:
+      return { ...state, loading: true };
+    case ADD_LOCAL_GOV_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case ADD_LOCAL_GOV_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_ADD_LOCAL_GOV:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
 export const deleteStateReducer = (
   state: ResponseType = initialStateRequest,
   action: any
@@ -149,14 +184,14 @@ export const deleteStateReducer = (
   }
 };
 
-export const addLocalGovReducer = (
+export const deleteLocalGovReducer = (
   state: ResponseType = initialStateRequest,
   action: any
 ) => {
   switch (action.type) {
-    case ADD_LOCAL_GOV_REQUEST:
+    case DELETE_LOCAL_GOV_REQUEST:
       return { ...state, loading: true };
-    case ADD_LOCAL_GOV_SUCCESS:
+    case DELETE_LOCAL_GOV_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -164,7 +199,7 @@ export const addLocalGovReducer = (
         serverResponse: action.payload,
       };
 
-    case ADD_LOCAL_GOV_FAIL:
+    case DELETE_LOCAL_GOV_FAIL:
       return {
         ...state,
         loading: false,
@@ -172,7 +207,7 @@ export const addLocalGovReducer = (
         error: true,
         serverError: action.payload,
       };
-    case RESET_ADD_LOCAL_GOV:
+    case RESET_DELETE_LOCAL_GOV:
       return state;
 
     default:

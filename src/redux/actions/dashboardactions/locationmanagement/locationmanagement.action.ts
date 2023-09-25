@@ -7,6 +7,7 @@ import {
   AddLocalGovInterface,
   AddStateInterface,
   CreateNewRegionInterface,
+  DeleteLocalGovInterface,
   DeleteStateInterface,
 } from './types';
 import {
@@ -19,6 +20,9 @@ import {
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
+  DELETE_LOCAL_GOV_FAIL,
+  DELETE_LOCAL_GOV_REQUEST,
+  DELETE_LOCAL_GOV_SUCCESS,
   DELETE_STATE_FAIL,
   DELETE_STATE_REQUEST,
   DELETE_STATE_SUCCESS,
@@ -113,6 +117,37 @@ export const addStateAction =
     }
   };
 
+export const addLocalGovAction =
+  ({ countryId, local_government_name, stateId }: AddLocalGovInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ addLocalGov }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: ADD_LOCAL_GOV_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(
+        `${SERVER_URL}/add-local-gov/${countryId}`,
+        { stateId, local_government_name },
+        config
+      );
+
+      dispatch({ type: ADD_LOCAL_GOV_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: ADD_LOCAL_GOV_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
 export const deleteStateAction =
   ({ documentId, stateId }: DeleteStateInterface) =>
   async (
@@ -142,14 +177,14 @@ export const deleteStateAction =
     }
   };
 
-export const addLocalGovAction =
-  ({ countryId, local_government_name, stateId }: AddLocalGovInterface) =>
+export const deleteLocalGovAction =
+  ({ documentId, stateId, localGovId }: DeleteLocalGovInterface) =>
   async (
     dispatch: Dispatch,
-    getState: ({ addLocalGov }: StoreReducerTypes) => void
+    getState: ({ deleteLocalGov }: StoreReducerTypes) => void
   ) => {
     try {
-      dispatch({ type: ADD_LOCAL_GOV_REQUEST });
+      dispatch({ type: DELETE_LOCAL_GOV_REQUEST });
 
       const config = {
         headers: {
@@ -157,17 +192,16 @@ export const addLocalGovAction =
         },
       };
 
-      const { data } = await axios.post(
-        `${SERVER_URL}/add-local-gov/${countryId}`,
-        { stateId, local_government_name },
+      const { data } = await axios.delete(
+        `${SERVER_URL}/delete-local-gov?documentId=${documentId}&stateId=${stateId}&localGovId=${localGovId}`,
         config
       );
 
-      dispatch({ type: ADD_LOCAL_GOV_SUCCESS, payload: data });
+      dispatch({ type: DELETE_LOCAL_GOV_SUCCESS, payload: data });
       // console.log({ re: data });
     } catch (error: any) {
       dispatch({
-        type: ADD_LOCAL_GOV_FAIL,
+        type: DELETE_LOCAL_GOV_FAIL,
         payload: error?.response && error?.response?.data?.message,
       });
     }
