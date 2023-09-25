@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   About,
   Contact,
@@ -13,16 +13,20 @@ import {
   SignUp,
   SingleHouseScreen,
   UpdateUserDetails,
-} from './Pages';
-import { Dashboard, Users } from './Pages/dashboardPages/AdminPage';
+} from "./Pages";
+import { Dashboard, Users } from "./Pages/dashboardPages/AdminPage";
 import {
   Application,
   Favourite,
   UserDashboadPage,
+<<<<<<< HEAD
 } from './Pages/dashboardPages/UserPage';
 
 // import { Dashboard, Users } from '../../Pages/dashboardPages';
 
+=======
+} from "./Pages/dashboardPages/UserPage";
+>>>>>>> main
 // import UpdateProfile from './Pages/UpdateProfile';
 
 function App() {
@@ -47,6 +51,7 @@ function App() {
         {/* DASHBOARD */}
 
         <Route path="/dashboard" element={<Dashboard />} />
+<<<<<<< HEAD
         {/* <Route path="/dashboard/add-local-gov/:id" element={<AddLocalGov />} />
         <Route
           path="/dashboard/view-local-gov/:id/:index"
@@ -54,6 +59,8 @@ function App() {
         /> */}
         {/* <Route path="/dashboard/add-towns/:id" element={<AddTowns />} />
         <Route path="/dashboard/view-towns/:id/:index" element={<Towns />} /> */}
+=======
+>>>>>>> main
         <Route path="/dashboard/all-users" element={<Users />} />
 
         {/* USER DASHBOARD */}
