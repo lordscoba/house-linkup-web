@@ -1,21 +1,21 @@
 // import { User, dropDown } from '../../../assets/icons';
-import { User, dropDown } from '../../../../assets/icons';
-import { SideBarInterface } from './types';
+import { dropDown } from "../../../../assets/icons";
+import { SideBarInterface } from "./types";
 
 export const sidebarValues: Array<SideBarInterface> = [
   {
-    icon: User,
+    // icon: User,
     icon_2: dropDown,
-    text: 'Dashboard',
+    text: "Dashboard",
   },
   {
-    icon: User,
+    // icon: User,
     icon_2: dropDown,
-    text: 'Admin',
+    text: "Admin",
   },
   {
-    icon: User,
+    // icon: User,
     icon_2: dropDown,
-    text: 'Users',
+    text: "Users",
   },
 ];
