@@ -7,6 +7,9 @@ import {
   ADD_STATE_FAIL,
   ADD_STATE_REQUEST,
   ADD_STATE_SUCCESS,
+  ADD_TOWN_FAIL,
+  ADD_TOWN_REQUEST,
+  ADD_TOWN_SUCCESS,
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
@@ -20,6 +23,7 @@ import {
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
   RESET_ADD_LOCAL_GOV,
+  RESET_ADD_TOWN,
   RESET_DELETE_LOCAL_GOV,
   RESET_DELETE_STATE,
   RESET_STATE,
@@ -146,6 +150,37 @@ export const addLocalGovReducer = (
         serverError: action.payload,
       };
     case RESET_ADD_LOCAL_GOV:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const addTownReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case ADD_TOWN_REQUEST:
+      return { ...state, loading: true };
+    case ADD_TOWN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case ADD_TOWN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_ADD_TOWN:
       return state;
 
     default:

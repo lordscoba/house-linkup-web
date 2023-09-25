@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addTownAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import { RESET_ADD_TOWN } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 
 type Props = {
   country: string;
   state: string;
   countryId: string;
   stateId: string;
+  localGovId: string;
   show: boolean;
   setShow: (a: any) => void;
 };
@@ -17,6 +20,7 @@ const AddTownsModal = ({
   show,
   state,
   stateId,
+  localGovId,
 }: Props) => {
   const dispatch = useDispatch();
 
@@ -24,6 +28,15 @@ const AddTownsModal = ({
 
   const handleSubmit = () => {
     if (!town) return;
+    dispatch(
+      addTownAction({
+        documentId: countryId,
+        localGovId,
+        stateId,
+        town_name: town,
+      }) as any
+    );
+    dispatch({ type: RESET_ADD_TOWN });
 
     setShow(false);
   };

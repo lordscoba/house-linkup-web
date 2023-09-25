@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
-import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
-import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
-import { StoreReducerTypes } from "../../../../redux/store";
-import { TownsInterface } from "../../../dashboard/AdminDashboard/types";
-import AddTownsModal from "../../../modals/dashboardModals/locationModal/AddTownsModal";
-import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
+import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import { RESET_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
+import { StoreReducerTypes } from '../../../../redux/store';
+import { TownsInterface } from '../../../dashboard/AdminDashboard/types';
+import AddTownsModal from '../../../modals/dashboardModals/locationModal/AddTownsModal';
+import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
 // import DeleteModal from './DeleteModal';
 // import AddTownsModal from './AddTownsModal';
 
@@ -16,19 +16,22 @@ type Props = {};
 const ViewTownsComponent = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [lga, setLga] = useState("");
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [lga, setLga] = useState('');
+  const [localGovId, setLocalGovId] = useState('');
   const [show, setShow] = useState<boolean>(false);
 
-  const countryId = useLocation().pathname?.split("_")[0].split("/")[3];
-  const stateId = useLocation().pathname?.split("_")[1].split("/")[0];
-  const index = useLocation().pathname?.split("/")[4];
+  const countryId = useLocation().pathname?.split('_')[0].split('/')[3];
+  const stateId = useLocation().pathname?.split('_')[1].split('/')[0];
+  const index = useLocation().pathname?.split('/')[4];
 
   const Region = useSelector(
     (state: StoreReducerTypes) => state.fetchAllRegion
   );
   const ResSuccess = Region?.success;
+
+  const towns = useSelector((state: StoreReducerTypes) => state?.addTown);
 
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
@@ -47,6 +50,8 @@ const ViewTownsComponent = (props: Props) => {
         (x: any) => JSON.stringify(x?._id) === JSON.stringify(stateId)
       );
       const state = array[countryIndex]?.states[stateIndex]?.state;
+      const localGovId =
+        array[countryIndex]?.states[stateIndex]?.local_government[index]?._id;
       const localGov =
         array[countryIndex]?.states[stateIndex]?.local_government[index]
           ?.local_government_name;
@@ -56,9 +61,15 @@ const ViewTownsComponent = (props: Props) => {
       setState(state);
       setData(towns);
       setLga(localGov);
-      // console.log({ stateIndex, country, state, index, localGov, towns });
+      setLocalGovId(localGovId);
+      // console.log({ array, stateId });
     }
   }, [ResSuccess]);
+
+  useEffect(() => {
+    dispatch(fecthAllRegionsAction() as any);
+    dispatch({ type: RESET_STATE });
+  }, [towns]);
 
   const openTownModal = () => {};
   return (
@@ -68,11 +79,11 @@ const ViewTownsComponent = (props: Props) => {
           Region / Country : {country}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold uppercase">
-          {" "}
+          {' '}
           State : {state}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold uppercase">
-          {" "}
+          {' '}
           LGA : {lga}
         </h4>
         <div onClick={openTownModal} className=" w-[12rem]  ml-auto my-4 ">
@@ -91,7 +102,7 @@ const ViewTownsComponent = (props: Props) => {
                   Towns
                 </th>
 
-                <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center">
+                <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center ">
                   Update Town
                 </th>
 
@@ -129,6 +140,7 @@ const ViewTownsComponent = (props: Props) => {
         show={show}
         state={state}
         stateId={stateId}
+        localGovId={localGovId}
       />
     </>
   );
@@ -160,7 +172,7 @@ const TownsTable = ({ town, country }: TInterface) => {
             {town}
           </td>
 
-          <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
+          <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center ">
             <p className="text-center flex justify-center">
               <img
                 src={EditIcon}

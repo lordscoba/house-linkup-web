@@ -6,6 +6,7 @@ import { SERVER_URL, apiRoutes } from '../../../routes/apiRoutes';
 import {
   AddLocalGovInterface,
   AddStateInterface,
+  AddTownInterface,
   CreateNewRegionInterface,
   DeleteLocalGovInterface,
   DeleteStateInterface,
@@ -17,6 +18,9 @@ import {
   ADD_STATE_FAIL,
   ADD_STATE_REQUEST,
   ADD_STATE_SUCCESS,
+  ADD_TOWN_FAIL,
+  ADD_TOWN_REQUEST,
+  ADD_TOWN_SUCCESS,
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
@@ -143,6 +147,37 @@ export const addLocalGovAction =
     } catch (error: any) {
       dispatch({
         type: ADD_LOCAL_GOV_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const addTownAction =
+  ({ stateId, documentId, localGovId, town_name }: AddTownInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ addTown }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: ADD_TOWN_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(
+        `${SERVER_URL}/add-town?documentId=${documentId}&stateId=${stateId}&local_govId=${localGovId}`,
+        { town_name },
+        config
+      );
+
+      dispatch({ type: ADD_TOWN_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: ADD_TOWN_FAIL,
         payload: error?.response && error?.response?.data?.message,
       });
     }

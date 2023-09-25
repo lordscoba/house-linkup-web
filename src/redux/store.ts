@@ -16,6 +16,7 @@ import {
 import {
   addLocalGovReducer,
   addStateReducer,
+  addTownReducer,
   createRegionReducer,
   deleteLocalGovReducer,
   deleteStateReducer,
@@ -65,6 +66,7 @@ export type StoreReducerTypes = {
   fetchAllRegion: ReturnType<typeof fetchAllRegionReducer>;
   addState: ReturnType<typeof addStateReducer>;
   addLocalGov: ReturnType<typeof addLocalGovReducer>;
+  addTown: ReturnType<typeof addTownReducer>;
   deleteState: ReturnType<typeof deleteStateReducer>;
   deleteLocalGov: ReturnType<typeof deleteLocalGovReducer>;
 
@@ -100,6 +102,7 @@ const reducer: StoreReducerTypes = combineReducers({
   fetchAllRegion: fetchAllRegionReducer,
   addState: addStateReducer,
   addLocalGov: addLocalGovReducer,
+  addTown: addTownReducer,
   deleteState: deleteStateReducer,
   deleteLocalGov: deleteLocalGovReducer,
 
