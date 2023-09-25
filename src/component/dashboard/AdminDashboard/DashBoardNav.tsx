@@ -10,8 +10,8 @@ type Props = {
 const DashBoardNav = ({ setShow }: Props) => {
   const navigate = useNavigate();
   return (
-    <section className="flex items-center gap-4 border bg-[#fff] text-[#333] fixed left-0 right-0 py-2 z-50">
-      <div className=" flex items-center gap-4">
+    <section className="flex flex-wrap items-center gap-4 border bg-[#fff] text-[#333] fixed left-0 right-0 py-2 z-50">
+      <div className=" flex flex-wrap items-center gap-4">
         <img
           onClick={() => navigate("/")}
           src={Logo}
