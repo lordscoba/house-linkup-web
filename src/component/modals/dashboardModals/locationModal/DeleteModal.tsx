@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreReducerTypes } from '../../../../redux/store';
-import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
 import {
+  deleteLocalGovAction,
+  fecthAllRegionsAction,
+} from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import {
+  RESET_DELETE_LOCAL_GOV,
   RESET_DELETE_STATE,
   RESET_STATE,
 } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
@@ -11,8 +15,11 @@ type Props = {
   country: string;
   state: string;
   show: boolean;
+  stateId?: string;
+  countryId?: string;
+  localGovId?: string;
   setShow: (a: any) => void;
-  deleteFunc: (a: any) => void;
+  deleteFunc?: (a: any) => void;
   // setData: (a: any) => void;
   text: string;
 };
@@ -23,10 +30,25 @@ const DeleteModal = ({
   setShow,
   show,
   state,
+  countryId,
+  stateId,
+  localGovId,
   // setData,
   text,
 }: Props) => {
   const dispatch = useDispatch();
+
+  const handleStateDelete = () => {
+    dispatch(
+      deleteLocalGovAction({
+        documentId: countryId,
+        localGovId,
+        stateId,
+      }) as any
+    );
+    dispatch({ type: RESET_DELETE_LOCAL_GOV });
+    setShow(false);
+  };
 
   return (
     <>

@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
-import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
-import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
-import { StoreReducerTypes } from "../../../../redux/store";
-import AddLgaModal from "../../../modals/dashboardModals/locationModal/AddLgaModal";
-import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
-import { LocalGovInterface } from "../types";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
+import {
+  deleteLocalGovAction,
+  fecthAllRegionsAction,
+} from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import {
+  RESET_DELETE_LOCAL_GOV,
+  RESET_STATE,
+} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
+import { StoreReducerTypes } from '../../../../redux/store';
+import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
+import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
+import { LocalGovInterface } from '../types';
 
 type Props = {};
 
 const ViewLocalGovernment = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [state_id, setState_id] = useState("");
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [state_id, setState_id] = useState('');
   // const [showDelete, setShowDelete] = useState<boolean>(false);
 
   const [showAddLgaModal, setShowAddLgaModal] = useState<boolean>(false);
 
-  const location = useLocation().pathname?.split("/")[3];
-  const index = useLocation().pathname?.split("/")[4];
+  const location = useLocation().pathname?.split('/')[3];
+  const index = useLocation().pathname?.split('/')[4];
 
   const Region = useSelector(
     (state: StoreReducerTypes) => state.fetchAllRegion
@@ -31,7 +37,12 @@ const ViewLocalGovernment = (props: Props) => {
   const ResSuccess = Region?.success;
 
   const lga = useSelector((state: StoreReducerTypes) => state?.addLocalGov);
-  const lgaSuccess = lga?.success;
+
+  const deleleLocalGov = useSelector(
+    (state: StoreReducerTypes) => state?.deleteLocalGov
+  );
+
+  const delSuccess = deleleLocalGov?.success;
 
   const openLgaModal = () => {
     setShowAddLgaModal(true);
@@ -52,20 +63,18 @@ const ViewLocalGovernment = (props: Props) => {
       const country = array[countryIndex]?.region;
       const state = array[countryIndex]?.states[index]?.state;
       const stateId = array[countryIndex]?.states[index]?._id;
-      // const localGovId =
-      //   array[countryIndex]?.states[index]?.local_government[0]?._id;
       setState_id(stateId);
       setCountry(country);
       setState(state);
       setData(find);
-      // console.log({ array, localGovId });
     }
   }, [ResSuccess]);
 
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
-  }, [lga]);
+  }, [lga, deleleLocalGov]);
+
   return (
     <>
       <div className="bg-[#fff] w-full md:w-[95%]   m-auto px-6 py-4 rounded-lg my-8">
@@ -73,7 +82,7 @@ const ViewLocalGovernment = (props: Props) => {
           Region / Country : {country}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold">
-          {" "}
+          {' '}
           State : {state}
         </h4>
         <div onClick={openLgaModal} className=" w-[12rem]  ml-auto my-4 ">
@@ -110,7 +119,7 @@ const ViewLocalGovernment = (props: Props) => {
                           index={i}
                           localGov={d?.local_government_name}
                           countryId={location}
-                          LGAID={state_id}
+                          LGAID={d?._id}
                           country={country}
                           stateId={state_id}
                         />
@@ -158,12 +167,19 @@ const LocalGovTables = ({
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState<boolean>(false);
 
-  const handleStateDelete = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleStateDelete = () => {
+    dispatch(
+      deleteLocalGovAction({
+        documentId: countryId,
+        localGovId: LGAID,
+        stateId,
+      }) as any
+    );
+    dispatch({ type: RESET_DELETE_LOCAL_GOV });
+    setShowDelete(false);
   };
 
   const openDelModal = () => {
-    // e.preventDefault()
     setShowDelete(true);
   };
 
@@ -171,6 +187,7 @@ const LocalGovTables = ({
     const id = `${countryId}_${stateId}`;
     navigate(`/dashboard/view-towns/${id}/${index}`);
   };
+
   return (
     <>
       <tbody className="">
@@ -183,7 +200,7 @@ const LocalGovTables = ({
             onClick={viewTowns}
             className="px-4 py-2 text-[black]  whitespace-nowrap  text-center"
           >
-            {" "}
+            {' '}
             <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-[50px] ">
               View Towns
             </button>
@@ -217,7 +234,6 @@ const LocalGovTables = ({
         country={country}
         deleteFunc={handleStateDelete}
         state={localGov}
-        // setData={setData}
         text="LGA"
       />
     </>
