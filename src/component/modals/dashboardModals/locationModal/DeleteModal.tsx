@@ -12,8 +12,8 @@ import {
 } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 
 type Props = {
-  country: string;
-  state: string;
+  country?: string;
+  state?: string;
   show: boolean;
   stateId?: string;
   countryId?: string;
@@ -70,7 +70,7 @@ const DeleteModal = ({
               <p className="py-6">
                 Are You sure you want to delete{' '}
                 <span className="font-bold">
-                  {state} {text}
+                  {state ? state : country} {text}
                 </span>{' '}
               </p>
 

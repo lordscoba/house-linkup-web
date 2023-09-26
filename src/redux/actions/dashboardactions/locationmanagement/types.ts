@@ -21,13 +21,24 @@ export interface AddTownInterface {
   town_name: string;
 }
 
+export interface DeleteStateInterface {
+  documentId: string;
+  stateId: string;
+}
+
 export interface DeleteLocalGovInterface {
   documentId: string | any;
   stateId: string | any;
   localGovId: string | any;
 }
 
-export interface DeleteStateInterface {
-  documentId: string;
-  stateId: string;
+export interface DeleteTownInterface {
+  documentId: string | any;
+  stateId: string | any;
+  localGovId: string | any;
+  townId: string | any;
+}
+
+export interface DeleteCountryInterface {
+  documentId: string | any;
 }

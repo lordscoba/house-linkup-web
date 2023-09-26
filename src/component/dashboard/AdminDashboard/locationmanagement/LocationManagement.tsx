@@ -1,23 +1,31 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
-import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
-import { StoreReducerTypes } from "../../../../redux/store";
-import AddCountryModal from "../../../modals/dashboardModals/locationModal/AddCountryModal";
-import AddStateModal from "../../../modals/dashboardModals/locationModal/AddStateModal";
-import { AdminDashboardInterface, RegionArray } from "../types";
-import LocationTables from "./LocationTables";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteCountryAction,
+  fecthAllRegionsAction,
+} from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import {
+  RESET_DELETE_COUNTRY,
+  RESET_STATE,
+} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
+import { StoreReducerTypes } from '../../../../redux/store';
+import AddCountryModal from '../../../modals/dashboardModals/locationModal/AddCountryModal';
+import AddStateModal from '../../../modals/dashboardModals/locationModal/AddStateModal';
+import { AdminDashboardInterface, RegionArray } from '../types';
+import LocationTables from './LocationTables';
+import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
 
 type Props = {};
 
 const LocationManagement = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState<RegionArray>([]);
-  const [id, setId] = useState("");
-  const [country, setCountry] = useState("");
+  const [id, setId] = useState('');
+  const [country, setCountry] = useState('');
   const [show, setShow] = useState<boolean>(false);
   const [showAddCountryModal, setShowAddCountryModal] =
     useState<boolean>(false);
+  const [showDeleteCountry, setShowDeleteCountry] = useState<boolean>(false);
 
   const Region = useSelector(
     (state: StoreReducerTypes) => state.fetchAllRegion
@@ -39,6 +47,13 @@ const LocationManagement = (props: Props) => {
   const addLocalGov = useSelector(
     (state: StoreReducerTypes) => state.addLocalGov
   );
+  const deleteTown = useSelector(
+    (state: StoreReducerTypes) => state?.deleteTown
+  );
+
+  const deleteCountry = useSelector(
+    (state: StoreReducerTypes) => state?.deleteLocalGov
+  );
 
   const addState = (index: any) => {
     const country = data[index]?.region;
@@ -50,6 +65,20 @@ const LocationManagement = (props: Props) => {
 
   const openCountryModal = () => {
     setShowAddCountryModal(true);
+  };
+
+  const handleCountryDelete = (index: any) => {
+    const country = data[index]?.region;
+    const _id = data[index]?._id;
+    setCountry(country);
+    setId(_id);
+    setShowDeleteCountry(true);
+  };
+
+  const deleteFunc = () => {
+    dispatch(deleteCountryAction({ documentId: id }) as any);
+    dispatch({ type: RESET_DELETE_COUNTRY });
+    setShowDeleteCountry(false);
   };
 
   useEffect(() => {
@@ -64,49 +93,50 @@ const LocationManagement = (props: Props) => {
     }
   }, [ResSuccess]);
 
-  useEffect(() => {
-    if (CreateState?.success) {
-      dispatch(fecthAllRegionsAction() as any);
-      dispatch({ type: RESET_STATE });
-      if (ResSuccess) {
-        const array = Region?.serverResponse;
-        setData(array);
-      }
-    }
-  }, [CreateState?.success]);
+  // useEffect(() => {
+  //   if (CreateState?.success) {
+  //     dispatch(fecthAllRegionsAction() as any);
+  //     dispatch({ type: RESET_STATE });
+  //     if (ResSuccess) {
+  //       const array = Region?.serverResponse;
+  //       setData(array);
+  //     }
+  //   }
+  // }, [CreateState?.success]);
+
+  // useEffect(() => {
+  //   if (deleteState?.success) {
+  //     dispatch(fecthAllRegionsAction() as any);
+  //     if (ResSuccess) {
+  //       const array = Region?.serverResponse;
+  //       setData(array);
+  //     }
+  //     dispatch({ type: RESET_STATE });
+  //   }
+  // }, [deleteState, deleteState?.success]);
 
   useEffect(() => {
-    if (deleteState?.success) {
-      dispatch(fecthAllRegionsAction() as any);
-      if (ResSuccess) {
-        const array = Region?.serverResponse;
-        setData(array);
-      }
-      dispatch({ type: RESET_STATE });
-    }
-  }, [deleteState, deleteState?.success]);
+    dispatch(fecthAllRegionsAction() as any);
+    dispatch({ type: RESET_STATE });
+  }, [
+    addLocalGov,
+    deleteTown,
+    deleteCountry,
+    CreateNewCountry,
+    deleteState,
+    CreateState,
+  ]);
 
-  useEffect(() => {
-    if (addLocalGov?.success) {
-      dispatch(fecthAllRegionsAction() as any);
-      if (ResSuccess) {
-        const array = Region?.serverResponse;
-        setData(array);
-      }
-      dispatch({ type: RESET_STATE });
-    }
-  }, [addLocalGov, addLocalGov?.success]);
-
-  useEffect(() => {
-    if (CreateNewCountry?.success) {
-      dispatch(fecthAllRegionsAction() as any);
-      if (ResSuccess) {
-        const array = Region?.serverResponse;
-        setData(array);
-      }
-      dispatch({ type: RESET_STATE });
-    }
-  }, [CreateNewCountry, CreateNewCountry?.success]);
+  // useEffect(() => {
+  //   if (CreateNewCountry?.success) {
+  //     dispatch(fecthAllRegionsAction() as any);
+  //     if (ResSuccess) {
+  //       const array = Region?.serverResponse;
+  //       setData(array);
+  //     }
+  //     dispatch({ type: RESET_STATE });
+  //   }
+  // }, [CreateNewCountry, CreateNewCountry?.success]);
 
   return (
     <>
@@ -127,13 +157,16 @@ const LocationManagement = (props: Props) => {
                 <div key={index} className="flex flex-col gap-4">
                   <div className="flex flex-wrap justify-between gap-4">
                     <h2 className="my-2">
-                      Region / Country :{" "}
+                      Region / Country :{' '}
                       <span className="font-bold text-[1.1rem]">
                         {item?.region}
                       </span>
                     </h2>
                     <div className="flex gap-3">
-                      <button className="  border md:px-8 md:py-1 p-3 bg-[#6726A8] text-[#fff] rounded-lg">
+                      <button
+                        onClick={() => handleCountryDelete(index)}
+                        className="  border md:px-8 md:py-1 p-3 bg-[#6726A8] text-[#fff] rounded-lg"
+                      >
                         Delete Country
                       </button>
                       <button
@@ -165,6 +198,14 @@ const LocationManagement = (props: Props) => {
       <AddCountryModal
         setShow={setShowAddCountryModal}
         show={showAddCountryModal}
+      />
+
+      <DeleteModal
+        country={country}
+        setShow={setShowDeleteCountry}
+        show={showDeleteCountry}
+        text="Country"
+        deleteFunc={deleteFunc}
       />
     </>
   );
