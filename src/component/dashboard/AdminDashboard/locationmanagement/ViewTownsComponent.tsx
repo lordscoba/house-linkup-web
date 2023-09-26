@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
-import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import { RESET_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
+import {
+  deleteLocalGovAction,
+  deleteTownAction,
+  fecthAllRegionsAction,
+} from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import {
+  RESET_DELETE_LOCAL_GOV,
+  RESET_DELETE_TOWN,
+  RESET_STATE,
+} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 import { StoreReducerTypes } from '../../../../redux/store';
 import { TownsInterface } from '../../../dashboard/AdminDashboard/types';
 import AddTownsModal from '../../../modals/dashboardModals/locationModal/AddTownsModal';
@@ -32,6 +40,7 @@ const ViewTownsComponent = (props: Props) => {
   const ResSuccess = Region?.success;
 
   const towns = useSelector((state: StoreReducerTypes) => state?.addTown);
+  const delTown = useSelector((state: StoreReducerTypes) => state?.deleteTown);
 
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
@@ -69,7 +78,7 @@ const ViewTownsComponent = (props: Props) => {
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
-  }, [towns]);
+  }, [towns, delTown]);
 
   const openTownModal = () => {};
   return (
@@ -120,10 +129,11 @@ const ViewTownsComponent = (props: Props) => {
                           // key={i}
                           // index={i}
                           town={d?.town_name}
-                          // countryId={location}
-                          // LGAID={state_id}
+                          countryId={countryId}
+                          localGovId={localGovId}
                           country={country}
-                          // stateId={state_id}
+                          stateId={stateId}
+                          townId={d?._id}
                         />
                       </>
                     );
@@ -151,19 +161,43 @@ export default ViewTownsComponent;
 interface TInterface {
   town: string;
   country: string;
+  countryId: string;
+  stateId: string;
+  localGovId: string;
+  townId: string;
 }
 
-const TownsTable = ({ town, country }: TInterface) => {
+const TownsTable = ({
+  town,
+  country,
+  stateId,
+  localGovId,
+  countryId,
+  townId,
+}: TInterface) => {
+  const dispatch = useDispatch();
   const [showDelete, setShowDelete] = useState<boolean>(false);
 
-  const handleStateDelete = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleStateDelete = () => {
+    dispatch(
+      deleteTownAction({
+        documentId: countryId,
+        localGovId,
+        stateId,
+        townId,
+      }) as any
+    );
+    dispatch({ type: RESET_DELETE_TOWN });
+    setShowDelete(false);
   };
 
   const openDelModal = () => {
-    // e.preventDefault()
     setShowDelete(true);
   };
+
+  // useEffect(()=>{
+
+  // },[delTown])
   return (
     <>
       <tbody className="">

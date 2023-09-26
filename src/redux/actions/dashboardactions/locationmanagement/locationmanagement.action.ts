@@ -8,8 +8,10 @@ import {
   AddStateInterface,
   AddTownInterface,
   CreateNewRegionInterface,
+  DeleteCountryInterface,
   DeleteLocalGovInterface,
   DeleteStateInterface,
+  DeleteTownInterface,
 } from './types';
 import {
   ADD_LOCAL_GOV_FAIL,
@@ -24,12 +26,18 @@ import {
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
+  DELETE_COUNTRY_FAIL,
+  DELETE_COUNTRY_REQUEST,
+  DELETE_COUNTRY_SUCCESS,
   DELETE_LOCAL_GOV_FAIL,
   DELETE_LOCAL_GOV_REQUEST,
   DELETE_LOCAL_GOV_SUCCESS,
   DELETE_STATE_FAIL,
   DELETE_STATE_REQUEST,
   DELETE_STATE_SUCCESS,
+  DELETE_TOWN_FAIL,
+  DELETE_TOWN_REQUEST,
+  DELETE_TOWN_SUCCESS,
   GET_ALL_REGION_FAIL,
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
@@ -237,6 +245,66 @@ export const deleteLocalGovAction =
     } catch (error: any) {
       dispatch({
         type: DELETE_LOCAL_GOV_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const deleteTownAction =
+  ({ documentId, stateId, localGovId, townId }: DeleteTownInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ deleteTown }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: DELETE_TOWN_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${SERVER_URL}/delete-town?documentId=${documentId}&stateId=${stateId}&local_govId=${localGovId}&townId=${townId}`,
+        config
+      );
+
+      dispatch({ type: DELETE_TOWN_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: DELETE_TOWN_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const deleteCountryAction =
+  ({ documentId }: DeleteCountryInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ deleteCountry }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: DELETE_COUNTRY_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${SERVER_URL}/delete-region?documentId=${documentId}`,
+        config
+      );
+
+      dispatch({ type: DELETE_COUNTRY_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: DELETE_COUNTRY_FAIL,
         payload: error?.response && error?.response?.data?.message,
       });
     }

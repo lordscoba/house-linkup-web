@@ -13,19 +13,27 @@ import {
   CREATE_REGION_FAIL,
   CREATE_REGION_REQUEST,
   CREATE_REGION_SUCCESS,
+  DELETE_COUNTRY_FAIL,
+  DELETE_COUNTRY_REQUEST,
+  DELETE_COUNTRY_SUCCESS,
   DELETE_LOCAL_GOV_FAIL,
   DELETE_LOCAL_GOV_REQUEST,
   DELETE_LOCAL_GOV_SUCCESS,
   DELETE_STATE_FAIL,
   DELETE_STATE_REQUEST,
   DELETE_STATE_SUCCESS,
+  DELETE_TOWN_FAIL,
+  DELETE_TOWN_REQUEST,
+  DELETE_TOWN_SUCCESS,
   GET_ALL_REGION_FAIL,
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
   RESET_ADD_LOCAL_GOV,
   RESET_ADD_TOWN,
+  RESET_DELETE_COUNTRY,
   RESET_DELETE_LOCAL_GOV,
   RESET_DELETE_STATE,
+  RESET_DELETE_TOWN,
   RESET_STATE,
 } from '../../../constants/dashboardconstants/locationConstants/location.constants';
 import { ResponseType, initialStateRequest } from '../../../responseType';
@@ -243,6 +251,68 @@ export const deleteLocalGovReducer = (
         serverError: action.payload,
       };
     case RESET_DELETE_LOCAL_GOV:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const deleteTownReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case DELETE_TOWN_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_TOWN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case DELETE_TOWN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_DELETE_TOWN:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const deleteCountryReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case DELETE_COUNTRY_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case DELETE_COUNTRY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_DELETE_COUNTRY:
       return state;
 
     default:

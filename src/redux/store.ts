@@ -18,8 +18,10 @@ import {
   addStateReducer,
   addTownReducer,
   createRegionReducer,
+  deleteCountryReducer,
   deleteLocalGovReducer,
   deleteStateReducer,
+  deleteTownReducer,
   fetchAllRegionReducer,
 } from './reducers/dashboardreducers/locationdashboardreducer/locationDashboard.reducer';
 import {
@@ -69,6 +71,8 @@ export type StoreReducerTypes = {
   addTown: ReturnType<typeof addTownReducer>;
   deleteState: ReturnType<typeof deleteStateReducer>;
   deleteLocalGov: ReturnType<typeof deleteLocalGovReducer>;
+  deleteTown: ReturnType<typeof deleteTownReducer>;
+  deleteCountry: ReturnType<typeof deleteCountryReducer>;
 
   // users dashboard
   uploadHouse: ReturnType<typeof uploadHouseReducer>;
@@ -105,6 +109,8 @@ const reducer: StoreReducerTypes = combineReducers({
   addTown: addTownReducer,
   deleteState: deleteStateReducer,
   deleteLocalGov: deleteLocalGovReducer,
+  deleteTown: deleteTownReducer,
+  deleteCountry: deleteCountryReducer,
 
   // users dashboard
   uploadHouse: uploadHouseReducer,

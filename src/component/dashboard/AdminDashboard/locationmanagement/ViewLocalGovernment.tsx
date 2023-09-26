@@ -38,9 +38,9 @@ const ViewLocalGovernment = (props: Props) => {
 
   const lga = useSelector((state: StoreReducerTypes) => state?.addLocalGov);
 
-  const deleleLocalGov = useSelector(
-    (state: StoreReducerTypes) => state?.deleteLocalGov
-  );
+  // const deleleLocalGov = useSelector(
+  //   (state: StoreReducerTypes) => state?.deleteLocalGov
+  // );
 
   const openLgaModal = () => {
     setShowAddLgaModal(true);
@@ -71,7 +71,7 @@ const ViewLocalGovernment = (props: Props) => {
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
-  }, [lga, deleleLocalGov]);
+  }, [lga]);
 
   return (
     <>
@@ -165,6 +165,10 @@ const LocalGovTables = ({
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState<boolean>(false);
 
+  const deleleLocalGov = useSelector(
+    (state: StoreReducerTypes) => state?.deleteLocalGov
+  );
+
   const handleStateDelete = () => {
     dispatch(
       deleteLocalGovAction({
@@ -185,6 +189,11 @@ const LocalGovTables = ({
     const id = `${countryId}_${stateId}`;
     navigate(`/dashboard/view-towns/${id}/${index}`);
   };
+
+  useEffect(() => {
+    dispatch(fecthAllRegionsAction() as any);
+    dispatch({ type: RESET_STATE });
+  }, [deleleLocalGov]);
 
   return (
     <>
