@@ -1,25 +1,20 @@
-import React, { useState, useEffect, useDebugValue } from 'react';
-import LocationTables from './LocationTables';
-import { useDispatch, useSelector } from 'react-redux';
-import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import { StoreReducerTypes } from '../../../../redux/store';
-import { AdminDashboardInterface, RegionArray } from '../types';
-import AddStateModal from '../../../modals/dashboardModals/locationModal/AddStateModal';
-import {
-  RESET_DELETE_STATE,
-  RESET_STATE,
-} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
-import InfoModal from '../../../modals/dashboardModals/InfoModal';
-import AddCountryModal from '../../../modals/dashboardModals/locationModal/AddCountryModal';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
+import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
+import { StoreReducerTypes } from "../../../../redux/store";
+import AddCountryModal from "../../../modals/dashboardModals/locationModal/AddCountryModal";
+import AddStateModal from "../../../modals/dashboardModals/locationModal/AddStateModal";
+import { AdminDashboardInterface, RegionArray } from "../types";
+import LocationTables from "./LocationTables";
 
 type Props = {};
 
 const LocationManagement = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState<RegionArray>([]);
-  const [id, setId] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
+  const [id, setId] = useState("");
+  const [country, setCountry] = useState("");
   const [show, setShow] = useState<boolean>(false);
   const [showAddCountryModal, setShowAddCountryModal] =
     useState<boolean>(false);
@@ -115,13 +110,13 @@ const LocationManagement = (props: Props) => {
 
   return (
     <>
-      <div className="px-2">
-        <h2 className=" max-w-max m-auto text-[1.2rem] font-bold uppercase border-b-2">
+      <div className="p-3 md:p-5 flex flex-col gap-5">
+        <h2 className=" max-w-max m-auto text-2xl font-bold uppercase border-b-2">
           Location Management
         </h2>
 
         <div onClick={openCountryModal} className=" w-[12rem]  ml-auto my-4 ">
-          <button className="w-full border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]">
+          <button className="w-full border md:px-8 md:py-1 p-3 bg-[#6726A8] text-[#fff] rounded-lg">
             Add Country
           </button>
         </div>
@@ -129,21 +124,21 @@ const LocationManagement = (props: Props) => {
         {data?.length > 0
           ? data?.map((item: AdminDashboardInterface, index: any) => {
               return (
-                <div key={index} className="mb-4">
-                  <div className="flex justify-between">
+                <div key={index} className="flex flex-col gap-4">
+                  <div className="flex flex-wrap justify-between gap-4">
                     <h2 className="my-2">
-                      Region / Country :{' '}
+                      Region / Country :{" "}
                       <span className="font-bold text-[1.1rem]">
                         {item?.region}
                       </span>
                     </h2>
-                    <div className=" flex gap-2">
-                      <button className="  border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]">
+                    <div className="flex gap-3">
+                      <button className="  border md:px-8 md:py-1 p-3 bg-[#6726A8] text-[#fff] rounded-lg">
                         Delete Country
                       </button>
                       <button
                         onClick={() => addState(index)}
-                        className=" border md:px-8 md:py-1 px-2 py-2 bg-[#6726A8] text-[#fff]"
+                        className=" border md:px-8 md:py-1 p-3 bg-[#6726A8] text-[#fff] rounded-lg"
                       >
                         Add State
                       </button>

@@ -13,7 +13,13 @@ const Dashboard = (props: Props) => {
       <DashBoardNav setShow={setShow} />
       <section className="flex  h-[80vh] ">
         <DashboardSideBar show={show} setShow={setShow} />
-        <AdminDashboardIndex />
+        <div
+          className={`${
+            show ? "md:pl-[15rem]" : "md:pl-[5rem]"
+          } flex-1   pt-[6rem]  bg-[#F3F4F6] text-[#333] px-2 overflow-x-hidden`}
+        >
+          <AdminDashboardIndex />
+        </div>
       </section>
     </div>
   );

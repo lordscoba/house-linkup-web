@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { LocalGovArray, RegionArray, StateInterface } from '../types';
-import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
-import { deleteStateAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import { StoreReducerTypes } from '../../../../redux/store';
-import { RESET_DELETE_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
-import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
-import ViewLga from '../../../modals/dashboardModals/locationModal/ViewLga';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
+import { deleteStateAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
+import { RESET_DELETE_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
+import AddLgaModal from "../../../modals/dashboardModals/locationModal/AddLgaModal";
+import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
+import ViewLga from "../../../modals/dashboardModals/locationModal/ViewLga";
+import { LocalGovArray, RegionArray, StateInterface } from "../types";
 
 type Props = {
   item: Array<StateInterface>;
@@ -26,8 +25,8 @@ const LocationTables = ({
   data,
 }: Props) => {
   return (
-    <section className="bg-[#fff] p-[1rem] rounded-lg mt-2 shadow-2xl overflow-x-auto  w-full hide-scrollbar   ">
-      <table className=" w-full bg-[#fff]   shadow-2xl rounded-lg ">
+    <section className="bg-[#fff] p-3 rounded-lg mt-2overflow-x-auto  w-full hide-scrollbar  overflow-x-auto ">
+      <table className=" w-full bg-[#fff] rounded-lg">
         <thead className="bg-[#fff] text-[#333]">
           <tr className="border-b-2 border-[#6726A8]">
             <th className=" uppercase px-[12px] py-[8px] whitespace-nowrap border-r text-center ">
@@ -89,12 +88,12 @@ const TableValues = ({
 }: TableInterface) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [stateName, setStateName] = useState('');
+  const [stateName, setStateName] = useState("");
   const [showAddLGA, setShowAddLGA] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
-  const [country, setCountry] = useState('');
-  const [state_id, setState_id] = useState('');
-  const [country_id, setCountry_id] = useState('');
+  const [country, setCountry] = useState("");
+  const [state_id, setState_id] = useState("");
+  const [country_id, setCountry_id] = useState("");
 
   const [showLga, setShowLga] = useState<boolean>(false);
   const [lgaData, setLgaData] = useState<LocalGovArray>([]);
@@ -151,33 +150,23 @@ const TableValues = ({
   return (
     <>
       <tbody className="">
-        {' '}
+        {" "}
         <tr>
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center ">
             {state}
           </td>
-          {/* 
-          <td
-            onClick={() => addLocalGov(index)}
-            className="px-4 py-2 text-[black]  whitespace-nowrap text-center"
-          >
-            {' '}
-            <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-[50px]">
-              Add LGA
-            </button>
-          </td> */}
           <td
             onClick={() => viewLga(index)}
             className="px-4 py-2 text-[black]  whitespace-nowrap  text-center"
           >
-            {' '}
-            <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-[50px] ">
+            {" "}
+            <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-lg">
               View LGA
             </button>
           </td>
 
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
                 alt="Edit icon"
@@ -190,7 +179,7 @@ const TableValues = ({
             onClick={() => deleteBtn(index)}
             className="px-4 py-2 text-[black]  whitespace-nowrap m-auto "
           >
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={RedDeleteIcon}
                 alt="Red delete icon"

@@ -9,12 +9,11 @@ const Location = () => {
   return (
     <div className="hide-scrollbar">
       <DashBoardNav setShow={setShow} />
-
       <section className="flex   ">
         <DashboardSideBar show={show} setShow={setShow} />
         <div
           className={`${
-            show ? "md:pl-[19rem]" : "md:pl-[5rem]"
+            show ? "md:pl-[15rem]" : "md:pl-[5rem]"
           } flex-1   pt-[6rem]  bg-[#F3F4F6] text-[#333] px-2 overflow-x-hidden`}
         >
           <LocationManagement />

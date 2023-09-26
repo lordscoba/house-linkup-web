@@ -10,7 +10,6 @@ const HomeScreen = (props: Props) => {
   return (
     <div className="overflow-x-hidden">
       <Hero />
-
       <Advantages />
       <HowHouseLinkupWorks />
       <Reviews />

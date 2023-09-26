@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { LocalGovArray, LocalGovInterface } from '../types';
-import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { StoreReducerTypes } from '../../../../redux/store';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { fecthAllRegionsAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import { RESET_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
-import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
-import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
+import { fecthAllRegionsAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
+import { RESET_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
+import { StoreReducerTypes } from "../../../../redux/store";
+import AddLgaModal from "../../../modals/dashboardModals/locationModal/AddLgaModal";
+import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
+import { LocalGovInterface } from "../types";
 
 type Props = {};
 
 const ViewLocalGovernment = (props: Props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [state_id, setState_id] = useState('');
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [state_id, setState_id] = useState("");
   // const [showDelete, setShowDelete] = useState<boolean>(false);
 
   const [showAddLgaModal, setShowAddLgaModal] = useState<boolean>(false);
 
-  const location = useLocation().pathname?.split('/')[3];
-  const index = useLocation().pathname?.split('/')[4];
+  const location = useLocation().pathname?.split("/")[3];
+  const index = useLocation().pathname?.split("/")[4];
 
   const Region = useSelector(
     (state: StoreReducerTypes) => state.fetchAllRegion
@@ -73,7 +73,7 @@ const ViewLocalGovernment = (props: Props) => {
           Region / Country : {country}
         </h4>
         <h4 className="text-[#222] md:text-[1.5rem] text-[1rem] font-semibold">
-          {' '}
+          {" "}
           State : {state}
         </h4>
         <div onClick={openLgaModal} className=" w-[12rem]  ml-auto my-4 ">
@@ -183,13 +183,13 @@ const LocalGovTables = ({
             onClick={viewTowns}
             className="px-4 py-2 text-[black]  whitespace-nowrap  text-center"
           >
-            {' '}
+            {" "}
             <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-[50px] ">
               View Towns
             </button>
           </td>
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
                 alt="Edit icon"
@@ -201,7 +201,7 @@ const LocalGovTables = ({
             onClick={openDelModal}
             className="px-4 py-2 text-[black]  whitespace-nowrap m-auto "
           >
-            <p className="text-center border flex justify-center">
+            <p className="text-center flex justify-center">
               <img
                 src={RedDeleteIcon}
                 alt="Red delete icon"
