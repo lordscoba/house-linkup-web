@@ -16,6 +16,7 @@ import { StoreReducerTypes } from '../../../../redux/store';
 import { TownsInterface } from '../../../dashboard/AdminDashboard/types';
 import AddTownsModal from '../../../modals/dashboardModals/locationModal/AddTownsModal';
 import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
+import EditTownModal from '../../../modals/dashboardModals/locationModal/EditTownModal';
 // import DeleteModal from './DeleteModal';
 // import AddTownsModal from './AddTownsModal';
 
@@ -41,7 +42,7 @@ const ViewTownsComponent = (props: Props) => {
 
   const towns = useSelector((state: StoreReducerTypes) => state?.addTown);
   const delTown = useSelector((state: StoreReducerTypes) => state?.deleteTown);
-
+  const editTown = useSelector((state: StoreReducerTypes) => state?.editTown);
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
@@ -78,7 +79,7 @@ const ViewTownsComponent = (props: Props) => {
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
-  }, [towns, delTown]);
+  }, [towns, delTown, editTown]);
 
   const openTownModal = () => {};
   return (
@@ -177,6 +178,7 @@ const TownsTable = ({
 }: TInterface) => {
   const dispatch = useDispatch();
   const [showDelete, setShowDelete] = useState<boolean>(false);
+  const [showEditTown, setShowEditTown] = useState<boolean>(false);
 
   const handleStateDelete = () => {
     dispatch(
@@ -195,9 +197,10 @@ const TownsTable = ({
     setShowDelete(true);
   };
 
-  // useEffect(()=>{
+  const editTown = () => {
+    setShowEditTown(true);
+  };
 
-  // },[delTown])
   return (
     <>
       <tbody className="">
@@ -206,7 +209,10 @@ const TownsTable = ({
             {town}
           </td>
 
-          <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center ">
+          <td
+            onClick={editTown}
+            className="px-4 py-2 text-[black]  whitespace-nowrap text-center "
+          >
             <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
@@ -236,6 +242,17 @@ const TownsTable = ({
         deleteFunc={handleStateDelete}
         state={town}
         text="Town"
+      />
+
+      <EditTownModal
+        Region={country}
+        countryId={countryId}
+        localGovId={localGovId}
+        setShow={setShowEditTown}
+        show={showEditTown}
+        stateId={stateId}
+        townId={townId}
+        town_name={town}
       />
     </>
   );

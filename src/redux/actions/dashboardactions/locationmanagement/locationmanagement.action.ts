@@ -12,6 +12,9 @@ import {
   DeleteLocalGovInterface,
   DeleteStateInterface,
   DeleteTownInterface,
+  EditLgaInterface,
+  EditStateInterface,
+  EditTownInterface,
 } from './types';
 import {
   ADD_LOCAL_GOV_FAIL,
@@ -38,6 +41,15 @@ import {
   DELETE_TOWN_FAIL,
   DELETE_TOWN_REQUEST,
   DELETE_TOWN_SUCCESS,
+  EDIT_LGA_FAIL,
+  EDIT_LGA_REQUEST,
+  EDIT_LGA_SUCCESS,
+  EDIT_STATE_FAIL,
+  EDIT_STATE_REQUEST,
+  EDIT_STATE_SUCCESS,
+  EDIT_TOWN_FAIL,
+  EDIT_TOWN_REQUEST,
+  EDIT_TOWN_SUCCESS,
   GET_ALL_REGION_FAIL,
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
@@ -305,6 +317,99 @@ export const deleteCountryAction =
     } catch (error: any) {
       dispatch({
         type: DELETE_COUNTRY_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const editStateAction =
+  ({ documentId, stateId, state_name }: EditStateInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ editState }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: EDIT_STATE_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.put(
+        `${SERVER_URL}/update-state?documentId=${documentId}&stateId=${stateId}`,
+        { state_name },
+        config
+      );
+
+      dispatch({ type: EDIT_STATE_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: EDIT_STATE_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const editLgaAction =
+  ({ documentId, stateId, local_gov_name, localGovId }: EditLgaInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ editLocalGov }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: EDIT_LGA_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.put(
+        `${SERVER_URL}/update-local-gov?documentId=${documentId}&stateId=${stateId}&localGovId=${localGovId}`,
+        { local_gov_name },
+        config
+      );
+
+      dispatch({ type: EDIT_LGA_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: EDIT_LGA_FAIL,
+        payload: error?.response && error?.response?.data?.message,
+      });
+    }
+  };
+
+export const editTownAction =
+  ({ documentId, stateId, town_name, townId, localGovId }: EditTownInterface) =>
+  async (
+    dispatch: Dispatch,
+    getState: ({ editTown }: StoreReducerTypes) => void
+  ) => {
+    try {
+      dispatch({ type: EDIT_TOWN_REQUEST });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.put(
+        `${SERVER_URL}/update-town?documentId=${documentId}&stateId=${stateId}&localGovId=${localGovId}&townId=${townId}`,
+        { town_name },
+        config
+      );
+
+      dispatch({ type: EDIT_TOWN_SUCCESS, payload: data });
+      // console.log({ re: data });
+    } catch (error: any) {
+      dispatch({
+        type: EDIT_TOWN_FAIL,
         payload: error?.response && error?.response?.data?.message,
       });
     }

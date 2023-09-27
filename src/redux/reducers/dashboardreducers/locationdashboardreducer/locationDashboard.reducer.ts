@@ -25,6 +25,15 @@ import {
   DELETE_TOWN_FAIL,
   DELETE_TOWN_REQUEST,
   DELETE_TOWN_SUCCESS,
+  EDIT_LGA_FAIL,
+  EDIT_LGA_REQUEST,
+  EDIT_LGA_SUCCESS,
+  EDIT_STATE_FAIL,
+  EDIT_STATE_REQUEST,
+  EDIT_STATE_SUCCESS,
+  EDIT_TOWN_FAIL,
+  EDIT_TOWN_REQUEST,
+  EDIT_TOWN_SUCCESS,
   GET_ALL_REGION_FAIL,
   GET_ALL_REGION_REQUEST,
   GET_ALL_REGION_SUCCESS,
@@ -34,6 +43,9 @@ import {
   RESET_DELETE_LOCAL_GOV,
   RESET_DELETE_STATE,
   RESET_DELETE_TOWN,
+  RESET_EDIT_LGA,
+  RESET_EDIT_STATE,
+  RESET_EDIT_TOWN,
   RESET_STATE,
 } from '../../../constants/dashboardconstants/locationConstants/location.constants';
 import { ResponseType, initialStateRequest } from '../../../responseType';
@@ -313,6 +325,99 @@ export const deleteCountryReducer = (
         serverError: action.payload,
       };
     case RESET_DELETE_COUNTRY:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const editStateReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case EDIT_STATE_REQUEST:
+      return { ...state, loading: true };
+    case EDIT_STATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case EDIT_STATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_EDIT_STATE:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const editLgaReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case EDIT_LGA_REQUEST:
+      return { ...state, loading: true };
+    case EDIT_LGA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case EDIT_LGA_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_EDIT_LGA:
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+export const editTownReducer = (
+  state: ResponseType = initialStateRequest,
+  action: any
+) => {
+  switch (action.type) {
+    case EDIT_TOWN_REQUEST:
+      return { ...state, loading: true };
+    case EDIT_TOWN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        serverResponse: action.payload,
+      };
+
+    case EDIT_TOWN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: true,
+        serverError: action.payload,
+      };
+    case RESET_EDIT_TOWN:
       return state;
 
     default:

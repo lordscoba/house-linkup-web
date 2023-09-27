@@ -14,6 +14,7 @@ import { StoreReducerTypes } from '../../../../redux/store';
 import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
 import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
 import { LocalGovInterface } from '../types';
+import EditLgaModal from '../../../modals/dashboardModals/locationModal/EditLgaModal';
 
 type Props = {};
 
@@ -37,7 +38,9 @@ const ViewLocalGovernment = (props: Props) => {
   const ResSuccess = Region?.success;
 
   const lga = useSelector((state: StoreReducerTypes) => state?.addLocalGov);
-
+  const editLocalGov = useSelector(
+    (state: StoreReducerTypes) => state?.editLocalGov
+  );
   // const deleleLocalGov = useSelector(
   //   (state: StoreReducerTypes) => state?.deleteLocalGov
   // );
@@ -71,7 +74,7 @@ const ViewLocalGovernment = (props: Props) => {
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
-  }, [lga]);
+  }, [lga, editLocalGov]);
 
   return (
     <>
@@ -164,12 +167,12 @@ const LocalGovTables = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState<boolean>(false);
-
+  const [showEditLga, setShowEditLga] = useState<boolean>(false);
   const deleleLocalGov = useSelector(
     (state: StoreReducerTypes) => state?.deleteLocalGov
   );
 
-  const handleStateDelete = () => {
+  const handleLocalGovDelete = () => {
     dispatch(
       deleteLocalGovAction({
         documentId: countryId,
@@ -188,6 +191,10 @@ const LocalGovTables = ({
   const viewTowns = () => {
     const id = `${countryId}_${stateId}`;
     navigate(`/dashboard/view-towns/${id}/${index}`);
+  };
+
+  const editLocalGov = () => {
+    setShowEditLga(true);
   };
 
   useEffect(() => {
@@ -212,7 +219,10 @@ const LocalGovTables = ({
               View Towns
             </button>
           </td>
-          <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
+          <td
+            onClick={editLocalGov}
+            className="px-4 py-2 text-[black]  whitespace-nowrap text-center"
+          >
             <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
@@ -239,9 +249,18 @@ const LocalGovTables = ({
         show={showDelete}
         setShow={setShowDelete}
         country={country}
-        deleteFunc={handleStateDelete}
+        deleteFunc={handleLocalGovDelete}
         state={localGov}
         text="LGA"
+      />
+      <EditLgaModal
+        Region={country}
+        countryId={countryId}
+        localGovId={LGAID}
+        stateId={stateId}
+        setShow={setShowEditLga}
+        show={showEditLga}
+        local_gov_name={localGov}
       />
     </>
   );
