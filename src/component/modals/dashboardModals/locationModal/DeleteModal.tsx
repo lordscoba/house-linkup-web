@@ -1,15 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreReducerTypes } from '../../../../redux/store';
-import {
-  deleteLocalGovAction,
-  fecthAllRegionsAction,
-} from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
-import {
-  RESET_DELETE_LOCAL_GOV,
-  RESET_DELETE_STATE,
-  RESET_STATE,
-} from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
 
 type Props = {
   country?: string;
@@ -37,18 +27,6 @@ const DeleteModal = ({
   text,
 }: Props) => {
   const dispatch = useDispatch();
-
-  const handleStateDelete = () => {
-    dispatch(
-      deleteLocalGovAction({
-        documentId: countryId,
-        localGovId,
-        stateId,
-      }) as any
-    );
-    dispatch({ type: RESET_DELETE_LOCAL_GOV });
-    setShow(false);
-  };
 
   return (
     <>
@@ -85,6 +63,7 @@ const DeleteModal = ({
                 <button
                   type="button"
                   onClick={deleteFunc}
+                  // onClick={deleteCountry}
                   className="bg-[#69B99D] text-[#fff] border rounded-lg py-2 w-[8rem]"
                 >
                   YES

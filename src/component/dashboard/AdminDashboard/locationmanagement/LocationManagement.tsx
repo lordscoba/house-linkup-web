@@ -52,8 +52,9 @@ const LocationManagement = (props: Props) => {
   );
 
   const deleteCountry = useSelector(
-    (state: StoreReducerTypes) => state?.deleteLocalGov
+    (state: StoreReducerTypes) => state.deleteCountry
   );
+  const editState = useSelector((state: StoreReducerTypes) => state?.editState);
 
   const addState = (index: any) => {
     const country = data[index]?.region;
@@ -93,50 +94,18 @@ const LocationManagement = (props: Props) => {
     }
   }, [ResSuccess]);
 
-  // useEffect(() => {
-  //   if (CreateState?.success) {
-  //     dispatch(fecthAllRegionsAction() as any);
-  //     dispatch({ type: RESET_STATE });
-  //     if (ResSuccess) {
-  //       const array = Region?.serverResponse;
-  //       setData(array);
-  //     }
-  //   }
-  // }, [CreateState?.success]);
-
-  // useEffect(() => {
-  //   if (deleteState?.success) {
-  //     dispatch(fecthAllRegionsAction() as any);
-  //     if (ResSuccess) {
-  //       const array = Region?.serverResponse;
-  //       setData(array);
-  //     }
-  //     dispatch({ type: RESET_STATE });
-  //   }
-  // }, [deleteState, deleteState?.success]);
-
   useEffect(() => {
     dispatch(fecthAllRegionsAction() as any);
     dispatch({ type: RESET_STATE });
   }, [
+    CreateNewCountry,
     addLocalGov,
     deleteTown,
     deleteCountry,
-    CreateNewCountry,
     deleteState,
     CreateState,
+    editState,
   ]);
-
-  // useEffect(() => {
-  //   if (CreateNewCountry?.success) {
-  //     dispatch(fecthAllRegionsAction() as any);
-  //     if (ResSuccess) {
-  //       const array = Region?.serverResponse;
-  //       setData(array);
-  //     }
-  //     dispatch({ type: RESET_STATE });
-  //   }
-  // }, [CreateNewCountry, CreateNewCountry?.success]);
 
   return (
     <>
@@ -202,6 +171,7 @@ const LocationManagement = (props: Props) => {
 
       <DeleteModal
         country={country}
+        countryId={id}
         setShow={setShowDeleteCountry}
         show={showDeleteCountry}
         text="Country"

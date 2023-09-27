@@ -42,3 +42,24 @@ export interface DeleteTownInterface {
 export interface DeleteCountryInterface {
   documentId: string | any;
 }
+
+export interface EditStateInterface {
+  documentId: string | any;
+  stateId: string | any;
+  state_name: string | any;
+}
+
+export interface EditLgaInterface {
+  documentId: string | any;
+  stateId: string | any;
+  localGovId: string;
+  local_gov_name: string | any;
+}
+
+export interface EditTownInterface {
+  documentId: string | any;
+  stateId: string | any;
+  localGovId: string;
+  townId: string;
+  town_name: string | any;
+}

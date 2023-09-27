@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
-import { deleteStateAction } from "../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action";
-import { RESET_DELETE_STATE } from "../../../../redux/constants/dashboardconstants/locationConstants/location.constants";
-import AddLgaModal from "../../../modals/dashboardModals/locationModal/AddLgaModal";
-import DeleteModal from "../../../modals/dashboardModals/locationModal/DeleteModal";
-import ViewLga from "../../../modals/dashboardModals/locationModal/ViewLga";
-import { LocalGovArray, RegionArray, StateInterface } from "../types";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
+import { deleteStateAction } from '../../../../redux/actions/dashboardactions/locationmanagement/locationmanagement.action';
+import { RESET_DELETE_STATE } from '../../../../redux/constants/dashboardconstants/locationConstants/location.constants';
+import AddLgaModal from '../../../modals/dashboardModals/locationModal/AddLgaModal';
+import DeleteModal from '../../../modals/dashboardModals/locationModal/DeleteModal';
+import ViewLga from '../../../modals/dashboardModals/locationModal/ViewLga';
+import { LocalGovArray, RegionArray, StateInterface } from '../types';
+import EditStateModal from '../../../modals/dashboardModals/locationModal/EditStateModal';
 
 type Props = {
   item: Array<StateInterface>;
@@ -57,6 +58,7 @@ const LocationTables = ({
                     state={d?.state}
                     data={data}
                     countryIndex={countryIndex}
+                    stateId={d?._id}
                     // setData={setData}
                   />
                 );
@@ -73,7 +75,7 @@ export default LocationTables;
 interface TableInterface {
   state: string;
   index: string | any;
-
+  stateId: string;
   // setData: (a: any) => void;
   data: RegionArray;
   countryIndex: string | any;
@@ -83,17 +85,19 @@ const TableValues = ({
   state,
   index,
   // setData,
+  stateId,
   data,
   countryIndex,
 }: TableInterface) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [stateName, setStateName] = useState("");
+  const [stateName, setStateName] = useState('');
   const [showAddLGA, setShowAddLGA] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
-  const [country, setCountry] = useState("");
-  const [state_id, setState_id] = useState("");
-  const [country_id, setCountry_id] = useState("");
+  const [country, setCountry] = useState('');
+  const [state_id, setState_id] = useState('');
+  const [country_id, setCountry_id] = useState('');
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
   const [showLga, setShowLga] = useState<boolean>(false);
   const [lgaData, setLgaData] = useState<LocalGovArray>([]);
@@ -140,17 +144,28 @@ const TableValues = ({
     const state = country?.states[index]?.state;
     const stateId = country?.states[index]?._id;
     const Lga = country?.states[index]?.local_government;
-    // setLgaData(Lga);
-    // setCountry(countryName);
-    // setStateName(state);
-    // setShowLga(true);
     navigate(`/dashboard/view-local-gov/${countryId}/${index}`);
+  };
+
+  const editState = () => {
+    const country = data[countryIndex];
+    const regionName = country?.region;
+    const documentId = country?._id;
+    const state = country?.states[index];
+    const stateId = state?._id;
+    const state_name = state?.state;
+
+    setCountry(regionName);
+    setStateName(state_name);
+    setCountry_id(documentId);
+    setState_id(stateId);
+    setShowEditModal(true);
   };
 
   return (
     <>
       <tbody className="">
-        {" "}
+        {' '}
         <tr>
           <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center ">
             {state}
@@ -159,13 +174,16 @@ const TableValues = ({
             onClick={() => viewLga(index)}
             className="px-4 py-2 text-[black]  whitespace-nowrap  text-center"
           >
-            {" "}
+            {' '}
             <button className="bg-[#D9F4DD] text-[green] px-6 py-1 rounded-lg">
               View LGA
             </button>
           </td>
 
-          <td className="px-4 py-2 text-[black]  whitespace-nowrap text-center">
+          <td
+            onClick={editState}
+            className="px-4 py-2 text-[black]  whitespace-nowrap text-center"
+          >
             <p className="text-center flex justify-center">
               <img
                 src={EditIcon}
@@ -212,6 +230,15 @@ const TableValues = ({
         setShow={setShowLga}
         show={showLga}
         state={state}
+      />
+
+      <EditStateModal
+        Region={country}
+        countryId={country_id}
+        setShow={setShowEditModal}
+        show={showEditModal}
+        state_name={state}
+        stateId={stateId}
       />
     </>
   );
