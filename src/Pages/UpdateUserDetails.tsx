@@ -1,10 +1,14 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { StoreReducerTypes } from '../redux/store';
-import { updateProfileAction } from '../redux/actions/auth.actions';
+import {
+  updateProfileAction,
+  userDetailsAction,
+} from '../redux/actions/auth.actions';
 import CircularLoader from '../component/loader/CircularLoader';
 import Message from '../component/message/Message';
+import { UPDATE_PROFILE_RESET } from '../redux/constants/auth.constants';
 
 type Props = {};
 
@@ -25,22 +29,23 @@ const UpdateUserDetails = (props: Props) => {
       ? JSON.parse(localStorage?.getItem('loginUser') as any)
       : null;
 
+  const userId = dataFromStorage?.userDoc?._id;
+
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
 
   const [image, setImage] = useState('') as any;
-  const [email, setEmail] = useState(userDetails?.serverResponse?.email || '');
-  const [location, setLocation] = useState(
-    userDetails?.serverResponse?.location || ''
-  );
-  const [phoneNumber, setPhoneNumber] = useState(
-    userDetails?.serverResponse?.phone_number || ''
-  );
+  const [email, setEmail] = useState('');
+  const [location, setLocation] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setUsername] = useState('');
 
   const updateProfile = useSelector(
     (state: StoreReducerTypes) => state.updateProfile
   );
+
+  // console.log({ r: updateProfile?.serverResponse?.getUser?.image[0]?.url });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
@@ -51,6 +56,8 @@ const UpdateUserDetails = (props: Props) => {
     fileInputRef.current.click();
   };
 
+  // console.log({ d: dataFromStorage?.userDoc });
+
   const handleProfileUpdate = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(
@@ -59,21 +66,39 @@ const UpdateUserDetails = (props: Props) => {
         image,
         location,
         phone_number: phoneNumber,
+        id: userId,
+        username,
       }) as any
     );
+    dispatch({ type: UPDATE_PROFILE_RESET });
   };
+
+  useEffect(() => {
+    const email = userDetails?.serverResponse?.email;
+    const location = userDetails?.serverResponse?.location;
+    const phoneNumber = userDetails?.serverResponse?.phone_number;
+    const username = userDetails?.serverResponse?.username;
+    setEmail(email);
+    setLocation(location);
+    setPhoneNumber(phoneNumber);
+    setUsername(username);
+  }, []);
+
+  useLayoutEffect(() => {
+    dispatch(userDetailsAction({ _id: userId }) as any);
+  }, []);
 
   useEffect(() => {
     const Success = updateProfile?.success;
     const Loading = updateProfile?.loading;
     const message = updateProfile?.serverResponse?.message;
+    // const img = updateProfile?.serverResponse?.image[0]?.url;
     setLoading(Loading);
     if (Success) {
-      // console.log({ success: message });
       setSuccessMessage(message);
       setSuccess(Success);
     }
-  }, [updateProfile?.success]);
+  }, [updateProfile]);
 
   useEffect(() => {
     const updateProfileLoading = updateProfile?.loading;
@@ -82,7 +107,6 @@ const UpdateUserDetails = (props: Props) => {
     setLoading(updateProfileLoading);
 
     if (updateProfileError) {
-      // console.log({ err: updateProfileErrorMessage, updateProfileError });
       setError(updateProfileError);
       setErrorMessage(updateProfileErrorMessage);
     }
@@ -205,6 +229,18 @@ const UpdateUserDetails = (props: Props) => {
               className="w-full border py-2 pl-3 rounded-lg"
             />
           </div>
+          <h2 className=" font-bold my-1">Username: </h2>
+          <div className="font-normal">
+            <input
+              type="location"
+              value={username}
+              onChange={(e: any) => setUsername(e.target.value)}
+              id="location"
+              placeholder="Enter Username"
+              className="w-full border py-2 pl-3 rounded-lg"
+            />
+          </div>
+
           <h2 className=" font-bold my-1">Location: </h2>
           <div className="font-normal">
             <input
@@ -216,7 +252,6 @@ const UpdateUserDetails = (props: Props) => {
               className="w-full border py-2 pl-3 rounded-lg"
             />
           </div>
-
           <h2 className=" font-bold my-1">Phone Number: </h2>
           <div className="font-normal">
             <input

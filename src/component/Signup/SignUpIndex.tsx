@@ -22,7 +22,7 @@ const SignUpIndex = (props: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const [username, setUsername] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
   const [success, setSuccess] = useState(false);
@@ -33,7 +33,7 @@ const SignUpIndex = (props: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(
-      registerAction({ email, full_name: fullName, password, userName }) as any
+      registerAction({ email, full_name: fullName, password, username }) as any
     );
   };
 
@@ -191,8 +191,8 @@ const SignUpIndex = (props: Props) => {
               <input
                 type="text"
                 placeholder="User Name"
-                value={userName}
-                onChange={(e: any) => setUserName(e.target.value)}
+                value={username}
+                onChange={(e: any) => setUsername(e.target.value)}
                 required
                 className="w-full border rounded-lg focus:border-[grey] px-3 py-3"
               />

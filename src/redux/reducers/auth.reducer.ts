@@ -15,6 +15,7 @@ import {
   RESET_REGISTER,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_RESET,
   UPDATE_PROFILE_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -153,6 +154,9 @@ export const updateProfileReducer = (
         error: true,
         serverError: action.payload,
       };
+
+    case UPDATE_PROFILE_RESET:
+      return state;
 
     default:
       return state;

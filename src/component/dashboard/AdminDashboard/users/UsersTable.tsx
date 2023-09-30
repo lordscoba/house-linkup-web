@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
-import { MdSearch } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { EditIcon, RedDeleteIcon } from "../../../../assets/icons";
+import { useEffect, useState } from 'react';
+import { MdSearch } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { EditIcon, RedDeleteIcon } from '../../../../assets/icons';
 import {
   deleteUserAction,
   getAllUsersAction,
-} from "../../../../redux/actions/user.action";
-import { StoreReducerTypes } from "../../../../redux/store";
-import DashboardEditModal from "../../../modals/dashboardModals/DashboardEditModal";
-import InfoModal from "../../../modals/dashboardModals/InfoModal";
-import RegisterFormModal from "../../../modals/dashboardModals/RegisterFormModal";
-import ViewDetails from "../../../modals/dashboardModals/ViewDetails";
-import { ImageInterface, TableArrays, TableInterface } from "./types";
+} from '../../../../redux/actions/user.action';
+import { StoreReducerTypes } from '../../../../redux/store';
+import DashboardEditModal from '../../../modals/dashboardModals/DashboardEditModal';
+import InfoModal from '../../../modals/dashboardModals/InfoModal';
+import RegisterFormModal from '../../../modals/dashboardModals/RegisterFormModal';
+import ViewDetails from '../../../modals/dashboardModals/ViewDetails';
+import { ImageInterface, TableArrays, TableInterface } from './types';
+import UpdateProfileModal from '../../../modals/dashboardModals/UpdateProfileModal';
 
 interface ShoweInterface {
   show: boolean;
@@ -51,6 +52,8 @@ export interface TableDataInterface {
   // deleteUserFunc: Function;
   handleOpenEditButton: (a: any) => void;
   handleViewUserButton: (a: any) => void;
+  phone_number: string;
+  username: string;
 }
 
 const UsersTable = ({ show }: ShoweInterface) => {
@@ -67,10 +70,12 @@ const UsersTable = ({ show }: ShoweInterface) => {
 
   const [singleUserDetails, setSingleUserDetails] = useState({}) as any;
 
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const allUsers = useSelector((state: StoreReducerTypes) => state?.allUsers);
-
+  const updateProfile = useSelector(
+    (state: StoreReducerTypes) => state.updateProfile
+  );
   const activate = useSelector(
     (state: StoreReducerTypes) => state?.activateUser
   );
@@ -133,7 +138,12 @@ const UsersTable = ({ show }: ShoweInterface) => {
 
   useEffect(() => {
     dispatch(getAllUsersAction({ pageNumber }) as any);
-  }, [activate?.success, deActivate?.success, block?.success]);
+  }, [activate?.success, deActivate?.success, block?.success, updateProfile]);
+
+  useEffect(() => {
+    dispatch(getAllUsersAction({ pageNumber }) as any);
+    // console.log({ t: tableList });
+  }, []);
 
   return (
     <section>
@@ -196,7 +206,7 @@ const UsersTable = ({ show }: ShoweInterface) => {
 
             {tableList
               ?.filter((item: TableDataInterface) => {
-                return searchQuery?.toLocaleLowerCase() === ""
+                return searchQuery?.toLocaleLowerCase() === ''
                   ? item
                   : item?.full_name
                       ?.toLowerCase()
@@ -223,6 +233,8 @@ const UsersTable = ({ show }: ShoweInterface) => {
                     handleOpenEditButton={handleEditOpen}
                     handleViewUserButton={handleViewUser}
                     role={item?.role}
+                    phone_number={item?.phone_number}
+                    username={item?.username}
                   />
                 );
               })}
@@ -231,16 +243,6 @@ const UsersTable = ({ show }: ShoweInterface) => {
         <Pagination totalPages={pages} />
       </section>
 
-      <DashboardEditModal
-        open={openModal}
-        setOpen={setOpenModal}
-        data={singleUserDetails}
-      />
-      <ViewDetails
-        open={openDetailsModal}
-        setOpen={setOpenDetailsModal}
-        data={singleUserDetails}
-      />
       <RegisterFormModal setShow={setCreateUserModal} show={createUserModal} />
     </section>
   );
@@ -265,14 +267,18 @@ const TableData = ({
   handleOpenEditButton,
   handleViewUserButton,
   role,
+  phone_number,
+  username,
 }: TableDataInterface) => {
   const dispatch = useDispatch();
   const router = useLocation();
   const navigate = useNavigate();
   const joinedDate = new Date(createdAt).toDateString();
   const [open, setOpen] = useState<boolean>(false);
+  const [openView, setOpenView] = useState<boolean>(false);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
+  const [d, setD] = useState('');
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -292,10 +298,26 @@ const TableData = ({
     // console.log({ index, _id, clickedUser });
   };
 
+  // console.log({ username });
+
+  const openEditModal = () => {
+    setOpen(true);
+  };
+
+  const openViewModal = () => {
+    setOpenView(true);
+
+    const user = list.find((x) => x?._id);
+
+    const n = user?.username;
+
+    console.log({ n: n, user });
+  };
+
   return (
     <>
       <tbody className="">
-        {" "}
+        {' '}
         <tr>
           <td className="px-4 py-2 text-[black]  whitespace-nowrap">
             <p className="flex items-center gap-2">
@@ -324,7 +346,7 @@ const TableData = ({
 
               <p>
                 <span className="capitalize">{full_name}</span> <br />
-                <span>{location ? location : "Not Specified Yet"}</span>
+                <span>{location ? location : 'Not Specified Yet'}</span>
               </p>
             </p>
           </td>
@@ -332,7 +354,7 @@ const TableData = ({
           <td className="px-4 py-4 text-[black] whitespace-nowrap">{role}</td>
           <td className="px-4 py-4 text-[black] whitespace-nowrap  ">
             <span
-              onClick={() => handleViewUserButton({ index })}
+              onClick={openViewModal}
               className="cursor-pointer hover:bg-[#bcecbc] px-4 py-1 rounded-[50px]"
             >
               view
@@ -357,31 +379,14 @@ const TableData = ({
           </td>
           <td className="px-4 py-2 text-[black] whitespace-nowrap ">
             <img
-              onClick={() => {
-                //             const searchParams = new URLSearchParams(Object.entries(attributes).filter(([_, value]) => Boolean(value)));
-                // const url = new URL(window.location.href);
-
-                // if (url.search !== searchParams.toString()) {
-                //   url.search = searchParams.toString();
-                //   window.history.replaceState({}, '', url.toString());
-                // }
-                // const searchParams = new URLSearchParams(Object.entries(attributes).filter(([_, value]) => Boolean(value)));
-
-                // const url = new URL(window.location.href).href.split(
-                //   '/?user='
-                // )[0];
-
-                // window.history.pushState({}, '', url + '/?user=' + _id);
-
-                handleOpenEditButton({ index });
-              }}
+              onClick={openEditModal}
               src={EditIcon}
               alt="Edit icon"
               className="w-6 h-6 cursor-pointer"
             />
           </td>
           <td className="px-4 py-4 text-[black] whitespace-nowrap  ">
-            {" "}
+            {' '}
             <img
               onClick={handleOpenModal}
               src={RedDeleteIcon}
@@ -397,6 +402,37 @@ const TableData = ({
         show={open}
         text={`Are You Sure You want To Delete`}
         yesOnclick={handleDelete}
+      />
+
+      <ViewDetails
+        open={openView}
+        setOpen={setOpenView}
+        isActive={active}
+        isBlock={blocked}
+        isDeActivate={de_activated}
+        role={role}
+        userEmail={email}
+        userId={_id}
+        userName={username}
+        user_fullName={full_name}
+        user_location={location}
+        user_number={phone_number}
+        imageUrl={image}
+
+        // data={singleUserDetails}
+      />
+      <UpdateProfileModal
+        open={open}
+        setOpen={setOpen}
+        userId={_id}
+        userEmail={email}
+        userName={username}
+        user_fullName={full_name}
+        user_location={location}
+        user_number={phone_number}
+        imageUrl={image}
+
+        // data={data}
       />
     </>
   );
