@@ -53,7 +53,7 @@ export const deleteUserAction =
 
       const { data } = await axios.delete(`${SERVER_URL}/delete-user/${_id}`);
 
-      console.log({ delete: data });
+      // console.log({ delete: data });
       dispatch({ type: DELETE_USER_SUCCESS, payload: data });
     } catch (error: any) {
       dispatch({

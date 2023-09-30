@@ -23,11 +23,11 @@ import {
   USER_DETAILS_SUCCESS,
 } from '../constants/auth.constants';
 import axios from 'axios';
-import { apiRoutes } from '../routes/apiRoutes';
+import { SERVER_URL, apiRoutes } from '../routes/apiRoutes';
 import { RegisterInterface } from '../../component/Signup/signupTypes';
 
 export const registerAction =
-  ({ email, full_name, password, userName }: RegisterInterface) =>
+  ({ email, full_name, password, username }: RegisterInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ registerUser }: StoreReducerTypes) => void
@@ -44,7 +44,7 @@ export const registerAction =
 
       const { data } = await axios.post(
         apiRoutes.auth.user.register,
-        { email, password, full_name, userName },
+        { email, password, full_name, username },
         config
       );
 
@@ -97,7 +97,7 @@ interface UserDetailsInterface {
 }
 
 export const userDetailsAction =
-  () =>
+  ({ _id }: UserDetailsInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ userDetails }: StoreReducerTypes) => void
@@ -105,7 +105,7 @@ export const userDetailsAction =
     try {
       dispatch({ type: USER_DETAILS_REQUEST });
 
-      const { data } = await axios.get(apiRoutes.auth.user.getUserDetails);
+      const { data } = await axios.get(`${SERVER_URL}/user-details/${_id}`);
 
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
     } catch (error: any) {
@@ -121,10 +121,19 @@ interface UpdateProfileInterface {
   phone_number: string;
   location: string;
   image: string;
+  id: string;
+  username: string;
 }
 
 export const updateProfileAction =
-  ({ email, image, location, phone_number }: UpdateProfileInterface) =>
+  ({
+    email,
+    image,
+    location,
+    phone_number,
+    username,
+    id,
+  }: UpdateProfileInterface) =>
   async (
     dispatch: Dispatch,
     getState: ({ updateProfile }: StoreReducerTypes) => void
@@ -138,6 +147,7 @@ export const updateProfileAction =
       FD.append('phone_number', phone_number);
       FD.append('location', location);
       FD.append('email', email);
+      FD.append('username', username);
 
       const config = {
         headers: {
@@ -147,7 +157,7 @@ export const updateProfileAction =
       };
 
       const { data } = await axios.put(
-        apiRoutes.auth.user.updateProfile,
+        `${SERVER_URL}/update-profile/${id}`,
         FD,
         config
       );

@@ -17,6 +17,8 @@ const Profile = (props: Props) => {
       ? JSON.parse(localStorage?.getItem('loginUser') as any)
       : null;
 
+  const userId = dataFromStorage?.userDoc?._id;
+
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
   );
@@ -38,7 +40,7 @@ const Profile = (props: Props) => {
   // };
 
   useLayoutEffect(() => {
-    dispatch(userDetailsAction() as any);
+    dispatch(userDetailsAction(userId) as any);
   }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
@@ -104,6 +106,14 @@ const Profile = (props: Props) => {
             {userDetails?.serverResponse?.email
               ? userDetails?.serverResponse?.email
               : dataFromStorage?.userDoc?.email}
+          </span>
+        </h2>
+        <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">
+          Username:{' '}
+          <span className="font-normal">
+            {userDetails?.serverResponse?.username
+              ? userDetails?.serverResponse?.username
+              : dataFromStorage?.userDoc?.username || 'Add Location'}
           </span>
         </h2>
         <h2 className="border-b border-[#69B99D] pb-1 font-bold my-6">

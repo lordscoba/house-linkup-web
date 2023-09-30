@@ -58,6 +58,7 @@ export type StoreReducerTypes = {
 
   allUsers: ReturnType<typeof allUsersReducer>;
   deleteUser: ReturnType<typeof deleteUserReducer>;
+  // getUser: ReturnType<typeof getUserReducer>;
 
   // dashboard
 

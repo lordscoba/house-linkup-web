@@ -14,6 +14,8 @@ export interface TableInterface {
   location: string;
   createdAt: string;
   role: string;
+  phone_number?: string | any;
+  username?: string | any;
   _id: string;
 }
 

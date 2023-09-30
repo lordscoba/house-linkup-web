@@ -30,6 +30,9 @@ const NavBar = (props: Props) => {
       : null;
 
   const NoToken = Boolean(!dataFromStorage);
+  const token = Boolean(dataFromStorage?.token);
+
+  const userId = dataFromStorage?.userDoc?._id;
 
   const userDetails = useSelector(
     (state: StoreReducerTypes) => state.userDetails
@@ -40,10 +43,11 @@ const NavBar = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const checkTokenExist = localStorage.getItem('loginUser');
+    // const checkTokenExist: any = localStorage.getItem('loginUser');
+    // const userId = checkTokenExist?.userDoc?._id;
 
-    dispatch(userDetailsAction() as any);
-    if (checkTokenExist) {
+    dispatch(userDetailsAction(userId) as any);
+    if (token) {
       setIsLoggedIn(true);
     }
   }, []);
