@@ -67,29 +67,29 @@ const State = ({ location }: Props) => {
                       className="text-end ml-auto"
                     />
                   </p>
-
-                  {showDropDown && (
-                    <>
-                      <div className="h-[10rem] overflow-y-auto ">
-                        {x?.states?.map((d: StateInterface, index: any) => {
-                          return (
-                            <div
-                              key={index}
-                              onClick={() => setShowDropDown(false)}
-                            >
-                              <p
-                                onClick={() => setSelected(d?.state)}
-                                className="cursor-pointer"
-                              >
-                                {d?.state}
-                              </p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
                 </div>
+
+                {showDropDown && (
+                  <>
+                    <div className="h-[10rem] overflow-y-auto ">
+                      {x?.states?.map((d: StateInterface, index: any) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={() => setShowDropDown(false)}
+                          >
+                            <p
+                              onClick={() => setSelected(d?.state)}
+                              className="cursor-pointer"
+                            >
+                              {d?.state}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             );
           })
