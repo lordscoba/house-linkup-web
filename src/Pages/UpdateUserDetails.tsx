@@ -84,7 +84,7 @@ const UpdateUserDetails = (props: Props) => {
     setUsername(username);
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(userDetailsAction({ _id: userId }) as any);
   }, []);
 
