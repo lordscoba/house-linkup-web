@@ -162,9 +162,9 @@ const ViewDetails = ({
     setIsBlocked(isBlock);
   }, []);
 
-  useLayoutEffect(() => {
-    dispatch(userDetailsAction({ _id: userId }) as any);
-  }, [userId]);
+  // useLayoutEffect(() => {
+  //   dispatch(userDetailsAction({ _id: userId }) as any);
+  // }, [userId]);
 
   return (
     <>
