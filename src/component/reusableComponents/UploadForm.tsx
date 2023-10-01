@@ -13,6 +13,8 @@ import Message from '../message/Message';
 import State from '../select/State';
 import LocalGovSelect from '../select/LocalGovSelect';
 import TownsSelect from '../select/TownsSelect';
+import { BsFillImageFill } from 'react-icons/bs';
+import { FaTimes } from 'react-icons/fa';
 
 type Props = {
   setData: Function;
@@ -36,37 +38,12 @@ const UploadForm = ({ setData }: Props) => {
   const [numOfBathRoom, setNumOfBathRoom] = useState(0);
   const [price, setPrice] = useState(0);
 
-  const [parlorImageName, setParlorImageName] = useState('');
-  const [parlorImageUrl, setparlorImageUrl] = useState('');
-  const [isParlorImage, setIsParlorImage] = useState<boolean>(false);
-
-  const [kitchenImageName, setKitchenImageName] = useState('');
-  const [kitchenImageUrl, setKitchenImageUrl] = useState('');
-  const [isKitchenImage, setIsKitchenImage] = useState<boolean>(false);
-
-  const [toiletImageName, setToiletImageName] = useState('');
-  const [toiletImageUrl, setToiletImageUrl] = useState('');
-  const [isToiletImage, setIsToiletImage] = useState<boolean>(false);
-
-  const [roomImageName, setRoomImageName] = useState('');
-  const [roomImageUrl, setRoomImageUrl] = useState('');
-  const [isRoomImage, setIsRoomImage] = useState<boolean>(false);
-
-  const [bathRoomImageName, setBathRoomImageName] = useState('');
-  const [bathRoomImageUrl, setBathRoomImageUrl] = useState('');
-  const [isBathRoomImage, setIsBathRoomImage] = useState<boolean>(false);
-
   const [fullName, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [address, setaddress] = useState('');
   const [posterId, setPosterId] = useState('');
 
   const fileInputRef = useRef(null) as any;
-  const parlorRef = useRef(null) as any;
-  const kitchenRef = useRef(null) as any;
-  const toiletRef = useRef(null) as any;
-  const roomRef = useRef(null) as any;
-  const bathRoomRef = useRef(null) as any;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -81,154 +58,44 @@ const UploadForm = ({ setData }: Props) => {
 
   // console.log(uploadHouseState);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files?.[0];
-    setImage(file);
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      // setImage(imageURL);
-      setImageName(file?.name);
-      console.log({ image: image });
-    }
-  };
-
-  const handleParlorFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event?.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      setparlorImageUrl(imageURL);
-      setParlorImageName(file?.name);
-    }
-  };
-
-  const handleToiletFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event?.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      setToiletImageUrl(imageURL);
-      setToiletImageName(file?.name);
-    }
-  };
-
-  const handleKitchenFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event?.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      setKitchenImageUrl(imageURL);
-      setKitchenImageName(file?.name);
-    }
-  };
-
-  const handleRoomFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      // const file = event?.target?.files?.[0];
-      setRoomImageUrl(imageURL);
-      setRoomImageName(file?.name);
-    }
-  };
-
-  const handleBathRoomFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event?.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      setBathRoomImageUrl(imageURL);
-      setBathRoomImageName(file?.name);
-    }
-  };
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event?.target?.files?.[0];
+  //   setImage(file);
+  //   if (file && file.type.startsWith('image/')) {
+  //     const imageURL = URL.createObjectURL(file);
+  //     // setImage(imageURL);
+  //     setImageName(file?.name);
+  //   }
+  // };
 
   // HANDLE DROP FUNCTION
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageURL = URL.createObjectURL(file);
-      setImage(imageURL);
-      setImageName(file?.name);
-    }
-  };
+  // const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  //   event.preventDefault();
+  //   const file = event.dataTransfer.files[0];
+  //   if (file && file.type.startsWith('image/')) {
+  //     const imageURL = URL.createObjectURL(file);
+  //     setImage(imageURL);
+  //     setImageName(file?.name);
+  //   }
+  // };
 
   // HANDLE DRAG OVER
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
+  // const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  //   event.preventDefault();
+  // };
 
   // HANDLE LABEL CLICK THAT OPENS THE IMAGE FOLDER
-  const handleLabelClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleParlorLabelClick = () => {
-    parlorRef.current.click();
-  };
-
-  const handleKitchenLabelClick = () => {
-    kitchenRef.current.click();
-  };
-
-  const handleToiletLabelClick = () => {
-    toiletRef.current.click();
-  };
-
-  const handleRoomLabelClick = () => {
-    roomRef.current.click();
-  };
-
-  const handleBathRoomLabelClick = () => {
-    bathRoomRef.current.click();
-  };
+  // const handleLabelClick = () => {
+  //   fileInputRef.current.click();
+  // };
 
   // HANDLE IMAGE PREVIEW FUNCTIONS
 
-  const handleImagePreview = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setIsImage((prev) => !prev);
-  };
-
-  const handleParlorImagePreview = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    setIsParlorImage((prev) => !prev);
-  };
-
-  const handleKitchenImagePreview = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    setIsKitchenImage((prev) => !prev);
-  };
-
-  const handleToiletImagePreview = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    setIsToiletImage((prev) => !prev);
-  };
-
-  const handleRoomImagePreview = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    setIsRoomImage((prev) => !prev);
-  };
-
-  const handleBathRoomImagePreview = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    setIsBathRoomImage((prev) => !prev);
-  };
+  // const handleImagePreview = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault();
+  //   setIsImage((prev) => !prev);
+  // };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -673,7 +540,7 @@ const UploadForm = ({ setData }: Props) => {
             </div>
           </section>
           {/* IMAGE UPLOAD */}
-          <section>
+          {/* <section>
             <h2 className="text-[18px] font-[600] text-[#000]">
               Upload Photos
             </h2>
@@ -739,7 +606,19 @@ const UploadForm = ({ setData }: Props) => {
                 </>
               )}
             </div>
-          </section>
+          </section> */}
+
+          <ExteriorImages />
+          <InternalImages />
+
+          <div className="text-center mt-[55px]">
+            <button
+              type="submit"
+              className="bg-[#69B99D] font-[500] text-[#fff] xl:text-[22px] text-[18px] w-full xl:w-[513px] m-auto xl:py-[16px] py-[8px] rounded-md"
+            >
+              Submit
+            </button>
+          </div>
 
           {/* OTHER IMPORTANT IMAGES */}
           {/* <div>
@@ -804,3 +683,312 @@ const UploadForm = ({ setData }: Props) => {
 };
 
 export default UploadForm;
+
+const ExteriorImages = () => {
+  const [image, setImage] = useState(null) as any;
+  const [imageName, setImageName] = useState('');
+  const [isImage, setIsImage] = useState<boolean>(false);
+  const [arr, setArr] = useState([]) as any;
+  const fileRef = useRef(null) as any;
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+    setImage(file);
+    if (file && file.type.startsWith('image/')) {
+      const imageURL = URL.createObjectURL(file);
+      setImage(imageURL);
+      setImageName(file?.name);
+      setArr([...arr, imageURL]);
+    }
+  };
+
+  // HANDLE DROP FUNCTION
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const imageURL = URL.createObjectURL(file);
+      setImage(imageURL);
+      setImageName(file?.name);
+      setArr([...arr, imageURL]);
+    }
+  };
+
+  // HANDLE DRAG OVER
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  // HANDLE LABEL CLICK THAT OPENS THE IMAGE FOLDER
+  const handleLabelClick = () => {
+    fileRef.current.click();
+  };
+
+  const removeImage = (index: number) => {
+    const newFiles = [...arr];
+    const splice = newFiles.splice(index, 1);
+    setArr(newFiles);
+  };
+
+  return (
+    <section>
+      <h2 className="text-[18px] font-[600] text-[#000] text-center my-3">
+        Upload External Images of the House
+      </h2>
+      <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md px-2  py-[20px] ">
+        <div
+          className="drop-area h-full flex gap-4 flex-wrap "
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
+          {arr?.length > 0
+            ? arr.map((x: any, index: any) => {
+                return (
+                  <div key={index} className="relative">
+                    <img
+                      src={x}
+                      alt="image blob"
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+
+                    <button
+                      onClick={() => removeImage(index)}
+                      type="button"
+                      className="absolute top-0 -right-1 bg-red-500 text-white py-1 px-2 rounded-full"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+        </div>
+        <div className="inline-block w-full relative cursor-pointer text-center  ">
+          <label
+            htmlFor="browse"
+            onClick={handleLabelClick}
+            className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
+          >
+            Drag and drop an image here or <br />
+            Browse
+          </label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={fileRef}
+            className="hidden"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const InternalImages = () => {
+  const [image, setImage] = useState(null) as any;
+  const [imageName, setImageName] = useState('');
+  const [isImage, setIsImage] = useState<boolean>(false);
+  const [arr, setArr] = useState([]) as any;
+  const fileInputRef = useRef(null) as any;
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+    setImage(file);
+    if (file && file.type.startsWith('image/')) {
+      const imageURL = URL.createObjectURL(file);
+      setImage(imageURL);
+      setImageName(file?.name);
+      setArr([...arr, imageURL]);
+    }
+  };
+
+  // HANDLE DROP FUNCTION
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const imageURL = URL.createObjectURL(file);
+      setImage(imageURL);
+      setImageName(file?.name);
+      setArr([...arr, imageURL]);
+    }
+  };
+
+  // HANDLE DRAG OVER
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  // HANDLE LABEL CLICK THAT OPENS THE IMAGE FOLDER
+  const handleLabelClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const removeImage = (index: number) => {
+    const newFiles = [...arr];
+    const splice = newFiles.splice(index, 1);
+    setArr(newFiles);
+  };
+  return (
+    <section>
+      <h2 className="text-[18px] font-[600] text-[#000] text-center my-3">
+        Upload Internal Images of the House
+      </h2>
+      <div className="image-uploader border-2 border-dashed border-[#69B99D] rounded-md px-2  py-[20px] ">
+        <div
+          className="drop-area h-full flex gap-4 flex-wrap "
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
+          {arr?.length > 0
+            ? arr.map((x: any, index: any) => {
+                return (
+                  <div key={index} className="relative">
+                    <img
+                      src={x}
+                      alt="image blob"
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+
+                    <button
+                      onClick={() => removeImage(index)}
+                      type="button"
+                      className="absolute top-0 -right-1 bg-red-500 text-white py-1 px-2 rounded-full"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+        </div>
+        <div className="inline-block w-full relative cursor-pointer text-center  ">
+          <label
+            htmlFor="browse"
+            onClick={handleLabelClick}
+            className="inline-block py-[10px] px-[20px] cursor-pointer text-[#69B99D] font-[500] text-[1rem]"
+          >
+            Drag and drop an image here or <br />
+            Browse
+          </label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            className="hidden"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const DropImages = () => {
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const fileInputRef = useRef(null) as any;
+
+  const handleLabelClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const newFiles: File[] = Array.from(files);
+      setSelectedFiles([...selectedFiles, ...newFiles]);
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    if (files) {
+      const newFiles: File[] = Array.from(files);
+      setSelectedFiles([...selectedFiles, ...newFiles]);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
+  };
+
+  return (
+    <>
+      <div className="mb-4">
+        <label
+          onClick={handleLabelClick}
+          className="bg-[#EDB84233] text-[#EDB842] px-4 py-2 rounded-lg mt-2 w-fit mx-auto"
+        >
+          Browse Image
+        </label>
+      </div>
+      <div
+        // className="border-2 border-dashed border-gray-300 p-4"
+        className="border-2 border-dashed border-[#E0E2E7] p-4 text-center rounded-md bg-[#F9F9FC]"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+          multiple
+          ref={fileInputRef}
+          id="multiplePictureInput"
+        />
+        <label
+          className="flex flex-col justify-center"
+          htmlFor="multiplePictureInput"
+        >
+          {selectedFiles.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {selectedFiles.map((file, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Image ${index + 1}`}
+                    className="w-20 h-20 object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={() => removeImage(index)}
+                    className="absolute top-0 -right-1 bg-red-500 text-white py-1 px-2 rounded-full"
+                  >
+                    &times;
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center gap-2">
+              {/* <div className="mx-auto p-2 bg-[#EDB842] rounded-md text-white">
+              <BsFillImageFill />
+            </div> */}
+              <span className="text-[#858D9D] text-sm">
+                Drag and drop image here, or click add image
+              </span>
+              <label
+                onClick={handleLabelClick}
+                className="bg-[#EDB84233] text-[#EDB842] px-4 py-2 rounded-lg mt-2 w-fit mx-auto"
+              >
+                Browse
+              </label>
+            </div>
+          )}
+        </label>
+      </div>
+    </>
+  );
+};

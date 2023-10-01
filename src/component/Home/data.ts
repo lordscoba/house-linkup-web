@@ -17,28 +17,21 @@ export const housevalues: Array<HouseTypeInterface> = [
   {
     houses: [
       {
-        heading: 'Houses',
+        heading: 'Residential Units',
         values: [
-          '1 bedroom',
-          '2 bedroom',
-          '3 bedroom',
-          '4 bedroom',
-          '5 bedroom',
-          '6 bedroom',
+          'Self Con',
+          ' Single Room',
+          '1 bedroom flat',
+          '2 bedroom flat',
+          ' 3 bedroom flat',
+          'Others',
         ],
       },
     ],
     rent: [
       {
-        heading: 'Rent',
-        values: [
-          '1 rent',
-          '2 bedroom',
-          '3 bedroom',
-          '4 bedroom',
-          '5 bedroom',
-          '6 bedroom',
-        ],
+        heading: 'Commercials',
+        values: ['Shop', 'Office', 'Others'],
       },
     ],
   },

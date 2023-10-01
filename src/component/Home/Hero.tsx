@@ -74,7 +74,10 @@ const HeroCard = () => {
         </button>
       </div>
       <div className="block xl:flex xl:w-[951px] xl:flex-1 w-full items-start gap-[1rem] xl:px-[32px] bg-[#fefefe] py-4">
-        <State location="Location" />
+        <div className="w-[241px] xl:min-w-[151px]">
+          <State location="Location" />
+        </div>
+
         <HouseType />
         <PriceRange />
 
@@ -85,159 +88,6 @@ const HeroCard = () => {
           Search
         </button>
       </div>
-    </div>
-  );
-};
-
-const Location = () => {
-  const [data, setData] = useState<LocatiionTypesData>([]);
-  const [selected, setSelected] = useState<string>('');
-  const [showDropDown, setShowDropDown] = useState<Boolean>(false);
-
-  const [arrayObj, setArrayObj] = useState<LocatiionTypesData>([]);
-  const [selectedTwo, setSelectedTwo] = useState<string>('');
-
-  useEffect(() => {
-    setArrayObj(locationData);
-    setData(locationData);
-  }, []);
-
-  return (
-    <div className=" ">
-      <div>
-        {data?.length > 0
-          ? data?.map((item: LocationInterface, index: any) => {
-              return (
-                <div key={index} className="mb-4">
-                  <label htmlFor={`${item?.label}`} className="mb-2">
-                    {item?.label}
-                  </label>
-                  <p
-                    className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
-                    onClick={() => setShowDropDown((prev) => !prev)}
-                  >
-                    <input
-                      type="text"
-                      value={selected}
-                      onChange={(e) => e.target.value}
-                      placeholder="Select location "
-                    />
-
-                    <img
-                      src={ArrowDown}
-                      alt="arrow icon"
-                      width={18}
-                      height={18}
-                      className="text-end ml-auto"
-                    />
-                  </p>
-
-                  {showDropDown && (
-                    <div className="h-[10rem] overflow-y-auto ">
-                      {item.value
-                        ? item?.value?.map((obj: any, index: any) => {
-                            return (
-                              <div
-                                key={index}
-                                onClick={() => setShowDropDown(false)}
-                              >
-                                <p
-                                  onClick={() => setSelected(obj)}
-                                  className="cursor-pointer"
-                                >
-                                  {obj}
-                                </p>
-                              </div>
-                            );
-                          })
-                        : null}
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          : null}
-      </div>
-
-      {/* <section>
-        <p>Location</p>
-        <p
-          className="w-[241px] xl:min-w-[151px] h-8 border-none outline-none flex justify-between items-center text-[#443e3e] text-[14px]"
-          onClick={() => setShowDropDown((prev) => !prev)}
-        >
-          <input
-            type="text"
-            value={selected}
-            onChange={(e) => e.target.value}
-            placeholder="Select location "
-          />
-
-          <img
-            src={ArrowDown}
-            alt="arrow icon"
-            width={18}
-            height={18}
-            className="text-end ml-auto"
-          />
-        </p>
-
-        {showDropDown ? (
-          <>
-            {arrayObj?.length > 0
-              ? arrayObj?.map((item: LocationInterface, index: any) => {
-                  return (
-                    <div
-                      key={index}
-                      onClick={() => setShowDropDown(false)}
-                      className=" border mt-3 h-[8rem] overflow-y-auto pl-3"
-                    >
-                      <div>
-                        {item?.houses?.map((d: any, i: any) => {
-                          return (
-                            <div key={index}>
-                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase mb-2">
-                                {d?.heading}
-                              </h4>
-                              {d?.values?.map((d: any, i: any) => {
-                                return (
-                                  <p
-                                    key={index}
-                                    onClick={() => setSelected(d)}
-                                    className="cursor-pointer"
-                                  >
-                                    {d}
-                                  </p>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div>
-                        {item?.rent?.map((d: any, i: any) => {
-                          return (
-                            <div key={index}>
-                              <h4 className="font-semibold bg-[rgba(245,241,241,0.7)] text-[#333] pl-3 uppercase my-2">
-                                {d?.heading}
-                              </h4>
-                              {d?.values?.map((d: any, i: any) => {
-                                return (
-                                  <p key={index} onClick={() => setSelected(d)}>
-                                    {d}
-                                  </p>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })
-              : null}
-          </>
-        ) : null}
-      </section> */}
     </div>
   );
 };
@@ -283,7 +133,7 @@ const HouseType = () => {
                     <div
                       key={index}
                       onClick={() => setShowDropDown(false)}
-                      className=" border mt-3 h-[8rem] overflow-y-auto "
+                      className=" border mt-3 h-[8rem] overflow-y-auto pl-2 "
                     >
                       <div>
                         {item?.houses?.map((d: any, i: any) => {
@@ -297,8 +147,9 @@ const HouseType = () => {
                                   <p
                                     key={index}
                                     onClick={() => setSelected(d)}
-                                    className="cursor-pointer"
+                                    className="cursor-pointer flex items-center gap-2"
                                   >
+                                    <p className="w-1.5 h-1.5 rounded-full bg-black"></p>
                                     {d}
                                   </p>
                                 );
@@ -316,7 +167,13 @@ const HouseType = () => {
                               </h4>
                               {d?.values?.map((d: any, i: any) => {
                                 return (
-                                  <p key={index} onClick={() => setSelected(d)}>
+                                  <p
+                                    key={index}
+                                    onClick={() => setSelected(d)}
+                                    className="cursor-pointer flex items-center gap-2"
+                                  >
+                                    <p className="w-1.5 h-1.5 rounded-full bg-black"></p>
+
                                     {d}
                                   </p>
                                 );
