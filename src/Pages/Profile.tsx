@@ -39,8 +39,8 @@ const Profile = (props: Props) => {
   //   fileInputRef.current.click();
   // };
 
-  useLayoutEffect(() => {
-    dispatch(userDetailsAction(userId) as any);
+  useEffect(() => {
+    dispatch(userDetailsAction({ _id: userId }) as any);
   }, []);
   return (
     <div className="flex flex-col items-center justify-center pt-[4rem]">
