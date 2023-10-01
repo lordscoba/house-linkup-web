@@ -46,7 +46,7 @@ const NavBar = (props: Props) => {
     // const checkTokenExist: any = localStorage.getItem('loginUser');
     // const userId = checkTokenExist?.userDoc?._id;
 
-    dispatch(userDetailsAction(userId) as any);
+    dispatch(userDetailsAction({ _id: userId }) as any);
     if (token) {
       setIsLoggedIn(true);
     }
