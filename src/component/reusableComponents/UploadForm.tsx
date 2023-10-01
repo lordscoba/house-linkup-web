@@ -10,6 +10,9 @@ import { StoreReducerTypes } from '../../redux/store';
 import { UPLOAD_HOUSE_RESET } from '../../redux/constants/dashboardconstants/usersdashboardconstants/usersdashboard.constants';
 import CircularLoader from '../loader/CircularLoader';
 import Message from '../message/Message';
+import State from '../select/State';
+import LocalGovSelect from '../select/LocalGovSelect';
+import TownsSelect from '../select/TownsSelect';
 
 type Props = {
   setData: Function;
@@ -412,7 +415,7 @@ const UploadForm = ({ setData }: Props) => {
 
             <section className="flex gap-[20px] flex-wrap">
               <div className="lg:w-[318px] w-full mb-4">
-                <label htmlFor="state" className="text-[17px] font-[600]">
+                {/* <label htmlFor="state" className="text-[17px] font-[600]">
                   {' '}
                   State
                 </label>{' '}
@@ -431,11 +434,13 @@ const UploadForm = ({ setData }: Props) => {
                     <option value="Enugu">Enugu</option>
                     <option value="imo">Imo</option>
                   </select>
-                </div>
+                </div> */}
+
+                <State location="State" />
               </div>
 
               <div className="lg:w-[318px] w-full mb-4">
-                <label htmlFor="city" className="text-[17px] font-[600]">
+                {/* <label htmlFor="city" className="text-[17px] font-[600]">
                   {' '}
                   City
                 </label>{' '}
@@ -453,11 +458,13 @@ const UploadForm = ({ setData }: Props) => {
                     <option value="awka">Awka</option>
                     <option value="uduEbot">UduEbot</option>
                   </select>
-                </div>
+                </div> */}
+
+                <LocalGovSelect />
               </div>
 
               <div className="lg:w-[318px] w-full mb-4">
-                <label
+                {/* <label
                   htmlFor="local-government"
                   className="text-[17px] font-[600]"
                 >
@@ -478,7 +485,9 @@ const UploadForm = ({ setData }: Props) => {
                     <option value="dunukofia">Dunukofia</option>
                     <option value="aniocha">Aniocha</option>
                   </select>
-                </div>
+                </div> */}
+
+                <TownsSelect />
               </div>
               <div className="lg:w-[318px] w-full mb-4">
                 <label htmlFor="home-type" className="text-[17px] font-[600]">

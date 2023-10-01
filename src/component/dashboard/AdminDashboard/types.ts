@@ -17,6 +17,8 @@ export interface StateInterface {
   local_government: Array<LocalGovInterface>;
 }
 
+export type stateArray = Array<StateInterface>;
+
 export interface AdminDashboardInterface {
   _id: string;
   region: string;
