@@ -298,8 +298,6 @@ const TableData = ({
     // console.log({ index, _id, clickedUser });
   };
 
-  // console.log({ username });
-
   const openEditModal = () => {
     setOpen(true);
   };
@@ -308,10 +306,6 @@ const TableData = ({
     setOpenView(true);
 
     const user = list.find((x) => x?._id);
-
-    const n = user?.username;
-
-    console.log({ n: n, user });
   };
 
   return (
