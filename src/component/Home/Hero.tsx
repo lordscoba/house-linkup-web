@@ -9,6 +9,7 @@ import {
   PriceInterface,
   PriceListData,
 } from './types';
+import State from '../select/State';
 
 const Hero = () => {
   return (
@@ -73,7 +74,7 @@ const HeroCard = () => {
         </button>
       </div>
       <div className="block xl:flex xl:w-[951px] xl:flex-1 w-full items-start gap-[1rem] xl:px-[32px] bg-[#fefefe] py-4">
-        <Location />
+        <State location="Location" />
         <HouseType />
         <PriceRange />
 
