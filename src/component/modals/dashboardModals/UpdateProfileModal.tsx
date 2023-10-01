@@ -161,9 +161,11 @@ const UpdateProfileModal = ({
     }
   }, [errorMessage]);
 
-  useLayoutEffect(() => {
-    dispatch(userDetailsAction({ _id: userId }) as any);
-  }, [userId]);
+  // useLayoutEffect(() => {
+  //   dispatch(userDetailsAction({ _id: userId }) as any);
+  //   console.log({ d: userDetails, userId });
+  // }, [open]);
+
   return (
     <>
       {' '}
